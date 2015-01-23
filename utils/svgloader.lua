@@ -1,10 +1,8 @@
 local parseXml = require "utils.parsexml"
 local serialize = require "utils.serialize"
 
-local function loadWalls (filename)
-	local level = {
-		walls = { }
-	}
+local function loadPolygons (filename, layername)
+	local polygons = {}
 
 	local function get_node_polygon (node)
 		local path_args = ""
@@ -41,8 +39,8 @@ local function loadWalls (filename)
 				else
 					x = x + prev_x
 					y = y + prev_y
-					table.insert (polygon, x)
-					table.insert (polygon, y)
+					table.insert (polygon, tonumber(x))
+					table.insert (polygon, tonumber(y))
 					path_args = string.sub (path_args, sl + 1)
 				end
 			end
@@ -52,24 +50,41 @@ local function loadWalls (filename)
 		return polygon
 	end
 
-	local function svg2polygons (filename)
+	local function find_layer (svg_data, layername)
+		local layer_node = nil
+		for k,v in pairs(svg_data[2]) do
+			print ("ser ... ", k, serialize(v))
+			if v.xarg then
+				print ("v.xarg", v.xarg)
+
+				if v.xarg.label then
+					print (v.xarg.label, v.label, layername)
+				end
+			end
+
+			if v.label and v.label == "g" 
+				and v.xarg and type(v.xarg) == "table"
+				and v.xarg.label and v.xarg.label == layername then
+				return v
+			end
+		end
+
+		print ("did not find bla.... ")
+	end
+
+	local function svg2polygons (filename, layername)
 		local polygons = {}
 
 		local level_file = io.open (filename)
 		local level_xml_string = level_file:read("*a")
 		local svg_data = parseXml (level_xml_string)
-		-- print (serialize (svg_data))
+		print (serialize (svg_data))
 		assert (#svg_data == 2)
 
-		local graphics_node = nil
-		for k,v in pairs(svg_data[2]) do
-			if v.label and v.label == "g" then
-				graphics_node = v
-			end
-		end
+		local layer_data = find_layer (svg_data, layername)
 
-		print (#graphics_node)
-		for k,v in ipairs (graphics_node) do
+		print (#layer_data)
+		for k,v in ipairs (layer_data) do
 			local polygon = get_node_polygon (v)
 			table.insert (polygons, polygon)
 		end
@@ -79,9 +94,9 @@ local function loadWalls (filename)
 		return polygons
 	end
 
-	level.walls = svg2polygons (filename)
+	polygons = svg2polygons (filename, layername)
 
-	return level
+	return polygons
 end
 
-return loadWalls
+return loadPolygons

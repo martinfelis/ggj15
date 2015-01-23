@@ -16,9 +16,8 @@ end
 function LevelOneClass:enter()
 	LevelBaseClass.enter(self)
 
-	self.player = newPlayer (self.world, 1, 10, 200)
-	self.player2 = newPlayer (self.world, 2, 40, 200)
-	self.wall = newWall(self.world, 50, 0, 40, 100)
+	self.player = newPlayer (self.world, 1, 80, 130)
+	self.player2 = newPlayer (self.world, 2, 80, 200)
 	local chain = newChain(self.world, self.player, self.player2)
 	self.player:init()
 	self.player2:init()
@@ -36,7 +35,6 @@ function LevelOneClass:draw()
 
 	self.player:draw()
 	self.player2:draw()
-	self.wall:draw()
 	debugWorldDraw(self.world, 0, 0, 800, 600)
 end
 

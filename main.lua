@@ -11,9 +11,6 @@ local ExampleMenuClass = require("states.examplemenu")
 local Credits = require("states.credits")
 
 vector = require("hump.vector")
-
--- newFooBar
-newWall = require ("entities.wall")
 newPlayer = require ("entities.player")
 
 -- some global dicts
