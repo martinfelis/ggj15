@@ -1,24 +1,22 @@
 require ("strict")
 
+-- useful global requires
 Gamestate = require "hump.gamestate"
 
-local parseXml = require "utils.parsexml"
-local serialize = require "utils.serialize"
-
+-- require States
 local LevelBaseClass = require("states.levelbase")
 local LevelOneClass = require("states.level1")
 local MenuClass = require("states.menu")
 
+-- newFooBar
 newWall = require ("entities.wall")
 newPlayer = require ("entities.player")
 
-local fonts = {}
-
+-- some global dicts
+fonts = {}
 states = {}
 
 function love.load ()
-	print ("Loading!")
-
 	-- preload fonts
 	fonts = {
 		[12] = love.graphics.newFont(12),
@@ -26,8 +24,6 @@ function love.load ()
 	}
 	love.graphics.setBackgroundColor(17,17,17)
 	love.graphics.setFont(fonts[12])
-
-
 
 	-- create all states
 	states.menu = MenuClass:new()
@@ -42,14 +38,12 @@ end
 
 function love.draw ()
 
-
 end
 
 function love.update (dt)
---	print (string.format ("dt = %f", dt))
 
 end
 
 function love.keypressed (key)
-	print (string.format ("key %s was pressed", key))
+
 end
