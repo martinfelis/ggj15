@@ -24,30 +24,39 @@ local function newPlayer (world, id,  x, y)
 	}
 
 	-- physics
-	player.body = love.physics.newBody(world, x, y, "dynamic")
-	player.body:setLinearDamping(10)
+	player.body = love.physics.newBody(world, 0, 0, "dynamic")
+	player.body:setLinearDamping(0.1)
 	player.shape = love.physics.newCircleShape(PLAYER_RADIUS)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
+	-- so that the rope does not colllide with players
+	player.fixture:setCategory(id)
 
 	print (string.format ("Created new player at %f,%f", x, y))
 
 
 	function player:update (dt)
 		local velX, velY = self.body:getLinearVelocity()
-	
+		local vel = vector(velX, velY)
+		
 		local right = love.keyboard.isDown(player.keys.right) and 1 or 0
 		local left = love.keyboard.isDown(player.keys.left) and 1 or 0
 		if (right==1 or left==1) then
-			velX = (right-left)*PLAYER_MOVE_FORCE
+			vel.x = (right-left)*PLAYER_MOVE_FORCE
 		end
 		
 		local up = love.keyboard.isDown(player.keys.up) and 1 or 0
 		local down = love.keyboard.isDown(player.keys.down) and 1 or 0
 		if (up==1 or down==1) then
-			velY = (down-up)*PLAYER_MOVE_FORCE
+			vel.y = (down-up)*PLAYER_MOVE_FORCE
 		end
 		
-		self.body:setLinearVelocity(velX, velY)
+		if (up==1 or down==1 or left == 1 or right == 1) then
+			vel:normalize_inplace()
+			vel = vel * PLAYER_MOVE_FORCE
+		end
+
+		
+		self.body:setLinearVelocity(vel.x, vel.y)
 --[[		if (love.keyboard.isDown("right")) then
 			self.body:setLinearVelocity(PLAYER_MOVE_FORCE, 0)
 		end

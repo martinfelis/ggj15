@@ -1,5 +1,7 @@
 local LevelBaseClass = require("states.levelbase")
 local newPlayer = require ("entities.player")
+local newChain = require("entities.chain")
+local debugWorldDraw = require("debugWorldDraw")
 
 local LevelOneClass = LevelBaseClass:new()
 
@@ -17,6 +19,7 @@ function LevelOneClass:enter()
 	self.player = newPlayer (self.world, 1, 10, 200)
 	self.player2 = newPlayer (self.world, 2, 40, 200)
 	self.wall = newWall(self.world, 50, 0, 40, 100)
+	local chain = newChain(self.world, self.player, self.player2)
 
 end
 
@@ -33,7 +36,7 @@ function LevelOneClass:draw()
 	self.player:draw()
 	self.player2:draw()
 	self.wall:draw()
-
+	debugWorldDraw(self.world, 0, 0, 800, 600)
 end
 
 function LevelOneClass:update(dt)
