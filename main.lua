@@ -7,6 +7,8 @@ Gamestate = require "hump.gamestate"
 local LevelBaseClass = require("states.levelbase")
 local LevelOneClass = require("states.level1")
 local MenuClass = require("states.menu")
+local ExampleMenuClass = require("states.examplemenu")
+local Credits = require("states.credits")
 
 -- newFooBar
 newWall = require ("entities.wall")
@@ -15,6 +17,7 @@ newPlayer = require ("entities.player")
 -- some global dicts
 fonts = {}
 states = {}
+config = { sound = true }
 
 function love.load ()
 	-- preload fonts
@@ -27,13 +30,16 @@ function love.load ()
 
 	-- create all states
 	states.menu = MenuClass:new()
+	states.examplemenu = ExampleMenuClass:new()
 	states.levelbase = LevelBaseClass:new ()
 	states.levelone = LevelOneClass:new ()
+	states.credits = Credits:new ()
 
 	-- start initial state
     Gamestate.registerEvents()
-    Gamestate.switch(states.levelone)
-
+    Gamestate.push(states.levelone)
+    -- Gamestate.push(states.menu)
+    -- Gamestate.push(states.credits)
 end
 
 function love.draw ()
