@@ -1,5 +1,4 @@
 require ("strict")
-local newPlayer = require ("entities.player")
 local LevelBaseClass = require("states.levelbase")
 local LevelOneClass = require("states.level1")
 
@@ -47,13 +46,8 @@ function love.load ()
     Gamestate.switch(states.levelone)
 
 	-- physics
-	love.physics.setMeter(64)
-	world = love.physics.newWorld(0, 0, true) -- no gravity
 
 
-	player = newPlayer (world, 1, 10, 200)
-	player2 = newPlayer (world, 2, 40, 200)
-	wall = newWall(world, 50, 0, 40, 100)
 
 end
 
@@ -62,21 +56,12 @@ function love.draw ()
 	love.graphics.draw (player_image, player_pos.x, player_pos.y)
 	gui.core.draw()
 
-	player:draw()
-	player2:draw()
-	wall:draw()
+
 end
 
 function love.update (dt)
-	world:update(dt)
-
-
-
-
 --	print (string.format ("dt = %f", dt))
 
-	player:update (dt)
-	player2:update(dt)
 
 	player_pos.x = player_pos.x + dt * 30
 
