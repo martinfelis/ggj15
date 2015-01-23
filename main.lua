@@ -1,5 +1,6 @@
 require ("strict")
 newPlayer = require ("entities.player")
+newWall = require ("entities.wall")
 
 local gui = require "Quickie"
 
@@ -7,7 +8,10 @@ local player_image = love.graphics.newImage ("player.png")
 local player_pos = { x = 30, y = 30 }
 local fonts = {}
 
+local world = {}
 local player = {}
+local player2 = {}
+local wall = {}
 
 function love.load ()
 	print ("Loading!")
@@ -25,7 +29,14 @@ function love.load ()
 	gui.group.default.size[2] = 25
 	gui.group.default.spacing = 5
 
-	player = newPlayer (10, 200)
+	-- physics
+	love.physics.setMeter(64)
+	world = love.physics.newWorld(0, 0, true) -- no gravity
+
+	
+	player = newPlayer (world, 1, 10, 200)
+	player2 = newPlayer (world, 2, 40, 200)
+	wall = newWall(world, 50, 0, 40, 100)
 end
 
 function love.draw ()
@@ -34,13 +45,20 @@ function love.draw ()
 	gui.core.draw()
 
 	player:draw()
+	player2:draw()
+	wall:draw()
 end
 
 function love.update (dt)
+	world:update(dt)
+	
+	
+	
+	
 --	print (string.format ("dt = %f", dt))
 
 	player:update (dt)
-
+	player2:update(dt)
 
 	player_pos.x = player_pos.x + dt * 30
 
