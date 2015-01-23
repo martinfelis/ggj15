@@ -1,13 +1,18 @@
 require ("strict")
+
+local gui = require "Quickie"
+local Gamestate = require "hump.gamestate"
+
+local parseXml = require "utils.parsexml"
+local serialize = require "utils.serialize"
+
 local newPlayer = require ("entities.player")
 local LevelBaseClass = require("states.levelbase")
 local LevelOneClass = require("states.level1")
 
 newWall = require ("entities.wall")
-
-
-local gui = require "Quickie"
-local Gamestate = require "hump.gamestate"
+newPlayer = require ("entities.player")
+newLevel = require ("level")
 
 local player_image = love.graphics.newImage ("player.png")
 local player_pos = { x = 30, y = 30 }
@@ -19,9 +24,11 @@ local player2 = {}
 local wall = {}
 
 local states = {}
+local level = {}
 
 function love.load ()
 	print ("Loading!")
+	level = newLevel ("level.svg")
 
 	-- preload fonts
 	fonts = {
@@ -62,6 +69,10 @@ function love.draw ()
 	love.graphics.draw (player_image, player_pos.x, player_pos.y)
 	gui.core.draw()
 
+	for i,p in ipairs (level.walls) do
+		love.graphics.polygon ("fill", p)
+	end
+
 	player:draw()
 	player2:draw()
 	wall:draw()
@@ -81,18 +92,6 @@ function love.update (dt)
 	player_pos.x = player_pos.x + dt * 30
 
 	gui.group.push({grow = "down", pos = {100,33}})
-	if gui.Button ({text = "Click Mich!"}) then
-		print ("Was clicked!")
-	end
-	if gui.Button ({text = "Click Mich!"}) then
-		print ("Was clicked!")
-	end
-	if gui.Button ({text = "Click Mich!"}) then
-		print ("Was clicked!")
-	end
-	if gui.Button ({text = "Click Mich!"}) then
-		print ("Was clicked!")
-	end
 	if gui.Button ({text = "Click Mich!"}) then
 		print ("Was clicked!")
 	end
