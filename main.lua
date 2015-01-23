@@ -1,13 +1,18 @@
 require ("strict")
-newPlayer = require ("entities.player")
+local newPlayer = require ("entities.player")
+local LevelBaseClass = require("states.levelbase")
+local LevelOneClass = require("states.level1")
 
 local gui = require "Quickie"
+local Gamestate = require "hump.gamestate"
 
 local player_image = love.graphics.newImage ("player.png")
 local player_pos = { x = 30, y = 30 }
 local fonts = {}
 
 local player = {}
+
+local states = {}
 
 function love.load ()
 	print ("Loading!")
@@ -26,6 +31,15 @@ function love.load ()
 	gui.group.default.spacing = 5
 
 	player = newPlayer (10, 200)
+
+	-- create all states
+	-- states.menu =
+	states.levelbase = LevelBaseClass:new ()
+	states.levelone = LevelOneClass:new ()
+
+	-- start initial state
+    Gamestate.registerEvents()
+    Gamestate.switch(states.levelone)
 end
 
 function love.draw ()
