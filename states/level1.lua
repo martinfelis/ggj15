@@ -20,7 +20,8 @@ function LevelOneClass:enter()
 	self.player2 = newPlayer (self.world, 2, 40, 200)
 	self.wall = newWall(self.world, 50, 0, 40, 100)
 	local chain = newChain(self.world, self.player, self.player2)
-
+	self.player:init()
+	self.player2:init()
 end
 
 function LevelOneClass:keypressed (key)

@@ -20,7 +20,9 @@ local function newPlayer (world, id,  x, y)
 	local player = {
 		image = love.graphics.newImage ("player.png"),
 		id = id,
-		keys = PLAYER_KEY_CONFIG[id]
+		keys = PLAYER_KEY_CONFIG[id],
+		x = x,
+		y = y
 	}
 
 	-- physics
@@ -30,9 +32,15 @@ local function newPlayer (world, id,  x, y)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	-- so that the rope does not colllide with players
 	player.fixture:setCategory(id)
+	
 
 	print (string.format ("Created new player at %f,%f", x, y))
 
+
+	-- changes the position of the player to the right
+	function player:init()
+		player.body:setPosition(self.x, self.y);
+	end
 
 	function player:update (dt)
 		local velX, velY = self.body:getLinearVelocity()
