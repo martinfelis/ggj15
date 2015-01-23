@@ -10,6 +10,10 @@ local newPlayer = require ("entities.player")
 local LevelBaseClass = require("states.levelbase")
 local LevelOneClass = require("states.level1")
 
+vector = require("hump.vector")
+
+
+
 newWall = require ("entities.wall")
 newPlayer = require ("entities.player")
 
