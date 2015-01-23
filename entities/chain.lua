@@ -1,6 +1,7 @@
-local CHAIN_PART_WIDTH = 10
-local CHAIN_PART_HEIGHT = 5
-local SPACE_BETWEEN_PARTS = 2;
+local CHAIN_PART_WIDTH = 20
+local CHAIN_PART_HEIGHT = 10
+local SPACE_BETWEEN_PARTS = 5;
+local CHAIN_PART_COUNT = 10
 
 local function newChain (world, player1, player2)
 	local chain = {
@@ -11,23 +12,26 @@ local function newChain (world, player1, player2)
 	
 	-- create chain parts
 	
-	for i = 1, 5, 1 do	
+	for i = 1, CHAIN_PART_COUNT, 1 do	
 		local part = {}
 		part.body = love.physics.newBody(world, 0, 0, "dynamic")	
 		part.shape = love.physics.newRectangleShape(CHAIN_PART_WIDTH, CHAIN_PART_HEIGHT)
 		part.fixture = love.physics.newFixture(part.body, part.shape)
 		
+		part.fixture:setGroupIndex(-1)
+		part.fixture:setMask(1,2);
+		
 		table.insert(chain.parts, part)
 		
 		if (i>1) then
-			love.physics.newRopeJoint(chain.parts[i-1].body, chain.parts[i].body, CHAIN_PART_WIDTH, CHAIN_PART_HEIGHT/2, 0, CHAIN_PART_HEIGHT/2, SPACE_BETWEEN_PARTS, true)
+			love.physics.newWeldJoint(chain.parts[i-1].body, chain.parts[i].body, CHAIN_PART_WIDTH/2, 0, -CHAIN_PART_WIDTH/2, 0, false)
 		end
 	end
 	
 	-- first and last rope
-	love.physics.newRopeJoint(player1.body, chain.parts[1].body,  32,  32, 0, CHAIN_PART_HEIGHT/2, SPACE_BETWEEN_PARTS, true)
+	love.physics.newRopeJoint(player1.body, chain.parts[1].body, 0,0, -CHAIN_PART_WIDTH/2, 0, SPACE_BETWEEN_PARTS +32, false)
 	
-	love.physics.newRopeJoint(chain.parts[5].body, player2.body, CHAIN_PART_WIDTH, CHAIN_PART_HEIGHT/2,  32, 32, SPACE_BETWEEN_PARTS, true)
+	love.physics.newRopeJoint(chain.parts[CHAIN_PART_COUNT].body, player2.body, CHAIN_PART_WIDTH/2, 0,  0, 0, SPACE_BETWEEN_PARTS +32, false)
 	
 	
 	return chain

@@ -24,10 +24,12 @@ local function newPlayer (world, id,  x, y)
 	}
 
 	-- physics
-	player.body = love.physics.newBody(world, x, y, "dynamic")
+	player.body = love.physics.newBody(world, 0, 0, "dynamic")
 	player.body:setLinearDamping(0.1)
 	player.shape = love.physics.newCircleShape(PLAYER_RADIUS)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
+	-- so that the rope does not colllide with players
+	player.fixture:setCategory(id)
 
 	print (string.format ("Created new player at %f,%f", x, y))
 
