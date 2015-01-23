@@ -1,7 +1,7 @@
 local parseXml = require "utils.parsexml"
 local serialize = require "utils.serialize"
 
-local function newLevel (filename)
+local function loadWalls (filename)
 	local level = {
 		walls = { }
 	}
@@ -78,10 +78,10 @@ local function newLevel (filename)
 
 		return polygons
 	end
-	
+
 	level.walls = svg2polygons (filename)
 
-	return level
+	return level.walls
 end
 
-return newLevel
+return loadWalls

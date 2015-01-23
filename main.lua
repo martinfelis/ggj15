@@ -12,7 +12,6 @@ local LevelOneClass = require("states.level1")
 
 newWall = require ("entities.wall")
 newPlayer = require ("entities.player")
-newLevel = require ("level")
 
 local player_image = love.graphics.newImage ("player.png")
 local player_pos = { x = 30, y = 30 }
@@ -28,7 +27,6 @@ local level = {}
 
 function love.load ()
 	print ("Loading!")
-	level = newLevel ("level.svg")
 
 	-- preload fonts
 	fonts = {
@@ -64,9 +62,6 @@ function love.draw ()
 	love.graphics.draw (player_image, player_pos.x, player_pos.y)
 	gui.core.draw()
 
-	for i,p in ipairs (level.walls) do
-		love.graphics.polygon ("fill", p)
-	end
 
 end
 
