@@ -15,7 +15,7 @@ function LevelBaseClass:enter ()
 end
 
 function LevelBaseClass:draw ()
-	for i,p in ipairs (self.walls) do
+	for i,p in ipairs (self.walls.walls) do
 		love.graphics.polygon ("fill", p)
 	end
 

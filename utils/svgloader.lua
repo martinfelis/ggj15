@@ -81,7 +81,7 @@ local function loadWalls (filename)
 
 	level.walls = svg2polygons (filename)
 
-	return level.walls
+	return level
 end
 
 return loadWalls
