@@ -12,7 +12,7 @@ local function newGuard (x, y)
 	}
 
 	function guard:update(dt, players, world)
-
+		self.alert = false
 	self.angle = self.angle + dt * 0.4
 		if self.angle > 2*math.pi then
 			self.angle = self.angle - 2*math.pi
@@ -40,9 +40,12 @@ local function newGuard (x, y)
 			local angle = rel_pos:rotate_inplace (-self.angle):angleTo()
 
 			if (math.abs (angle) < self.fov / 2.) then
-				self.alert = true
-			else
-				self.alert = false
+				if ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 > (self.radius+player.radius) * (self.radius+player.radius)) then
+				else
+					self.alert = true
+					self.testingfor = k
+					world:rayCast(self.x, self.y, player.body:getX(), player.body:getY(), callback)
+				end
 			end
 		end
 		-- cast rays
