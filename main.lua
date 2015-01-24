@@ -2,6 +2,7 @@ require ("strict")
 
 -- useful global requires
 Gamestate = require "hump.gamestate"
+Camera = require "hump.camera"
 
 -- require States
 local LevelBaseClass = require("states.levelbase")
