@@ -25,7 +25,7 @@ function LevelOneClass:enter()
 	self.chain:init()
 	self.cam = newSecurityCam(680, 420)
 
-	local player_center = vector(self.player.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
+	local player_center = vector(self.player1.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
 	self.camera = Camera (player_center.x, player_center.y)
 end
 
@@ -37,7 +37,7 @@ end
 
 
 function LevelOneClass:draw()
-	local player_center = vector(self.player.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
+	local player_center = vector(self.player1.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
 	self.camera:lookAt (player_center.x, player_center.y)
 	self.camera:attach()	
 
@@ -49,6 +49,7 @@ function LevelOneClass:draw()
 	self.cam:draw(self.player1, self.player2)
 	-- debugWorldDraw(self.world, 0, 0, 800, 600)
 	debugWorldDraw(self.world, 0, 0, 800, 600)
+	love.graphics.setColor(255, 255, 255, 255)
 
 	self.camera:detach()	
 end

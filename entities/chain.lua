@@ -18,6 +18,7 @@ local function newChain (world, player1, player2)
 		part.body = love.physics.newBody(world, 0, 0, "dynamic")	
 		part.shape = love.physics.newRectangleShape(CHAIN_PART_WIDTH, CHAIN_PART_HEIGHT)
 		part.fixture = love.physics.newFixture(part.body, part.shape)
+		part.fixture:setUserData("chain")
 		part.body:setPosition(i*CHAIN_PART_WIDTH,0)
 		part.body:setLinearDamping(10)
 
