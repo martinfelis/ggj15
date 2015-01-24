@@ -30,7 +30,8 @@ local function loadShapes (filename, layername)
 		local args = {}
 
 		for key, value in string.gmatch(idstring, "[_]([%w]+)[:]([%w%d]+)") do
-			args[key] = value
+			args[key] = tonumber(value) or value
+
 		end
 		return args
 	end
@@ -93,7 +94,7 @@ local function loadShapes (filename, layername)
 
 	local function get_color(styleargs)
 		local color = styleargs.fill and styleargs.fill or "#000000"
-		local r, g, b, a
+		local r, g, b, a = 0, 0, 0, 0
 
 		if #color >= 7 then
 			r = tonumber(color:sub(2, 3), 16)
@@ -120,7 +121,7 @@ local function loadShapes (filename, layername)
 			end
 		end
 
-		local polygon = {}
+		local points = {}
 		if path_args ~= "" then
 			local got_values = true
 			local x = 0.
@@ -131,8 +132,8 @@ local function loadShapes (filename, layername)
 			local sl = 0.
 			path_args = string.sub (path_args, 1)
 			si, sl, x, y = string.find (path_args, "(-?[%d]+%.?[%d]*),(-?[%d]+%.?[%d]*)%s+")
-			table.insert (polygon, x)
-			table.insert (polygon, y)
+			table.insert (points, x)
+			table.insert (points, y)
 			path_args = string.sub (path_args, sl + 1)
 			-- print (path_args)
 			while (got_values) do
@@ -144,14 +145,15 @@ local function loadShapes (filename, layername)
 				else
 					x = x + prev_x
 					y = y + prev_y
-					table.insert (polygon, tonumber(x))
-					table.insert (polygon, tonumber(y))
+					table.insert (points, tonumber(x))
+					table.insert (points, tonumber(y))
 					path_args = string.sub (path_args, sl + 1)
 				end
 			end
 		end
 
-		assert (#polygon > 0)
+		assert (#points > 0)
+		local polygon = {points = points}
 		polygon.colorhex, polygon.color = get_color(parse_style(node.xarg.style))
 		polygon.config = parse_id(node.xarg.id)
 		-- print (serialize(polygon))
@@ -171,7 +173,7 @@ local function loadShapes (filename, layername)
 		if node.xarg.transform then
 			rect.angle, rect.points = parse_transform(node.xarg.transform, rect.x, rect.y, rect.width, rect.height)
 		end
-		print (serialize(rect))
+		-- print (serialize(rect))
 
 		return rect
 	end
@@ -233,8 +235,8 @@ local function loadShapes (filename, layername)
 		--print (serialize(layer_data))
 		for k,v in ipairs (layer_data) do
 			if v.label == "path" and not v.xarg.type then
-				 local polygon = {}
-				 polygon.points = get_node_polygon (v)
+				 local polygon = get_node_polygon (v)
+				 polygon.id = v.xarg.id
 				 polygon.type = "polygon"
 				 table.insert (shapes.polygons, polygon)
 				 table.insert (shapes.all, polygon)

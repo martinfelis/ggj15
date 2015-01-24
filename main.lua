@@ -4,6 +4,7 @@ require ("strict")
 Gamestate = require "hump.gamestate"
 Camera = require "hump.camera"
 matrix = require "utils.matrix"
+pathfunctions = require "utils.pathfunctions"
 
 -- require States
 local LevelBaseClass = require("states.levelbase")

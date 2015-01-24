@@ -3,18 +3,22 @@ loadShapes = require ("utils.svgloader")
 
 function LevelBaseClass:new ()
   local newInstance = {}
+	newInstance.canvas = love.graphics.newCanvas()
+	newInstance.canvas:setFilter ("nearest", "nearest")
+	newInstance.camera = Camera (0,0)
+	newInstance.totalTime = 0
   self.__index = self
-	self.canvas = love.graphics.newCanvas()
-	self.canvas:setFilter ("nearest", "nearest")
-	self.camera = Camera (0,0)
   return setmetatable(newInstance, self)
 end
 
 function LevelBaseClass:enter ()
 	love.physics.setMeter(64)
+	self.totalTime = 0
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
 	self.walls = loadShapes ("leveldefinitions/level.svg", "Walls")
 	self.boxes = loadShapes ("leveldefinitions/level.svg", "Boxes")
+	self.spotlights = loadShapes ("leveldefinitions/level.svg", "Spotlights")
+	self.spotlightpaths = loadShapes ("leveldefinitions/level.svg", "SpotlightPaths")
 
 	-- add walls to the world
 	for i,w in ipairs (self.walls.all) do
@@ -38,6 +42,16 @@ function LevelBaseClass:enter ()
 		b.body:setLinearDamping(20)
 		b.body:setAngularDamping(150)
 	end
+	-- associate spotlights with paths
+	for i, s in ipairs(self.spotlights.circles) do
+		for i, sp in ipairs(self.spotlightpaths.polygons) do
+			-- print (sp.id)
+			if sp.id == s.config.path then
+				s.pathpoints = sp.points
+			end
+		end
+	end
+	-- print (serialize(self.spotlights))
 end
 
 function LevelBaseClass:preDraw()
@@ -87,10 +101,23 @@ function LevelBaseClass:draw ()
 --		love.graphics.polygon ("fill", p)
 		love.graphics.polygon ("line", p.body:getWorldPoints(p.shape:getPoints()))
 	end
+	local oldr, oldg, oldb, olda = love.graphics.getColor()
+	love.graphics.setColor({210,200, 13, 180})
+	for i, c in ipairs (self.spotlights.circles) do
+		love.graphics.circle( "fill", c.x, c.y, c.r, 50 )
+	end
+	love.graphics.setColor(oldr, oldg, oldb, olda)
+
 end
 
 function LevelBaseClass:update (dt)
 	self.world:update(dt)
+	self.totalTime = self.totalTime + dt
+
+	for i, c in ipairs (self.spotlights.circles) do
+		c.x, c.y = pathfunctions.walk(c.pathpoints, self.totalTime, c.config.speed)
+	end
+
 end
 
 function LevelBaseClass:keypressed (key)
