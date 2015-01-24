@@ -7,49 +7,33 @@ local function newGuard (x, y)
 		alert = false,
 		testingfor = 1,
 		radius = 170,
-		angle1 = math.rad(90),
-		angle2 = math.rad(180)
+		angle = math.pi/2,
+		fov = math.pi/2
 	}
 
 
 	local function angleBetweenAngles(angle, angle1, angle2)
-		-- make the angle from angle1 to angle2 to be <= 180 degrees
-		local target = math.deg(angle)
-		angle1 = math.deg(angle1)
-		angle2 = math.deg(angle2)
-
-		print(string.format("TARGET %f  (%f, %f)",target, angle1, angle2))
-
-		local rAngle = ((angle2 - angle1) % 360 + 360) % 360;
-		print(rAngle)
-		if (rAngle >= 180) then
-			local tmp = angle1 
-			angle1 = angle2
+		-- a,b,c >= 0; a,b,c < 360; a <= c)
+		--[[if (angle1 > angle2) then
+			local tmp = angle1
+			angle1 = angle2 
 			angle2 = tmp
-	--]]	    std::swap(angle1, angle2);
 		end
-		-- check if it passes through zero
-		if (angle1 <= angle2) then
-			return target >= angle1 and target <= angle2;
-		else
-			return target >= angle1 or target <= angle2;
-		end
+	
+		--(c - a) % 180 >=0;b >= a && b <= c
 
---[[		local a = math.deg(angle1)
-		local b = math.deg(angle)
-		local c = math.deg(angle2)
-
-		if (c > a) then
-			local tmp = c
-			c = a
-			a = tmp
-		end
-
-		return (c - a) % 180 >=0 and b >= a and b <= c]]--
+		return (angle2 - angle1) % 180 >= 0 and angle >= angle1 and angle <= angle2]]--
+		
 	end
 
 	function guard:update(dt, players, world)
 
+		self.angle = self.angle + dt * 0.4
+		if self.angle > 2*math.pi then
+			self.angle = self.angle - 2*math.pi
+		elseif self.angle < 0 then
+			self.angle= self.angle + 2*math.pi
+		end
 		local function callback(fixture, x, y, xn, yn, fraction)
 
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains
@@ -65,6 +49,13 @@ local function newGuard (x, y)
 			return 0 -- immediately cancel the ray
 		end
 
+
+		for k,player in pairs(players) do
+			local rel_angle = self.angle - math.atan2((player.body:getX()-self.x), (player.body:getY()-self.y))
+			print(string.format("angle %d: %f",k, 180/(2*math.pi)*(rel_angle)))
+
+			self.alert = angleBetweenAngles(rel_angle, 0,0)
+		end
 		-- cast rays
 --[[
 		local arc1 = math.atan2(player1.body:getX()-self.x,(player1.body:getY()-self.y))
@@ -94,7 +85,6 @@ local function newGuard (x, y)
 			-- TODO lose game?
 		end
 ]]--
-		print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
 
@@ -105,8 +95,8 @@ local function newGuard (x, y)
 		else
 			love.graphics.setColor(255,255,0,128)
 		end
-
-		love.graphics.arc("fill", self.x, self.y, self.radius, self.angle1, self.angle2)
+																		   -- fix löves wrong angle drawing
+		love.graphics.arc("fill", self.x, self.y, self.radius, self.angle + self.fov*.5, self.angle - self.fov *.5)
 	end
 
 	return guard

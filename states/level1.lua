@@ -8,7 +8,7 @@ local newOpenDoor = require("entities.opendoor")
 local newSwitch = require("entities.switch")
 local debugWorldDraw = require("debugWorldDraw")
 
-NUM_PLAYERS = 5
+NUM_PLAYERS = 1
 
 local LevelOneClass = LevelBaseClass:new()
 

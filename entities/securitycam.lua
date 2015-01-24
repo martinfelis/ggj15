@@ -12,9 +12,6 @@ local function newSecurityCam (x, y)
 	function cam:update(dt, players, world)
 
 		local function callback(fixture, x, y, xn, yn, fraction)
-			print("callback %s",fixture:getUserData())
-
-
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains
 				return -1
 			end
@@ -53,7 +50,6 @@ local function newSecurityCam (x, y)
 			-- TODO lose game?
 		end
 
-		-- print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
 	function cam:draw()
