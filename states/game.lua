@@ -71,7 +71,7 @@ function GameStateClass:loadLevel (filename)
 
 	-- GUARDS -- guardid: guardX_path:gpathY_speed:200
 	for _, svgguard in pairs(self.SVGguards.circles) do
-		local guard = newGuard(svgguard.x, svgguard.y)
+		local guard = newGuard(svgguard.x, svgguard.y, self.world)
 		table.insert(self.guards, guard)
 
 		-- search path for guard
@@ -111,7 +111,7 @@ function GameStateClass:loadLevel (filename)
 	for i, s in ipairs(self.spotlights.circles) do
 	end
 
-	self.camera:zoom(0.2)
+	self.camera:zoom(0.4)
 
 	-- Players and chains
 	for i=1,NUM_PLAYERS,1 do
@@ -174,7 +174,7 @@ end
 function GameStateClass:loadTestObjects()
 --	table.insert(self.securitycameras, newSecurityCam(680, 420))
 	table.insert(self.spotlights, newSpotlight(400,420))
-	table.insert(self.guards, newGuard(200,200))
+	table.insert(self.guards, newGuard(200,200, self.world))
 
 	local switch = newSwitch(50, 50)
 	local door = newOpenDoor(self.world,70,40,20,80, false)

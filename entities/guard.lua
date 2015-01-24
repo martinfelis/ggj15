@@ -1,5 +1,6 @@
 local GUARD_REALIZE_TIME = 2
-local function newGuard (x, y)
+local GUARD_ROTATION_SPEED = 5
+local function newGuard (x, y, world)
 	-- TODO pass path to walk on
 	local guard = {
 		x = x,
@@ -9,19 +10,52 @@ local function newGuard (x, y)
 		testingfor = 1,
 		radius = 170,
 		angle = 1.,
+		wishAngle = 0,
 		fov = math.pi/2
 	}
+	guard.guide = love.physics.newBody(world, x, y, "dynamic")
+	guard.body = love.physics.newBody(world, x, y, "dynamic")
+	guard.shape = love.physics.newCircleShape(30)
+	guard.fixture = love.physics.newFixture(guard.body, guard.shape)
+	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, x,y, x,y, 10, false)
 
 	function guard:update(dt, players, world, totalTime)
 
 		-- walk
 		if self.pathpoints then
-			self.x, self.y = pathfunctions.walk(self.pathpoints, totalTime, self.speed)
+			self.guide:setPosition(pathfunctions.walk(self.pathpoints, totalTime, self.speed))
 		end
+
+		-- self.body:setLinearVelocity(vel.x, vel.y)
+		local startX, startY = pathfunctions.walk(self.pathpoints, totalTime, self.speed)
+		local endX, endY = pathfunctions.walk(self.pathpoints, totalTime+dt, self.speed)
+		self.angle = math.atan2(endY-startY, endX-startX)
+
+
+		--[[if self.wishAngle > 2*math.pi then
+			self.wishAngle = self.wishAngle - 2*math.pi
+		elseif self.angle < 0 then
+			self.wishAngle= self.wishAngle + 2*math.pi
+		end
+
+		print(string.format("%f <> %f", self.wishAngle, self.angle))
+
+		if (self.wishAngle > self.angle) then
+			print("greater")
+			self.angle = self.angle + dt * GUARD_ROTATION_SPEED
+		end
+		if (self.wishAngle < self.angle) then
+			print("smaller")
+			self.angle = self.angle - dt * GUARD_ROTATION_SPEED
+		end ]]--
+
+		-- guard
+
+		self.x, self.y = guard.body:getPosition()
 
 		self.alert = false
 		self.alerttime = self.alerttime + dt
-		self.angle = self.angle + dt * 0.4
+		-- self.angle = self.angle + dt * 0.4
 		if self.angle > 2*math.pi then
 			self.angle = self.angle - 2*math.pi
 		elseif self.angle < 0 then
