@@ -13,8 +13,8 @@
    height="620.17902"
    id="svg4578"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="level.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="level1.svg">
   <defs
      id="defs4580" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.12374369"
-     inkscape:cx="384.51877"
-     inkscape:cy="-1452.9459"
+     inkscape:zoom="0.35000001"
+     inkscape:cx="1894.8442"
+     inkscape:cy="-1410.0394"
      inkscape:document-units="px"
      inkscape:current-layer="layer6"
      showgrid="true"
@@ -40,9 +40,9 @@
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:window-width="1362"
-     inkscape:window-height="729"
+     inkscape:window-height="701"
      inkscape:window-x="0"
-     inkscape:window-y="37"
+     inkscape:window-y="27"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -62,7 +62,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -135,7 +135,7 @@
      style="display:inline">
     <path
        sodipodi:type="arc"
-       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900000999999999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="Player2"
        sodipodi:cx="-99.9105"
        sodipodi:cy="1320.0895"
@@ -145,7 +145,7 @@
        inkscape:label="#path5435" />
     <path
        sodipodi:type="arc"
-       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900000999999999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="path5437"
        sodipodi:cx="60.0895"
        sodipodi:cy="1400.0895"
@@ -170,7 +170,7 @@
        d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
        inkscape:label="#path5435" />
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:none;stroke:#ff0000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 1080.0895,2280.0895 0,-640 900,0 0,1280 -1280,0 0,-360 380,0"
        id="path5496"
        inkscape:connector-curvature="0"
@@ -183,7 +183,7 @@
      transform="translate(-59.9105,-52.272683)"
      style="display:inline">
     <rect
-       style="fill:#333333;fill-opacity:1;stroke:#333333;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#333333;fill-opacity:1;stroke:#333333;stroke-width:0.17900000999999999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect4642"
        width="3200"
        height="39.999954"
@@ -505,5 +505,74 @@
        x="200.08949"
        y="3080.0896"
        transform="translate(59.9105,52.272683)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Switches">
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00"
+       id="path3569"
+       sodipodi:cx="2140.0896"
+       sodipodi:cy="3460.0896"
+       sodipodi:rx="60"
+       sodipodi:ry="60"
+       d="m 2200.0896,3460.0896 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
+       inkscape:transform-center-x="39.9999"
+       inkscape:transform-center-y="-139.99992"
+       transform="translate(-2300.0001,479.99992)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Doors">
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="rect3515"
+       width="40"
+       height="240"
+       x="500.08951"
+       y="2520.0896" />
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="rect3517"
+       width="220"
+       height="40"
+       x="-19.9105"
+       y="3080.0896" />
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="rect3519"
+       width="40"
+       height="240"
+       x="500.08951"
+       y="3640.0896" />
+    <rect
+       style="fill:#0000ff;display:inline"
+       id="rect3528"
+       width="60"
+       height="200"
+       x="2420.0896"
+       y="3600.0896" />
+    <rect
+       style="fill:#0000ff;display:inline"
+       id="rect3526"
+       width="60"
+       height="180"
+       x="2420.0896"
+       y="3380.0896" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Boxes">
+    <rect
+       style="fill:#aa4400;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="rect3524"
+       width="240.00002"
+       height="220.00005"
+       x="1220.0895"
+       y="1960.0895" />
   </g>
 </svg>

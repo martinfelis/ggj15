@@ -3,7 +3,8 @@ function newSwitch(x, y)
 		x = x,
 		y = y,
 		radius = 10,
-		on = false
+		on = false,
+		observers = {}
 	}
 	function switch:update(dt, players)
 		if (self.on) then -- do not turn the switch back off
@@ -12,7 +13,11 @@ function newSwitch(x, y)
 		for k,player in pairs(players) do
 			if (self.x-player.body:getX())^2 + (self.y-player.body:getY())^2 < (self.radius+player.radius)^2 then
 				self.on = true
-				-- TODO open doors
+
+				-- notify the doors
+				for k,observer in pairs(self.observers) do
+					observer:notify(self)
+				end
 			end
 		end
 	end
@@ -24,6 +29,10 @@ function newSwitch(x, y)
 		end
 		love.graphics.circle("fill", self.x, self.y, self.radius)
 		love.graphics.setColor(255, 255, 255, 255)
+	end
+
+	function switch:addObserver(observer)
+		table.insert(self.observers, observer)
 	end
 
 	return switch

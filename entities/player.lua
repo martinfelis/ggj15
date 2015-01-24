@@ -137,11 +137,11 @@ local function newPlayer (world, id, x, y)
 
 		if (math.abs(x)+math.abs(y)>100) then
 			self.angle = math.atan2(x, -y)
-			print(string.format("angle %f (%f, %f)",self.angle,x,y))
+--			print(string.format("angle %f (%f, %f)",self.angle,x,y))
 		end
 
 		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 1,1,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
-		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
+--		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
 	end
 
 	return player

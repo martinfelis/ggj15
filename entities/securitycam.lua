@@ -20,7 +20,6 @@ local function newSecurityCam (x, y)
 				return -1
 			end
 
-
 			-- we hit something bad
 			self.alert[self.testingfor] = false
 			return 0 -- immediately cancel the ray
@@ -28,7 +27,7 @@ local function newSecurityCam (x, y)
 
 		for k,player in pairs(players) do
 			-- cast rays
-			if ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 > (self.radius+player.radius) * (self.radius+player.radius)) then
+			if ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 > (self.radius+player.radius)^2) then
 				self.alert[k] = false
 			else
 				self.alert[k] = true
