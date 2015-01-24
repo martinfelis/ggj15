@@ -13,10 +13,24 @@ local function newGuard (x, y)
 
 
 	local function angleBetweenAngles(angle, angle1, angle2)
+
 		-- a,b,c >= 0; a,b,c < 360; a <= c)
 		--[[if (angle1 > angle2) then
 			local tmp = angle1
 			angle1 = angle2 
+
+		-- make the angle from angle1 to angle2 to be <= 180 degrees
+		local target = math.deg(angle)
+		angle1 = math.deg(angle1)
+		angle2 = math.deg(angle2)
+
+		print(string.format("TARGET %f  (%f, %f)",target, angle1, angle2))
+
+		local rAngle = ((angle2 - angle1) % 360 + 360) % 360;
+		print(rAngle)
+		if (rAngle >= 180) then
+			local tmp = angle1
+			angle1 = angle2
 			angle2 = tmp
 		end
 	
@@ -61,7 +75,7 @@ local function newGuard (x, y)
 		local arc1 = math.atan2(player1.body:getX()-self.x,(player1.body:getY()-self.y))
 		local outside1 = not angleBetweenAngles(arc1, self.angle1, self.angle2)
 
-		if (outside1 or (player1.body:getX()-self.x)^2+(player1.body:getY()-self.y)^2 > (self.radius+player1.radius) * (self.radius+player1.radius)) then 
+		if (outside1 or (player1.body:getX()-self.x)^2+(player1.body:getY()-self.y)^2 > (self.radius+player1.radius) * (self.radius+player1.radius)) then
 			self.alert1 = false
 		else
 			self.alert1 = true
@@ -72,7 +86,7 @@ local function newGuard (x, y)
 		local arc2 = math.atan2(player2.body:getX()-self.x, player2.body:getY()-self.y)
 		local outside2 = true --angleBetweenAngles(arc2, self.angle1, self.angle2)
 
-		if (outside2 or (player2.body:getX()-self.x)^2+(player2.body:getY()-self.y)^2 > (self.radius+player2.radius) * (self.radius+player2.radius)) then 
+		if (outside2 or (player2.body:getX()-self.x)^2+(player2.body:getY()-self.y)^2 > (self.radius+player2.radius) * (self.radius+player2.radius)) then
 			self.alert2 = false
 		else
 			self.alert2 = true
@@ -85,6 +99,7 @@ local function newGuard (x, y)
 			-- TODO lose game?
 		end
 ]]--
+		--print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
 

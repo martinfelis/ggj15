@@ -35,6 +35,62 @@ local function loadShapes (filename, layername)
 		return args
 	end
 
+	local function parse_transform(transformstring, x, y, w, h)
+		-- transform = "matrix(0.86912819,0.49458688,-0.49458688,0.86912819,0,0)"
+		-- returns the angle
+		assert (transformstring:sub(1, 7) == "matrix(")
+		transformstring = transformstring:sub(8, #transformstring - 1)
+		assert (nil == transformstring:find(" ")) -- no spaces aka no other fancy stuff like rotate
+
+		local nums = {}
+		for n in string.gmatch(transformstring, "([%d-.]+)") do
+			table.insert(nums, tonumber(n))
+		end
+
+		-- Rotate
+		--
+		-- cos(a)   -sin(a)  0
+		-- sin(a)    cos(a)  0
+		--      0        0   1
+		--
+		-- Reihenfolge
+		-- a1  c3  e5
+		-- b2  d4  f6
+		-- 0   0   1
+
+		-- assert (nums[5] == 0 and nums[6] == 0) -- assert is only rotation
+
+		local angle = math.asin(nums[2])
+
+		local transformmatrix = matrix:new(3, 3, 0)
+		transformmatrix[1] = {nums[1], nums[3], nums[5]}
+		transformmatrix[2] = {nums[2], nums[4], nums[6]}
+		transformmatrix[3] = {0, 0, 1}
+
+		local resultingpointlist = {}
+
+		local untransformedpoints = {
+			{{x, y, 0}}, {{x+w, y, 0}}, {{x+w, y+h, 0}}, {{x, y+h, 0}}
+		}
+
+		for _, untransformedvertex in pairs(untransformedpoints) do
+			--print(serialize(transformmatrix))
+			--print(serialize(untransformedvertex))
+			local transformed = matrix.mul(transformmatrix, matrix.transpose(untransformedvertex))
+			--local transformed2 = matrix.mul(untransformedvertex, transformmatrix)
+			--print(serialize(transformed))
+			table.insert(resultingpointlist, transformed[1][1])
+			table.insert(resultingpointlist, transformed[2][1])
+		end
+
+		--print(serialize(nums))
+		--print(serialize(resultingpointlist))
+		--print (angle)
+		return angle, resultingpointlist
+	end
+
+
+
 	local function get_color(styleargs)
 		local color = styleargs.fill and styleargs.fill or "#000000"
 		local r, g, b, a
@@ -107,10 +163,30 @@ local function loadShapes (filename, layername)
 		local rect = node.xarg -- has x, y, height, width
 		rect.colorhex, rect.color = get_color(parse_style(node.xarg.style))
 		rect.config = parse_id(node.xarg.id)
+		rect.angle = 0
+		rect.points = {rect.x, rect.y,
+					   rect.x+rect.width, rect.y,
+					   rect.x+rect.width, rect.y+rect.height,
+					   rect.x, rect.y+rect.height}
+		if node.xarg.transform then
+			rect.angle, rect.points = parse_transform(node.xarg.transform, rect.x, rect.y, rect.width, rect.height)
+		end
 		print (serialize(rect))
 
-
 		return rect
+	end
+
+	local function get_node_circle(node)
+		local circle = {}
+		circle.colorhex, circle.color = get_color(parse_style(node.xarg.style))
+		circle.config = parse_id(node.xarg.id)
+		circle.x = node.xarg.cx
+		circle.y = node.xarg.cy
+		circle.rx = node.xarg.rx
+		circle.ry = node.xarg.ry
+		circle.r = math.sqrt(node.xarg.rx * node.xarg.rx + node.xarg.ry * node.xarg.ry)
+
+		return circle
 	end
 
 
@@ -156,19 +232,25 @@ local function loadShapes (filename, layername)
 
 		--print (serialize(layer_data))
 		for k,v in ipairs (layer_data) do
-			if v.label == "path" then
-				 local polygon = get_node_polygon (v)
+			if v.label == "path" and not v.xarg.type then
+				 local polygon = {}
+				 polygon.points = get_node_polygon (v)
 				 polygon.type = "polygon"
 				 table.insert (shapes.polygons, polygon)
 				 table.insert (shapes.all, polygon)
 			end
-			if v.label == "rect" then
+			if v.label == "rect" then  -- is converted into polygon
 				 local rect = get_node_rect (v)
-				 rect.type = "rect"
-				 table.insert (shapes.rects, rect)
+				 rect.type = "polygon"
+				 table.insert (shapes.polygons, rect)
  				 table.insert (shapes.all, rect)
 			end
-
+			if v.label == "path" and v.xarg.type == "arc" then
+				 local circle = get_node_circle (v)
+				 circle.type = "circle"
+				 table.insert (shapes.circles, circle)
+				 table.insert (shapes.all, circle)
+			end
 		end
 
 		level_file:close()
