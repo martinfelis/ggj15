@@ -86,7 +86,7 @@ local function loadShapes (filename, layername)
 		--print(serialize(nums))
 		--print(serialize(resultingpointlist))
 		--print (angle)
-		return nums, resultingpointlist
+		return angle, resultingpointlist
 	end
 
 
@@ -232,7 +232,7 @@ local function loadShapes (filename, layername)
 
 		--print (serialize(layer_data))
 		for k,v in ipairs (layer_data) do
-			if v.label == "path" and not v.type then
+			if v.label == "path" and not v.xarg.type then
 				 local polygon = {}
 				 polygon.points = get_node_polygon (v)
 				 polygon.type = "polygon"
