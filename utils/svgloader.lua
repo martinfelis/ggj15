@@ -36,10 +36,31 @@ local function loadShapes (filename, layername)
 		return args
 	end
 
+
 	local function parse_transform(transformstring, x, y, w, h)
 		-- transform = "matrix(0.86912819,0.49458688,-0.49458688,0.86912819,0,0)"
 		-- returns the angle
-		assert (transformstring:sub(1, 7) == "matrix(")
+		if not (transformstring:sub(1, 10) == "translate("
+				or transformstring:sub(1, 7) == "matrix(") or transformstring:find(" ") then
+			print ("UNSUPPORTED TRANSFORMATION: " .. transformstring)
+			return 0, {x, y, x+w, y, x+w, y+h, x, y+h}
+		end
+
+		if transformstring:sub(1, 10) == "translate(" then
+			-- translate(59.9105,52.272683)
+			transformstring = transformstring:sub(11, #transformstring - 1)
+			local nums = {}
+			for n in string.gmatch(transformstring, "([%d-.]+)") do
+				table.insert(nums, tonumber(n))
+			end
+			 return 0, { nums[1] + x, nums[2] + y,
+						 nums[1] + x+w, nums[2] + y,
+						 nums[1] + x+w, nums[2] + y+h,
+						 nums[1] + x, nums[2] + y+h }
+		end
+
+		-- else MATRIX:
+
 		transformstring = transformstring:sub(8, #transformstring - 1)
 		assert (nil == transformstring:find(" ")) -- no spaces aka no other fancy stuff like rotate
 
@@ -241,28 +262,29 @@ local function loadShapes (filename, layername)
 		local layer_data = find_layer (svg_data, layername)
 
 		--print (serialize(layer_data))
-		for k,v in ipairs (layer_data) do
-			if v.label == "path" and not v.xarg.type then
-				 local polygon = get_node_polygon (v)
-				 polygon.id = v.xarg.id
-				 polygon.type = "polygon"
-				 table.insert (shapes.polygons, polygon)
-				 table.insert (shapes.all, polygon)
+		if layer_data then
+			for k,v in ipairs (layer_data) do
+				if v.label == "path" and not v.xarg.type then
+					 local polygon = get_node_polygon (v)
+					 polygon.id = v.xarg.id
+					 polygon.type = "polygon"
+					 table.insert (shapes.polygons, polygon)
+					 table.insert (shapes.all, polygon)
+				end
+				if v.label == "rect" then  -- is converted into polygon
+					 local rect = get_node_rect (v)
+					 rect.type = "polygon"
+					 table.insert (shapes.polygons, rect)
+	 				 table.insert (shapes.all, rect)
+				end
+				if v.label == "path" and v.xarg.type == "arc" then
+					 local circle = get_node_circle (v)
+					 circle.type = "circle"
+					 table.insert (shapes.circles, circle)
+					 table.insert (shapes.all, circle)
+				end
 			end
-			if v.label == "rect" then  -- is converted into polygon
-				 local rect = get_node_rect (v)
-				 rect.type = "polygon"
-				 table.insert (shapes.polygons, rect)
- 				 table.insert (shapes.all, rect)
-			end
-			if v.label == "path" and v.xarg.type == "arc" then
-				 local circle = get_node_circle (v)
-				 circle.type = "circle"
-				 table.insert (shapes.circles, circle)
-				 table.insert (shapes.all, circle)
-			end
-		end
-
+		end --if
 		level_file:close()
 
 		return shapes
