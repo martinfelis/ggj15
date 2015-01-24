@@ -17,6 +17,9 @@ local AudioManager = require("audiomanager")
 vector = require("hump.vector")
 newPlayer = require ("entities.player")
 
+sketch_shader = {}
+noise_texture = {}
+
 -- some global dicts
 fonts = {}
 states = {}
@@ -27,6 +30,18 @@ io.stdout:setvbuf("no")
 
 function love.load ()
 	love.window.setTitle("Prison Broke")
+
+	-- setup of the sketching shader
+	sketch_shader = love.graphics.newShader ("shader/sketch.fs")
+	noise_texture = love.image.newImageData(50, 50)
+	noise_texture:mapPixel(function()
+		local l = love.math.random() * 255
+		return l,l,l,l
+	end)
+	noise_texture = love.graphics.newImage(noise_texture)
+	noise_texture:setWrap ("repeat", "repeat")
+	noise_texture:setFilter("nearest", "nearest")
+	sketch_shader:send("noise_texture", noise_texture)
 
 	-- preload fonts
 	fonts = {
@@ -58,7 +73,6 @@ function love.load ()
 end
 
 function love.draw ()
-
 end
 
 function love.update (dt)
