@@ -206,7 +206,7 @@ function GameStateClass:update (dt)
 
 	update_items (self.boxes, dt)
 	update_items (self.chains, dt)
-	update_items (self.guards, dt, self.players)
+	update_items (self.guards, dt, self.players, self.world)
 	update_items (self.players, dt)
 	update_items (self.securitycameras, dt, self.players, self.world)
 	update_items (self.spotlights, dt, self.players)
