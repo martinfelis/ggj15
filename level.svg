@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="133.02306"
-     inkscape:cy="897.9575"
+     inkscape:zoom="1"
+     inkscape:cx="125.62575"
+     inkscape:cy="768.67178"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
@@ -62,7 +62,7 @@
      id="layer1">
     <path
        style="fill:#999999;stroke:#999999;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 40,270.93361 0,281.42857 -20,0 0,-281.42857 z"
+       d="m 41,271.93361 0,281.42857 -20,0 0,-281.42857 z"
        id="path3866"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
@@ -79,8 +79,8 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="fill:#999999;stroke:#999999;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 720,192.36218 0,358.57143 -20,0 0,-358.57143 z"
+       style="fill:#999999;stroke:#999999;stroke-width:0.97797459px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 720,192.36218 0,361 -19,0 0,-361 z"
        id="path3866-4"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
@@ -123,8 +123,8 @@
      inkscape:label="Boxes"
      style="display:inline">
     <path
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.89442718px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 185,47.362183 80,0 0,79.999987 -80,0 z"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1.09544516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 180,42.362196 120,0 0,79.999984 -120,0 z"
        id="rect3199"
        inkscape:connector-curvature="0" />
   </g>

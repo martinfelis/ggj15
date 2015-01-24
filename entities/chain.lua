@@ -24,7 +24,7 @@ local function newChain (world, player1, player2)
 
 		-- chainparts should not collide with itself
 		part.fixture:setGroupIndex(-1)
-		--part.fixture:setMask(1,2);
+		part.fixture:setMask(2,3, 4);
 		
 		table.insert(chain.parts, part)
 		

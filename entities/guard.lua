@@ -4,8 +4,7 @@ local function newGuard (x, y)
 	local guard = {
 		x = x,
 		y = y,
-		alert1 = false,
-		alert2 = false,
+		alert = false,
 		testingfor = 1,
 		radius = 170,
 		angle1 = math.rad(90),
@@ -49,37 +48,25 @@ local function newGuard (x, y)
 		return (c - a) % 180 >=0 and b >= a and b <= c]]--
 	end
 
-	function guard:update(world, player1, player2)
+	function guard:update(dt, players, world)
 
 		local function callback(fixture, x, y, xn, yn, fraction)
 
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains
 				return -1
 			end
-
-			if (fixture:getUserData() == "player1") then
-				return -1
-			end
-			if (fixture:getUserData() == "player2") then
+			if (fixture:getUserData() == "player") then
 				return -1
 			end
 
 
 			-- we hit something bad
-			if (self.testingfor == 1) then
-				self.alert1 = false
-				return 0
-			end
-			if (self.testingfor == 2) then
-				self.alert2 = false
-				return 0
-			end
-			
+			self.alert = false
 			return 0 -- immediately cancel the ray
 		end
 
 		-- cast rays
-
+--[[
 		local arc1 = math.atan2(player1.body:getX()-self.x,(player1.body:getY()-self.y))
 		local outside1 = not angleBetweenAngles(arc1, self.angle1, self.angle2)
 
@@ -106,14 +93,14 @@ local function newGuard (x, y)
 		if (self.alert1 or self.alert2) then
 			-- TODO lose game?
 		end
-
+]]--
 		print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
 
 	function guard:draw()
 
-		if (self.alert1 or self.alert2) then
+		if (self.alert) then
 			love.graphics.setColor(255,96,0,128)
 		else
 			love.graphics.setColor(255,255,0,128)

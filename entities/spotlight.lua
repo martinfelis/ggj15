@@ -2,22 +2,22 @@ local function newSpotlight (x, y)
 	local spot = {
 		x = x,
 		y = y,
-		alert1 = false,
-		alert2 = false,
+		alert = false,
 		radius = 100
 	}
 
-	function spot:update(player1, player2)
+	function spot:update(dt, players)
 		-- TODO MOVEMENT
 
-		self.alert1 = (self.x-player1.body:getX())^2 + (self.y-player1.body:getY())^2 < (self.radius+player1.radius)^2
-		self.alert2 = (self.x-player2.body:getX())^2 + (self.y-player2.body:getY())^2 < (self.radius+player2.radius)^2
-
+		self.alert = false
+		for k,player in pairs(players) do
+			self.alert = self.alert or (self.x-player.body:getX())^2 + (self.y-player.body:getY())^2 < (self.radius+player.radius)^2
+		end
 	end
 
 	function spot:draw()
 
-		if (self.alert1 or self.alert2) then
+		if (self.alert) then
 			love.graphics.setColor(255,96,0,128)
 		else
 			love.graphics.setColor(255,255,0,128)
