@@ -1,34 +1,49 @@
 local PLAYER_RADIUS = 32
 local PLAYER_MOVE_FORCE = 150
 
-local PLAYER_KEY_CONFIG = {
+local PLAYER_CONFIG = {
 	{
-		right = "right",
-		left = "left",
-		down = "down",
-		up = "up"
+		keys= {
+			right = "right",
+			left = "left",
+			down = "down",
+			up = "up"
+		},
+		image = "player.png",
+		radius = 32,
+		center_x = 0,
+		center_y = 0
 	},
 	{
-		right = "d",
-		left = "a",
-		down = "s",
-		up = "w"
+		keys= {
+			right = "d",
+			left = "a",
+			down = "s",
+			up = "w"
+		},
+		image = "images/player.png",
+		radius = 20,
+		center_x = 2,
+		center_y = -3
 	}
 }
 
 local function newPlayer (world, id,  x, y)
 	local player = {
-		image = love.graphics.newImage ("player.png"),
 		id = id,
-		keys = PLAYER_KEY_CONFIG[id],
 		x = x,
-		y = y
+		y = y,
+		image = love.graphics.newImage(PLAYER_CONFIG[id].image),
+		keys = PLAYER_CONFIG[id].keys,
+		radius = PLAYER_CONFIG[id].radius,
+		center_x = PLAYER_CONFIG[id].center_x,
+		center_y = PLAYER_CONFIG[id].center_y
 	}
 
 	-- physics
 	player.body = love.physics.newBody(world, 0, 0, "dynamic")
 	player.body:setLinearDamping(5)
-	player.shape = love.physics.newCircleShape(PLAYER_RADIUS)
+	player.shape = love.physics.newCircleShape(player.radius)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	-- so that the rope does not colllide with players
 	player.fixture:setCategory(id)
@@ -77,9 +92,7 @@ local function newPlayer (world, id,  x, y)
 	end
 
 	function player:draw ()
-		love.graphics.draw (self.image, self.body:getX() - PLAYER_RADIUS, self.body:getY() - PLAYER_RADIUS)
-		
-		
+		love.graphics.draw(self.image, self.body:getX(), self.body:getY(), self.body:getAngle(), 1,1,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
 		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
 	end
 

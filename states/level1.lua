@@ -36,9 +36,8 @@ function LevelOneClass:draw()
 
 	self.player:draw()
 	self.player2:draw()
-	debugWorldDraw(self.world, 0, 0, 800, 600)
+	--debugWorldDraw(self.world, 0, 0, 800, 600)
 end
-
 function LevelOneClass:update(dt)
 	LevelBaseClass.update(self, dt)
 
