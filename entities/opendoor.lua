@@ -51,7 +51,7 @@ local function newOpenDoor(world, x, y, width, height, left)
 	end
 
 	function door:canBeOpenedBy(switch)
-		print(switch)
+--		print(switch)
 		table.insert(self.opener, switch)
 		switch:addObserver(self)
 	end

@@ -99,8 +99,8 @@ function GameStateClass:loadTestObjects()
 	table.insert(self.guards, newGuard(200,200))
 
 	local switch = newSwitch(50, 50)
-	local door = newOpenDoor(self.world,70,39,80,20, false)
-	door.canBeOpenedBy (switch)
+	local door = newOpenDoor(self.world,70,40,20,80, false)
+	door:canBeOpenedBy (switch)
 	table.insert(self.switches, switch)
 	table.insert(self.doors, door)
 end
@@ -179,6 +179,8 @@ function GameStateClass:draw ()
 	draw_items (self.securitycameras)
 	draw_items (self.spotlights)
 	draw_items (self.guards)
+	draw_items (self.switches)
+	draw_items (self.doors)
 	love.graphics.setColor (255, 255, 255, 255)
 
 --	for k,object in pairs(self.objects) do
