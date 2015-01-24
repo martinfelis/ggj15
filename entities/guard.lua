@@ -7,42 +7,13 @@ local function newGuard (x, y)
 		alert = false,
 		testingfor = 1,
 		radius = 170,
-		angle = math.pi/2,
+		angle = 1., 
 		fov = math.pi/2
 	}
 
-
-	local function angleBetweenAngles(angle, angle1, angle2)
-
-		-- a,b,c >= 0; a,b,c < 360; a <= c)
-		--[[if (angle1 > angle2) then
-			local tmp = angle1
-			angle1 = angle2 
-
-		-- make the angle from angle1 to angle2 to be <= 180 degrees
-		local target = math.deg(angle)
-		angle1 = math.deg(angle1)
-		angle2 = math.deg(angle2)
-
-		print(string.format("TARGET %f  (%f, %f)",target, angle1, angle2))
-
-		local rAngle = ((angle2 - angle1) % 360 + 360) % 360;
-		print(rAngle)
-		if (rAngle >= 180) then
-			local tmp = angle1
-			angle1 = angle2
-			angle2 = tmp
-		end
-	
-		--(c - a) % 180 >=0;b >= a && b <= c
-
-		return (angle2 - angle1) % 180 >= 0 and angle >= angle1 and angle <= angle2]]--
-		
-	end
-
 	function guard:update(dt, players, world)
 
-		self.angle = self.angle + dt * 0.4
+	self.angle = self.angle + dt * 0.4
 		if self.angle > 2*math.pi then
 			self.angle = self.angle - 2*math.pi
 		elseif self.angle < 0 then
@@ -65,10 +36,14 @@ local function newGuard (x, y)
 
 
 		for k,player in pairs(players) do
-			local rel_angle = self.angle - math.atan2((player.body:getX()-self.x), (player.body:getY()-self.y))
-			print(string.format("angle %d: %f",k, 180/(2*math.pi)*(rel_angle)))
+			local rel_pos = vector(player.body:getX() - self.x, player.body:getY() - self.y)
+			local angle = rel_pos:rotate_inplace (-self.angle):angleTo()
 
-			self.alert = angleBetweenAngles(rel_angle, 0,0)
+			if (math.abs (angle) < self.fov / 2.) then
+				self.alert = true
+			else
+				self.alert = false
+			end
 		end
 		-- cast rays
 --[[
@@ -112,6 +87,11 @@ local function newGuard (x, y)
 		end
 																		   -- fix löves wrong angle drawing
 		love.graphics.arc("fill", self.x, self.y, self.radius, self.angle + self.fov*.5, self.angle - self.fov *.5)
+
+		local forward = vector (100., 0.)
+		forward:rotate_inplace(self.angle)
+		love.graphics.setColor (255, 0, 0, 255)
+		love.graphics.line (self.x, self.y, self.x + forward.x, self.y + forward.y)
 	end
 
 	return guard
