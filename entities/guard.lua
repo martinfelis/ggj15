@@ -14,7 +14,7 @@ local function newGuard (x, y, world)
 		fov = math.pi/2
 	}
 	guard.guide = love.physics.newBody(world, x, y, "dynamic")
-	guard.body = love.physics.newBody(world, x, y+20, "dynamic")
+	guard.body = love.physics.newBody(world, x+20, y, "dynamic")
 	guard.shape = love.physics.newCircleShape(20)
 	guard.fixture = love.physics.newFixture(guard.body, guard.shape)
 	guard.body:setLinearDamping(5)
@@ -22,7 +22,7 @@ local function newGuard (x, y, world)
 	guard.fixture2 = love.physics.newFixture(guard.guide, guard.shape2)
 
 
-	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, 0,0,0,0, 1, false)
+	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, 0,0,0,0, 20, false)
 
 	function guard:update(dt, players, world, totalTime)
 

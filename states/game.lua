@@ -217,14 +217,14 @@ end
 function GameStateClass:enter ()
 	self.camera = Camera (0,0)
 
-	self:loadLevel ("level1.svg")
+	self:loadLevel ("level2.svg")
 	self:initTextures()
 
 	self.totalTime = 0
 end
 
 function GameStateClass:loadTestObjects()
-	table.insert(self.securitycameras, newSecurityCam(680, 420))
+	--[[table.insert(self.securitycameras, newSecurityCam(680, 420))
 	table.insert(self.spotlights, newSpotlight(1400,1220))
 	table.insert(self.guards, newGuard(200,200, self.world))
 
@@ -232,7 +232,7 @@ function GameStateClass:loadTestObjects()
 	local door = newOpenDoor(self.world,70,40,20,80, false)
 	door:canBeOpenedBy (switch)
 	table.insert(self.switches, switch)
-	table.insert(self.doors, door)
+	table.insert(self.doors, door)]]--
 end
 
 function GameStateClass:preDraw()
