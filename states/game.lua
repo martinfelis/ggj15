@@ -9,8 +9,6 @@ local newSwitch = require("entities.switch")
 local debugWorldDraw = require("debugWorldDraw")
 local newSecurityCam = require("entities.securitycam")
 
-NUM_PLAYERS = 1
-
 function GameStateClass:new ()
   local newInstance = {}
 
@@ -37,10 +35,17 @@ function GameStateClass:initTextures ()
 end
 
 function GameStateClass:loadLevel (filename)
+	self.camera = Camera (0,0)
+
 	love.physics.setMeter(64)
 	self.totalTime = 0
 
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
+
+	self.alerts = {}
+	self.alertcount = 0
+	self.busted = false
+	self.currentlevel = filename
 
 	self.SVGdoors = loadShapes ( filename, "Doors")
 	self.SVGguards = loadShapes ( filename, "Guards")
@@ -135,10 +140,8 @@ function GameStateClass:loadLevel (filename)
 	-- associate spotlights with paths
 	for i, s in ipairs(self.spotlights.circles) do
 	end
+
 	self.camera:zoom(0.6)
-
-
-
 
 	self:loadTestObjects()
 
@@ -174,6 +177,41 @@ function GameStateClass:loadLevel (filename)
 	--	end
 	--end
 	-- print (serialize(self.spotlights))
+
+	Signals.clear_pattern (".*")
+
+	Signals.register ('alert-start', function (source, player) 
+		print (string.format ("A %s (%s) spotted player %s", source.detectortype, tostring(source), tostring (player)))
+		if not self.alerts[player] then
+			self.alerts[player] = {}
+		end
+
+		self.alerts[player][source] = love.timer.getTime()
+		self.alertcount = self.alertcount + 1
+	end)
+
+	Signals.register ('alert-stop', function (source, player) 
+		print (string.format ("A %s (%s) lost player %s", source.detectortype, tostring(source), tostring (player)))
+		self.alerts[player][source] = nil
+		self.alertcount = self.alertcount - 1
+	end)
+
+	Signals.register ('busted', function (source, player)
+		print (string.format ("Player %s got busted by a %s (%s)", tostring(player), source.detectortype, tostring(source)))
+		self.busted = true
+		Timer.tween (1, self.camera, {x = source.x, y = source.y, scale = 1.})
+	end)
+
+	Signals.register ('busted-retry', function ()
+		print ("Retrying level " .. self.currentlevel)
+	end)
+end
+
+function GameStateClass:resume ()
+	if self.busted then
+		print ("Renturned from busted screen...")
+		self:loadLevel (self.currentlevel)
+	end
 end
 
 function GameStateClass:enter ()
@@ -181,14 +219,13 @@ function GameStateClass:enter ()
 
 	self:loadLevel ("level1.svg")
 	self:initTextures()
---	self:loadLevel ("leveldefinitions/level.svg")
 
 	self.totalTime = 0
 end
 
 function GameStateClass:loadTestObjects()
---	table.insert(self.securitycameras, newSecurityCam(680, 420))
-	table.insert(self.spotlights, newSpotlight(400,420))
+	table.insert(self.securitycameras, newSecurityCam(680, 420))
+	table.insert(self.spotlights, newSpotlight(1400,1220))
 	table.insert(self.guards, newGuard(200,200, self.world))
 
 	local switch = newSwitch(50, 50)
@@ -310,10 +347,28 @@ function GameStateClass:draw ()
 	self:postDraw()
 end
 
+function GameStateClass:checkAlerts ()
+	for pi,player in pairs(self.alerts) do
+		for source,spot_time in pairs(player) do
+			if love.timer.getTime() - spot_time > GVAR.spotlight_realize_time then
+				Signals.emit ('busted', source, player)
+				Gamestate.push(states.busted)
+			end
+		end
+	end
+
+	if self.busted then
+		self.alerts = {}
+	end
+end
 
 function GameStateClass:update (dt)
 	self.world:update(dt)
 	self.totalTime = self.totalTime + dt
+
+	if self.busted then
+		return
+	end
 
 	for i, c in ipairs (self.spotlights.circles) do
 		c.x, c.y = pathfunctions.walk(c.pathpoints, self.totalTime, c.config.speed)
@@ -336,6 +391,7 @@ function GameStateClass:update (dt)
 	update_items (self.switches, dt, self.players)
 
 	self:checkWin()
+	self:checkAlerts()
 end
 
 function GameStateClass:keypressed (key)
