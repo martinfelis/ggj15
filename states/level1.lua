@@ -17,10 +17,11 @@ function LevelOneClass:enter()
 	LevelBaseClass.enter(self)
 
 	self.player = newPlayer (self.world, 1, 80, 130)
-	self.player2 = newPlayer (self.world, 2, 80, 200)
-	local chain = newChain(self.world, self.player, self.player2)
+	self.player2 = newPlayer (self.world, 2, 80, 250)
+	self.chain = newChain(self.world, self.player, self.player2)
 	self.player:init()
 	self.player2:init()
+	self.chain:init()
 end
 
 function LevelOneClass:keypressed (key)

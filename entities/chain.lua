@@ -18,8 +18,8 @@ local function newChain (world, player1, player2)
 		part.shape = love.physics.newRectangleShape(CHAIN_PART_WIDTH, CHAIN_PART_HEIGHT)
 		part.fixture = love.physics.newFixture(part.body, part.shape)
 		
-		part.fixture:setGroupIndex(-1)
-		part.fixture:setMask(1,2);
+	--	part.fixture:setGroupIndex(-1)
+		--part.fixture:setMask(1,2);
 		
 		table.insert(chain.parts, part)
 		
@@ -33,6 +33,18 @@ local function newChain (world, player1, player2)
 	
 	love.physics.newRopeJoint(chain.parts[CHAIN_PART_COUNT].body, player2.body, CHAIN_PART_WIDTH/2, 0,  0, 0, SPACE_BETWEEN_PARTS +32, false)
 	
+
+	-- changes the position of the chain to be linear between the players
+	function chain:init()
+		local startX, startY = player1.body:getPosition()
+		local aimX, aimY = player2.body:getPosition()
+		for i = 1, CHAIN_PART_COUNT, 1 do
+			local chainX = startX + (i/CHAIN_PART_COUNT) * aimX
+			local chainY = startY + (i/CHAIN_PART_COUNT) * aimY
+			self.parts[i].body:setPosition(chainX, chainY)
+		end
+
+	end
 	
 	return chain
 end

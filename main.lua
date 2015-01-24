@@ -19,6 +19,8 @@ states = {}
 config = { sound = true }
 
 function love.load ()
+	love.window.setTitle("Prison Broke")
+
 	-- preload fonts
 	fonts = {
 		[12] = love.graphics.newFont(12),

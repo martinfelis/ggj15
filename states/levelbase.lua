@@ -1,6 +1,5 @@
 local LevelBaseClass = {}
 loadPolygons = require ("utils.svgloader")
-geometry = require ("utils.geometry")
 
 function LevelBaseClass:new ()
   local newInstance = {}
