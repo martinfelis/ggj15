@@ -186,7 +186,7 @@ function GameStateClass:loadLevel (filename)
 			self.alerts[player] = {}
 		end
 
-		self.alerts[player][source] = love.timer.getTime()
+		self.alerts[player][source] = love.timer.getTime() - GVAR.alert_realize_time * source.alertness
 		self.alertcount = self.alertcount + 1
 	end)
 
@@ -217,22 +217,22 @@ end
 function GameStateClass:enter ()
 	self.camera = Camera (0,0)
 
-	self:loadLevel ("level2.svg")
+	self:loadLevel ("level1.svg")
 	self:initTextures()
 
 	self.totalTime = 0
 end
 
 function GameStateClass:loadTestObjects()
-	--[[table.insert(self.securitycameras, newSecurityCam(680, 420))
-	table.insert(self.spotlights, newSpotlight(1400,1220))
+	table.insert(self.securitycameras, newSecurityCam(1400, 2520))
+	table.insert(self.spotlights, newSpotlight(1000,1220))
 	table.insert(self.guards, newGuard(200,200, self.world))
 
 	local switch = newSwitch(50, 50)
 	local door = newOpenDoor(self.world,70,40,20,80, false)
 	door:canBeOpenedBy (switch)
 	table.insert(self.switches, switch)
-	table.insert(self.doors, door)]]--
+	table.insert(self.doors, door)
 end
 
 function GameStateClass:preDraw()
@@ -241,7 +241,6 @@ function GameStateClass:preDraw()
 end
 
 function GameStateClass:drawGround()
-
 	local oldr, oldg, oldb, olda = love.graphics.getColor()
 	for _, ground in pairs(self.grounds) do
 		if ground.config.hide == nil or ground.config.hide ~= "true" then
@@ -278,6 +277,7 @@ function GameStateClass:postDraw()
 
 	self.camera:attach()
 	love.graphics.setColor (255, 255, 255 ,255)
+	love.graphics.setLineWidth (5.)
 	for i,p in ipairs (self.walls.polygons) do
 		love.graphics.polygon ("line", unpack(p.points))
 	end
@@ -289,7 +289,6 @@ function GameStateClass:postDraw()
 end
 
 function GameStateClass:draw ()
-
 	local player_center =  vector(0, 0)
 	for k,player in pairs(self.players) do
 		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
@@ -350,7 +349,7 @@ end
 function GameStateClass:checkAlerts ()
 	for pi,player in pairs(self.alerts) do
 		for source,spot_time in pairs(player) do
-			if love.timer.getTime() - spot_time > GVAR.spotlight_realize_time then
+			if love.timer.getTime() - spot_time > GVAR.alert_realize_time then
 				Signals.emit ('busted', source, player)
 				Gamestate.push(states.busted)
 			end
