@@ -15,7 +15,6 @@ local LevelOneClass = LevelBaseClass:new()
 function LevelOneClass:new ()
 	local newInstance = {}
 
-
 	self.__index = self
 	return setmetatable(newInstance, self)
 end
@@ -64,7 +63,6 @@ function LevelOneClass:keypressed (key)
 	print (key .. ' pressed, L1')
 end
 
-
 function LevelOneClass:update(dt)
 	LevelBaseClass.update(self, dt)
 	for k,player in pairs(self.players) do
@@ -88,6 +86,8 @@ function LevelOneClass:draw()
 		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
 	end
 	self.camera:lookAt (player_center.x, player_center.y)
+	
+	LevelBaseClass.preDraw(self)
 	self.camera:attach()
 
 	LevelBaseClass.draw(self)
@@ -108,6 +108,7 @@ function LevelOneClass:draw()
 	love.graphics.setColor(255, 255, 255, 255)
 
 	self.camera:detach()
+	LevelBaseClass.postDraw(self)
 end
 
 return LevelOneClass

@@ -4,6 +4,9 @@ loadShapes = require ("utils.svgloader")
 function LevelBaseClass:new ()
   local newInstance = {}
   self.__index = self
+	self.canvas = love.graphics.newCanvas()
+	self.canvas:setFilter ("nearest", "nearest")
+	self.camera = Camera (0,0)
   return setmetatable(newInstance, self)
 end
 
@@ -37,16 +40,52 @@ function LevelBaseClass:enter ()
 	end
 end
 
+function LevelBaseClass:preDraw()
+	love.graphics.setCanvas (self.canvas)
+	self.canvas:clear()
+end
+
+function LevelBaseClass:postDraw()
+	love.graphics.setCanvas ()
+
+	--
+	love.graphics.setShader (sketch_shader)
+	sketch_shader:send("noise_texture", noise_texture)
+	sketch_shader:send("noise_amp", 0.004)
+	sketch_shader:send("screen_center_x", self.camera.x / love.window.getWidth())
+	sketch_shader:send("screen_center_y", self.camera.y / love.window.getHeight())
+	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	sketch_shader:send("noise_texture", noise_texture)
+	sketch_shader:send("noise_amp", 0.005)
+	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	-- further draws with shifted noise
+	sketch_shader:send("noise_texture", noise_texture)
+	sketch_shader:send("noise_amp", 0.006)
+	sketch_shader:send("screen_center_x", 0.1 + (self.camera.x / love.window.getWidth()))
+	sketch_shader:send("screen_center_y", 0.13 + (self.camera.y / love.window.getHeight()))
+	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	sketch_shader:send("noise_texture", noise_texture)
+	sketch_shader:send("noise_amp", 0.006)
+	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	-- default drawing of the filtered canvas
+	love.graphics.setShader ()
+	love.graphics.draw (self.canvas, 0, 0, 0)
+end
+
 function LevelBaseClass:draw ()
 	for i,p in ipairs (self.walls.polygons) do
-		love.graphics.polygon ("fill", unpack(p.points))
+		love.graphics.polygon ("line", unpack(p.points))
 	end
 	for i,c in ipairs (self.walls.circles) do
-		love.graphics.circle( "fill", c.x, c.y, c.r, 50 )
+		love.graphics.circle( "line", c.x, c.y, c.r, 50 )
 	end
 	for i,p in ipairs (self.boxes) do
 --		love.graphics.polygon ("fill", p)
-		love.graphics.polygon ("fill", p.body:getWorldPoints(p.shape:getPoints()))
+		love.graphics.polygon ("line", p.body:getWorldPoints(p.shape:getPoints()))
 	end
 end
 
