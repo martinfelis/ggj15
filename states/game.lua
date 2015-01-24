@@ -1,4 +1,4 @@
-local LevelBaseClass = {}
+local GameStateClass = {}
 loadShapes = require ("utils.svgloader")
 local newPlayer = require ("entities.player")
 local newChain = require("entities.chain")
@@ -11,7 +11,7 @@ local newSecurityCam = require("entities.securitycam")
 
 NUM_PLAYERS = 1
 
-function LevelBaseClass:new ()
+function GameStateClass:new ()
   local newInstance = {}
 	newInstance.canvas = love.graphics.newCanvas()
 	newInstance.canvas:setFilter ("nearest", "nearest")
@@ -21,22 +21,22 @@ function LevelBaseClass:new ()
   return setmetatable(newInstance, self)
 end
 
-function LevelBaseClass:enter ()
+function GameStateClass:loadLevel (filename) 
 	love.physics.setMeter(64)
 	self.totalTime = 0
 
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
 
-	self.boxes = loadShapes ("leveldefinitions/level.svg", "Boxes")
+	self.boxes = loadShapes (filename, "Boxes")
 	self.chains = {}
 	self.doors = {}
 	self.guards = {}
 	self.players = {}
 	self.securitycameras = {}
-	self.spotlightpaths = loadShapes ("leveldefinitions/level.svg", "SpotlightPaths")
-	self.spotlights = loadShapes ("leveldefinitions/level.svg", "Spotlights")
+	self.spotlightpaths = loadShapes (filename, "SpotlightPaths")
+	self.spotlights = loadShapes (filename, "Spotlights")
 	self.switches = {}
-	self.walls = loadShapes ("leveldefinitions/level.svg", "Walls")
+	self.walls = loadShapes (filename, "Walls")
 
 	-- Players and chains
 	for i=1,NUM_PLAYERS,1 do
@@ -89,7 +89,11 @@ function LevelBaseClass:enter ()
 	-- print (serialize(self.spotlights))
 end
 
-function LevelBaseClass:loadTestObjects()
+function GameStateClass:enter ()
+	self:loadLevel ("leveldefinitions/level.svg")
+end
+
+function GameStateClass:loadTestObjects()
 	table.insert(self.securitycameras, newSecurityCam(680, 420))
 	table.insert(self.spotlights, newSpotlight(400,420))
 	table.insert(self.guards, newGuard(200,200))
@@ -101,12 +105,12 @@ function LevelBaseClass:loadTestObjects()
 	table.insert(self.doors, door)
 end
 
-function LevelBaseClass:preDraw()
+function GameStateClass:preDraw()
 	love.graphics.setCanvas (self.canvas)
 	self.canvas:clear()
 end
 
-function LevelBaseClass:postDraw()
+function GameStateClass:postDraw()
 	love.graphics.setCanvas ()
 
 	--
@@ -137,7 +141,7 @@ function LevelBaseClass:postDraw()
 	love.graphics.draw (self.canvas, 0, 0, 0)
 end
 
-function LevelBaseClass:draw ()
+function GameStateClass:draw ()
 	local player_center =  vector(0, 0)
 	for k,player in pairs(self.players) do
 		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
@@ -186,7 +190,7 @@ function LevelBaseClass:draw ()
 	self:postDraw()
 end
 
-function LevelBaseClass:update (dt)
+function GameStateClass:update (dt)
 	self.world:update(dt)
 	self.totalTime = self.totalTime + dt
 
@@ -209,8 +213,8 @@ function LevelBaseClass:update (dt)
 	update_items (self.switches, dt, self.players)
 end
 
-function LevelBaseClass:keypressed (key)
+function GameStateClass:keypressed (key)
 	print (key .. ' pressed')
 end
 
-return LevelBaseClass
+return GameStateClass
