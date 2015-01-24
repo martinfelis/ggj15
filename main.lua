@@ -4,11 +4,14 @@ require ("strict")
 Gamestate = require "hump.gamestate"
 Camera = require "hump.camera"
 matrix = require "utils.matrix"
+Signals = require "hump.signal"
+Timer = require "hump.timer"
 pathfunctions = require "utils.pathfunctions"
 
 -- require States
 local GameStateClass = require("states.game")
 local MenuStateClass = require("states.menu")
+local BustedState = require("states.busted")
 local ExampleMenuStateClass = require("states.examplemenu")
 local Credits = require("states.credits")
 local Story = require("states.story")
@@ -26,6 +29,13 @@ fonts = {}
 states = {}
 config = { sound = true }
 audio = AudioManager:new()
+sounds = { }
+
+-- game design parameters
+GVAR = {
+	spotlight_realize_time=1.5,
+	guard_realize_time=2,
+}
 
 io.stdout:setvbuf("no")
 
@@ -52,10 +62,15 @@ function love.load ()
 		tinet = love.graphics.newFont("fonts/tinet/TungusFont_Tinet.ttf", 30),
 		sugar = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 30),
 		sugarlarge = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 50),
+		megalarge = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 150),
 		sugarsmall = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 18),
 	}
 	love.graphics.setBackgroundColor(17,17,17)
 	love.graphics.setFont(fonts[12])
+
+	-- load sounds
+	sounds.punch = love.audio.newSource ("sounds/punch3.ogg", 'static')
+	sounds.whip= love.audio.newSource ("sounds/whip3.ogg", 'static')
 
 	-- create all states
 	states.menu = MenuStateClass:new()
@@ -63,6 +78,7 @@ function love.load ()
 	states.game = GameStateClass:new ()
 	states.credits = Credits:new ()
 	states.story = Story:new ()
+	states.busted = BustedState:new ()
 
 	-- start initial state
     Gamestate.registerEvents()
@@ -77,6 +93,7 @@ function love.draw ()
 end
 
 function love.update (dt)
+	Timer.update (dt)
 end
 
 function love.keypressed (key)

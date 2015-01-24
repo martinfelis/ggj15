@@ -19,7 +19,7 @@ local function loadShapes (filename, layername)
 		local start, end_, key, value = 0, 0
 		local args = {}
 
-		for key, value in string.gmatch(stylestring, "([%w-_]+)[:]([%w%d_-\\#]+)") do
+		for key, value in string.gmatch(stylestring, "([%w-_]+)[:]([%w%d_-\\#\\.]+)") do
 			args[key] = value
 		end
 		return args
@@ -115,13 +115,14 @@ local function loadShapes (filename, layername)
 
 	local function get_color(styleargs)
 		local color = styleargs.fill and styleargs.fill or "#000000"
-		local r, g, b, a = 0, 0, 0, 0
-
+		--print(serialize(styleargs))
+		local r, g, b, a = 0, 0, 0, (tonumber(styleargs["fill-opacity"] or 1))*255
+		print(styleargs["fill-opacity"])
 		if #color >= 7 then
 			r = tonumber(color:sub(2, 3), 16)
 			g = tonumber(color:sub(4, 5), 16)
 			b = tonumber(color:sub(6, 7), 16)
-			a = 255
+			-- a = 255
 		end
 		if #color == 9 then
 			a = tonumber(color:sub(8, 9), 16)
@@ -183,6 +184,7 @@ local function loadShapes (filename, layername)
 
 
 	local function get_node_rect(node)
+		print ("RECT" .. node.xarg.id .. " " .. node.xarg.style)
 		local rect = node.xarg -- has x, y, height, width
 		rect.x, rect.y = tonumber(rect.x), tonumber(rect.y)
 		rect.height, rect.width = tonumber(rect.height), tonumber(rect.width)

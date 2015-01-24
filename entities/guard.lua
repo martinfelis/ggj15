@@ -1,4 +1,3 @@
-local GUARD_REALIZE_TIME = 2
 local GUARD_ROTATION_SPEED = 5
 local function newGuard (x, y, world)
 	-- TODO pass path to walk on
@@ -11,10 +10,12 @@ local function newGuard (x, y, world)
 		radius = 170,
 		angle = 1.,
 		wishAngle = 0,
+		detectortype = "guard",
+		player_alert_start= {},
 		fov = math.pi/2
 	}
 	guard.guide = love.physics.newBody(world, x, y, "dynamic")
-	guard.body = love.physics.newBody(world, x, y+20, "dynamic")
+	guard.body = love.physics.newBody(world, x+20, y, "dynamic")
 	guard.shape = love.physics.newCircleShape(20)
 	guard.fixture = love.physics.newFixture(guard.body, guard.shape)
 	guard.body:setLinearDamping(5)
@@ -22,7 +23,7 @@ local function newGuard (x, y, world)
 	guard.fixture2 = love.physics.newFixture(guard.guide, guard.shape2)
 
 
-	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, 0,0,0,0, 1, false)
+	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, 0,0,0,0, 20, false)
 
 	function guard:update(dt, players, world, totalTime)
 
@@ -95,13 +96,28 @@ local function newGuard (x, y, world)
 			local rel_pos = vector(player.body:getX() - self.x, player.body:getY() - self.y)
 			local angle = rel_pos:rotate_inplace (-self.angle):angleTo()
 
+			local alert = false
 			if (math.abs (angle) < self.fov / 2.) then
-				if ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 > (self.radius+player.radius) * (self.radius+player.radius)) then
-				else
+				alert = ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 < (self.radius+player.radius) * (self.radius+player.radius))
+
+				if alert then
+					-- check whether we are acually seen
 					self.alert = true
 					self.testingfor = k
 					world:rayCast(self.x, self.y, player.body:getX(), player.body:getY(), callback)
+					alert = self.alert
 				end
+			end
+
+			-- emit signals 
+			if alert and not self.player_alert_start[player] then
+				Signals.emit ('alert-start', self, player)
+				self.player_alert_start[player] = love.timer.getTime()
+			end
+
+			if not alert and self.player_alert_start[player] then
+				Signals.emit ('alert-stop', self, player)
+				self.player_alert_start[player] = nil
 			end
 		end
 	end
@@ -111,14 +127,14 @@ local function newGuard (x, y, world)
 		if (not self.alert) then
 			self.alerttime = 0
 		else
-			if (self.alerttime >= GUARD_REALIZE_TIME) then
+			if (self.alerttime >= GVAR.guard_realize_time) then
 				-- TODO end game friendly
 				print("a guard caught you")
 				love.event.quit()
 			end
 		end
 
-		love.graphics.setColor(255,(GUARD_REALIZE_TIME-self.alerttime)*(255/GUARD_REALIZE_TIME),0,128)
+		love.graphics.setColor(255,(GVAR.guard_realize_time-self.alerttime)*(255/GVAR.guard_realize_time),0,128)
 																		   -- fix löves wrong angle drawing
 		love.graphics.arc("fill", self.x, self.y, self.radius, self.angle + self.fov*.5, self.angle - self.fov *.5)
 

@@ -67,6 +67,14 @@ function GS.current()
 	return stack[#stack]
 end
 
+function GS.prev()
+	if #stack > 1 then
+		return stack[#stack - 1]
+	end
+
+	return nil
+end
+
 local all_callbacks = {
 	'draw', 'errhand', 'focus', 'keypressed', 'keyreleased', 'mousefocus',
 	'mousepressed', 'mousereleased', 'quit', 'resize', 'textinput',
