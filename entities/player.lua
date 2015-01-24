@@ -3,19 +3,19 @@ local PLAYER_MOVE_FORCE = 150
 
 local PLAYER_CONFIG = {
 	{
-		keys= {
+		keys = {
 			right = "right",
 			left = "left",
 			down = "down",
 			up = "up"
 		},
-		image = "player.png",
-		radius = 32,
-		center_x = 0,
-		center_y = 0
+		image = "images/player.png",
+		radius = 20,
+		center_x = 2,
+		center_y = -3
 	},
 	{
-		keys= {
+		keys = {
 			right = "d",
 			left = "a",
 			down = "s",
@@ -28,7 +28,7 @@ local PLAYER_CONFIG = {
 	}
 }
 
-local function newPlayer (world, id,  x, y)
+local function newPlayer (world, id, x, y)
 	local player = {
 		id = id,
 		x = x,
@@ -80,6 +80,8 @@ local function newPlayer (world, id,  x, y)
 
 		
 		self.body:setLinearVelocity(vel.x, vel.y)
+		self.body:setAngle(math.atan2(vel.x, -vel.y))
+	--	self.body:setAngle()
 --[[		if (love.keyboard.isDown("right")) then
 			self.body:setLinearVelocity(PLAYER_MOVE_FORCE, 0)
 		end
