@@ -112,7 +112,7 @@ function GameStateClass:loadLevel (filename)
 	for _, svgdoor in pairs(self.SVGdoors.polygons) do
 		local rl = (svgdoor.config.left=="true") or false
 		local door = newOpenDoor(self.world, svgdoor.x + 60, svgdoor.y + 50,
-								svgdoor.width, svgdoor.height, true)
+								svgdoor.width, svgdoor.height, rl)
 		if svgdoor.config.openby then
 			for _, switch in pairs(self.switches) do
 				if switch.id == svgdoor.config.openby then
