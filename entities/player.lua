@@ -45,6 +45,7 @@ local function newPlayer (world, id, x, y)
 	player.body:setLinearDamping(5)
 	player.shape = love.physics.newCircleShape(player.radius)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
+	player.fixture:setUserData(string.format("player%d",id))
 	-- so that the rope does not colllide with players
 	player.fixture:setCategory(id)
 	
@@ -81,7 +82,7 @@ local function newPlayer (world, id, x, y)
 
 		
 		self.body:setLinearVelocity(vel.x, vel.y)
-		
+
 		self.body:setAngle(math.atan2(vel.x, -vel.y))
 	--	self.body:setAngle()
 --[[		if (love.keyboard.isDown("right")) then
