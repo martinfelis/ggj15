@@ -65,7 +65,7 @@ local function newSecurityCam (x, y)
 		print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
-	function cam:draw(player1, player2)
+	function cam:draw()
 
 		if (self.alert1 or self.alert2) then
 			love.graphics.setColor(255,96,0,128)

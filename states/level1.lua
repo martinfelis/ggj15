@@ -2,6 +2,7 @@ local LevelBaseClass = require("states.levelbase")
 local newPlayer = require ("entities.player")
 local newChain = require("entities.chain")
 local newSecurityCam = require("entities.securitycam")
+local newSpotlight = require("entities.spotlight")
 local debugWorldDraw = require("debugWorldDraw")
 
 local LevelOneClass = LevelBaseClass:new()
@@ -24,6 +25,7 @@ function LevelOneClass:enter()
 	self.player2:init()
 	self.chain:init()
 	self.cam = newSecurityCam(680, 420)
+	self.spot = newSpotlight(400,420)
 
 	local player_center = vector(self.player1.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
 	self.camera = Camera (player_center.x, player_center.y)
@@ -36,6 +38,15 @@ function LevelOneClass:keypressed (key)
 end
 
 
+function LevelOneClass:update(dt)
+	LevelBaseClass.update(self, dt)
+
+	self.player1:update(dt)
+	self.player2:update(dt)
+	self.cam:update(self.world, self.player1, self.player2)
+	self.spot:update(self.player1, self.player2)
+end
+
 function LevelOneClass:draw()
 	local player_center = vector(self.player1.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
 	self.camera:lookAt (player_center.x, player_center.y)
@@ -46,19 +57,13 @@ function LevelOneClass:draw()
 	self.player1:draw()
 	self.player2:draw()
 	self.chain:draw()
-	self.cam:draw(self.player1, self.player2)
+	self.cam:draw()
+	self.spot:draw()
 	-- debugWorldDraw(self.world, 0, 0, 800, 600)
 	-- debugWorldDraw(self.world, 0, 0, 800, 600)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	self.camera:detach()	
-end
-function LevelOneClass:update(dt)
-	LevelBaseClass.update(self, dt)
-
-	self.player1:update(dt)
-	self.player2:update(dt)
-	self.cam:update(self.world, self.player1, self.player2)
 end
 
 return LevelOneClass
