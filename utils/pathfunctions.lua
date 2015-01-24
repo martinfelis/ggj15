@@ -57,6 +57,25 @@ function pathfunctions.walk(path, time, speed)
 	return posx, posy
 end
 
+function pathfunctions.transform(path, dx, dy)
+	for i = 1, #path, 2 do
+		path[i] = path[i] + dx
+		path[i+1] = path[i+1] + dy
+	end
+	return path
+end
 
+
+function pathfunctions.getDimensions(path)
+	local minx, miny = 1000000, 1000000
+	local maxx, maxy = -1000000, -1000000
+	for i = 1, #path, 2 do
+		minx = math.min(path[i], minx)
+		maxx = math.max(path[i], maxx)
+		miny = math.min(path[i+1], miny)
+		maxy = math.max(path[i+1], maxy)
+	end
+	return maxx - minx, maxy - miny
+end
 
 return pathfunctions

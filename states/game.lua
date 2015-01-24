@@ -5,6 +5,7 @@ local newChain = require("entities.chain")
 local newSpotlight = require("entities.spotlight")
 local newGuard = require("entities.guard")
 local newOpenDoor = require("entities.opendoor")
+local newPolygonWall = require("entities.wall")
 local newSwitch = require("entities.switch")
 local debugWorldDraw = require("debugWorldDraw")
 local newSecurityCam = require("entities.securitycam")
@@ -49,7 +50,8 @@ function GameStateClass:loadLevel (filename)
 	self.SVGswitches = loadShapes (filename, "Switches")
 	self.SVGtargets = loadShapes (filename, "Target")
 	self.SVGground = loadShapes (filename, "Ground")
-	self.boxes = loadShapes (filename, "Boxes")
+	self.SVGwalls = loadShapes (filename, "Walls")
+	self.SVGboxes = loadShapes (filename, "Boxes")
 	self.spotlights = loadShapes (filename, "Spotlights")
 
 	self.chains = {}
@@ -59,8 +61,9 @@ function GameStateClass:loadLevel (filename)
 	self.securitycameras = {}
 	self.switches = {}
 	self.target = {center_x = 0, center_y = 0, radius = 0}
-	self.walls = loadShapes (filename, "Walls")
 	self.grounds = {} -- list of {points={...}, color=...}
+	self.walls = {}
+	self.boxes = {} -- gets svg table
 
 	-- PLAYER and CHAINS
 	for _, player in pairs(self.SVGplayers.circles) do
@@ -106,7 +109,7 @@ function GameStateClass:loadLevel (filename)
 	-- DOORS: id: doorX_left:true
 	for _, svgdoor in pairs(self.SVGdoors.polygons) do
 		local rl = (svgdoor.config.left=="true") or false
-		local door = newOpenDoor(self.world, svgdoor.x + 60, svgdoor.y + 50,
+		local door = newOpenDoor(self.world, svgdoor.x, svgdoor.y,
 								svgdoor.width, svgdoor.height, true)
 		if svgdoor.config.openby then
 			for _, switch in pairs(self.switches) do
@@ -132,38 +135,42 @@ function GameStateClass:loadLevel (filename)
 	-- GROUND (colored)
 	self.grounds = self.SVGground.polygons
 
+
+
+	-- WALLS: add walls to the world
+	for _, svgwall in ipairs (self.SVGwalls.all) do
+		-- print ("adding wall", #w)
+		if svgwall.type == "polygon" then --and svgwall.id == "rect5386" then
+			local wall = newPolygonWall(self.world, svgwall.points, svgwall.color)
+			wall.svgwall = svgwall
+			table.insert(self.walls, wall)
+		elseif svgwall.type == "circle" then
+			print("Circle walls currently not supported. extend wall.lua")
+		end
+
+	end
+
+	-- BOXES: add boxes to the world
+	for i,svgbox in ipairs (self.SVGboxes.polygons) do
+		svgbox.body = love.physics.newBody (self.world,0* svgbox.width/2,0* svgbox.height/2, "dynamic")
+		svgbox.shape = love.physics.newPolygonShape (unpack(svgbox.points))
+		svgbox.fixture = love.physics.newFixture (svgbox.body, svgbox.shape)
+		svgbox.body:setLinearDamping(10)
+		svgbox.body:setAngularDamping(150)
+		table.insert(self.boxes, svgbox)
+	end
+
+	-- SPOTLIGHTS
+
 	-- associate spotlights with paths
 	for i, s in ipairs(self.spotlights.circles) do
 	end
+
+
+
+	--	self:loadTestObjects()
 	self.camera:zoom(0.6)
 
-
-
-
-	self:loadTestObjects()
-
-	-- add walls to the world
-	for i,w in ipairs (self.walls.all) do
-		-- print ("adding wall", #w)
-		w.body = love.physics.newBody (self.world, 0, 0, "static")
-		if w.type == "polygon" then
-			w.shape = love.physics.newPolygonShape (unpack(w.points))
-		elseif w.type == "circle" then
-			w.shape = love.physics.newCircleShape( w.x, w.y, w.r )
-		end
-		if w.shape then
-			w.fixture = love.physics.newFixture (w.body, w.shape)
-		end
-	end
-	-- add boxes to the world
-	for i,b in ipairs (self.boxes) do
-		print ("adding box", #b)
-		b.body = love.physics.newBody (self.world, 0, 0, "dynamic")
-		b.shape = love.physics.newPolygonShape (unpack(b))
-		b.fixture = love.physics.newFixture (b.body, b.shape)
-		b.body:setLinearDamping(20)
-		b.body:setAngularDamping(150)
-	end
 	-- associate spotlights with paths
 	--for i, s in ipairs(self.spotlights.circles) do
 	--	for i, sp in ipairs(self.spotlightpaths.polygons) do
@@ -241,9 +248,11 @@ function GameStateClass:postDraw()
 
 	self.camera:attach()
 	love.graphics.setColor (255, 255, 255 ,255)
-	for i,p in ipairs (self.walls.polygons) do
-		love.graphics.polygon ("line", unpack(p.points))
+	for _,wall in ipairs (self.walls) do
+		wall:draw()
 	end
+
+
 	for i,p in ipairs (self.players) do
 		p:draw()
 	end
@@ -252,6 +261,12 @@ function GameStateClass:postDraw()
 end
 
 function GameStateClass:draw ()
+	local function draw_items (items)
+		for i,v in ipairs (items) do
+			v:draw()
+		end
+	end
+
 
 	local player_center =  vector(0, 0)
 	for k,player in pairs(self.players) do
@@ -268,12 +283,10 @@ function GameStateClass:draw ()
 	self.camera:attach()
 	self:drawGround()
 
-	for i,p in ipairs (self.walls.polygons) do
-		love.graphics.polygon ("line", unpack(p.points))
-	end
-	for i,c in ipairs (self.walls.circles) do
-		love.graphics.circle( "line", c.x, c.y, c.r, 50 )
-	end
+	-- WALLS
+	draw_items (self.walls)
+
+	-- BOXES
 	for i,p in ipairs (self.boxes) do
 --		love.graphics.polygon ("fill", p)
 		love.graphics.polygon ("line", p.body:getWorldPoints(p.shape:getPoints()))
@@ -286,11 +299,7 @@ function GameStateClass:draw ()
 	love.graphics.setColor(oldr, oldg, oldb, olda)
 
 
-	local function draw_items (items)
-		for i,v in ipairs (items) do
-			v:draw()
-		end
-	end
+
 
 	draw_items (self.players)
 	draw_items (self.securitycameras)
@@ -336,6 +345,7 @@ function GameStateClass:update (dt)
 	update_items (self.switches, dt, self.players)
 
 	self:checkWin()
+	print(self.camera:worldCoords(0,0))
 end
 
 function GameStateClass:keypressed (key)
