@@ -5,53 +5,27 @@ local function newSecurityCam (x, y)
 		y = y,
 		alert1 = false,
 		alert2 = false,
-		alert1X = 0,
-		alert1Y = 0,
-		alert1NX = 0,
-		alert1NY = 0,
-		alert2X = 0,
-		alert2Y = 0,
-		alert2NX = 0,
-		alert2NY = 0,
-		nonAlert1X = 0,
-		nonAlert1Y = 0,
-		nonAlert2X = 0,
-		nonAlert2Y = 0,
-		testingfor = 1
+		testingfor = 1,
+		radius = 170
 	}
 
 	function cam:update(world, player1, player2)
 
 		local function callback(fixture, x, y, xn, yn, fraction)
 			print("callback %s",fixture:getUserData())
+		
 
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains
 				return -1
 			end
 
 			if (fixture:getUserData() == "player1") then
-				-- the security cam can see the player
-			--	self.alert1 = true
-				self.alert1X = x
-				self.alert1Y = y
-				self.alert1NX = xn
-				self.alert1NY = yn
 				return -1
-				--love.event.quit()
 			end
 			if (fixture:getUserData() == "player2") then
-			--	self.alert2 = true
-				self.alert2X = x
-				self.alert2Y = y
-				self.alert2NX = xn
-				self.alert2NY = yn
 				return -1
 			end
 
-			self.nonAlert1X = x
-			self.nonAlert1Y = y
-
-			print(fraction)
 
 			-- we hit something bad
 			if (self.testingfor == 1) then
@@ -63,22 +37,44 @@ local function newSecurityCam (x, y)
 				return 0
 			end
 			
-			return 0 -- imediately cancel the ray
+			return 0 -- immediately cancel the ray
 		end
 
 		-- cast rays
-		self.alert1 = true
-		self.testingfor = 1
-		world:rayCast(self.x, self.y, player1.body:getX(), player1.body:getY(), callback)
-		self.alert2 = true
-		self.testingfor = 2
-		world:rayCast(self.x, self.y, player2.body:getX(), player2.body:getY(), callback)
+		if ((player1.body:getX()-self.x)^2+(player1.body:getY()-self.y)^2 > (self.radius+player1.radius) * (self.radius+player1.radius)) then 
+			self.alert1 = false
+		else
+			self.alert1 = true
+			self.testingfor = 1
+			world:rayCast(self.x, self.y, player1.body:getX(), player1.body:getY(), callback)
+		end
+
+		if ((player2.body:getX()-self.x)^2+(player2.body:getY()-self.y)^2 > (self.radius+player2.radius) * (self.radius+player2.radius)) then 
+			self.alert2 = false
+		else
+			self.alert2 = true
+			self.testingfor = 2
+			world:rayCast(self.x, self.y, player2.body:getX(), player2.body:getY(), callback)
+		end
+
+
+		if (self.alert1 or self.alert2) then
+			-- TODO lose game?
+		end
 
 		print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
 	function cam:draw(player1, player2)
-		love.graphics.setColor(255,255,255,255)
+
+		if (self.alert1 or self.alert2) then
+			love.graphics.setColor(255,96,0,128)
+		else
+			love.graphics.setColor(255,255,0,128)
+		end
+
+		love.graphics.circle("fill", self.x, self.y, self.radius)
+--[[	love.graphics.setColor(255,255,255,255)
 
 		love.graphics.circle("fill", self.nonAlert1X, self.nonAlert1Y, 5)
 
@@ -96,7 +92,7 @@ local function newSecurityCam (x, y)
 		end
 		
 		love.graphics.line(x,y,player2.body:getPosition())
-		love.graphics.setColor(255,255,255,255)
+		love.graphics.setColor(255,255,255,255) ]]--
 	end
 
 	return cam

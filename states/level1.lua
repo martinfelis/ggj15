@@ -48,7 +48,7 @@ function LevelOneClass:draw()
 	self.chain:draw()
 	self.cam:draw(self.player1, self.player2)
 	-- debugWorldDraw(self.world, 0, 0, 800, 600)
-	debugWorldDraw(self.world, 0, 0, 800, 600)
+	-- debugWorldDraw(self.world, 0, 0, 800, 600)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	self.camera:detach()	
