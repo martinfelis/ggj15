@@ -13,7 +13,7 @@ local function newSecurityCam (x, y)
 
 		local function callback(fixture, x, y, xn, yn, fraction)
 			print("callback %s",fixture:getUserData())
-		
+
 
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains
 				return -1
@@ -36,12 +36,12 @@ local function newSecurityCam (x, y)
 				self.alert2 = false
 				return 0
 			end
-			
+
 			return 0 -- immediately cancel the ray
 		end
 
 		-- cast rays
-		if ((player1.body:getX()-self.x)^2+(player1.body:getY()-self.y)^2 > (self.radius+player1.radius) * (self.radius+player1.radius)) then 
+		if ((player1.body:getX()-self.x)^2+(player1.body:getY()-self.y)^2 > (self.radius+player1.radius) * (self.radius+player1.radius)) then
 			self.alert1 = false
 		else
 			self.alert1 = true
@@ -49,7 +49,7 @@ local function newSecurityCam (x, y)
 			world:rayCast(self.x, self.y, player1.body:getX(), player1.body:getY(), callback)
 		end
 
-		if ((player2.body:getX()-self.x)^2+(player2.body:getY()-self.y)^2 > (self.radius+player2.radius) * (self.radius+player2.radius)) then 
+		if ((player2.body:getX()-self.x)^2+(player2.body:getY()-self.y)^2 > (self.radius+player2.radius) * (self.radius+player2.radius)) then
 			self.alert2 = false
 		else
 			self.alert2 = true
@@ -62,7 +62,7 @@ local function newSecurityCam (x, y)
 			-- TODO lose game?
 		end
 
-		print(string.format("%s, %s",self.alert1, self.alert2))
+		-- print(string.format("%s, %s",self.alert1, self.alert2))
 	end
 
 	function cam:draw()
@@ -90,7 +90,7 @@ local function newSecurityCam (x, y)
 			love.graphics.circle("fill", self.alert2X, self.alert2Y, 5)
 			love.graphics.circle("fill", self.alert2X + 10*self.alert2NX, self.alert2Y + 10*self.alert2NY, 3)
 		end
-		
+
 		love.graphics.line(x,y,player2.body:getPosition())
 		love.graphics.setColor(255,255,255,255) ]]--
 	end

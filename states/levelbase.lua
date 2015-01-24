@@ -1,5 +1,5 @@
 local LevelBaseClass = {}
-loadPolygons = require ("utils.svgloader")
+loadShapes = require ("utils.svgloader")
 
 function LevelBaseClass:new ()
   local newInstance = {}
@@ -10,15 +10,18 @@ end
 function LevelBaseClass:enter ()
 	love.physics.setMeter(64)
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
-	self.walls = loadPolygons ("level.svg", "Walls")
-	self.boxes = loadPolygons ("level.svg", "Boxes")
+	self.walls = loadShapes ("leveldefinitions/level.svg", "Walls")
+	self.boxes = loadShapes ("leveldefinitions/level.svg", "Boxes")
 
 	-- add walls to the world
-	for i,w in ipairs (self.walls) do
-		print ("adding wall", #w)
-		local body = love.physics.newBody (self.world, 0, 0, "static")
-		local shape = love.physics.newPolygonShape (unpack(w))
-		local fixture = love.physics.newFixture (body, shape)
+	for i,w in ipairs (self.walls.polygons) do
+		-- print ("adding wall", #w)
+		w.body = love.physics.newBody (self.world, 0, 0, "static")
+		w.shape = love.physics.newPolygonShape (unpack(w))
+		w.fixture = love.physics.newFixture (w.body, w.shape)
+	end
+	for i,w in ipairs (self.walls.rects) do
+		print "RECT"
 	end
 	-- add boxes to the world
 	for i,b in ipairs (self.boxes) do
@@ -32,8 +35,8 @@ function LevelBaseClass:enter ()
 end
 
 function LevelBaseClass:draw ()
-	for i,p in ipairs (self.walls) do
-		love.graphics.polygon ("fill", p)
+	for i,p in ipairs (self.walls.polygons) do
+		love.graphics.polygon ("fill", unpack(p))
 	end
 
 	for i,p in ipairs (self.boxes) do
