@@ -35,12 +35,13 @@ function love.load ()
 	-- setup of the sketching shader
 	sketch_shader = love.graphics.newShader ("shader/sketch.fs")
 	noise_texture = love.image.newImageData(50, 50)
-	noise_texture:mapPixel(function()
-		local l = love.math.random() * 255
+	noise_texture:mapPixel(function(x,y)
+		local l = love.math.noise (x,y) * 255 
 		return l,l,l,l
 	end)
 	noise_texture = love.graphics.newImage(noise_texture)
 	noise_texture:setWrap ("repeat", "repeat")
+	noise_texture:setFilter("linear", "linear")
 	noise_texture:setFilter("nearest", "nearest")
 	sketch_shader:send("noise_texture", noise_texture)
 
