@@ -24,6 +24,42 @@ local PLAYER_CONFIG = {
 		radius = 20,
 		center_x = 2,
 		center_y = -3
+	},
+	{
+		keys = {
+			right = "l",
+			left = "j",
+			down = "k",
+			up = "i"
+		},
+		image = "images/player.png",
+		radius = 20,
+		center_x = 2,
+		center_y = -3
+	},
+	{
+		keys = {
+			right = "l",
+			left = "j",
+			down = "k",
+			up = "i"
+		},
+		image = "images/player.png",
+		radius = 20,
+		center_x = 2,
+		center_y = -3
+	},
+	{
+		keys = {
+			right = "l",
+			left = "j",
+			down = "k",
+			up = "i"
+		},
+		image = "images/player.png",
+		radius = 20,
+		center_x = 2,
+		center_y = -3
 	}
 }
 
@@ -45,9 +81,9 @@ local function newPlayer (world, id, x, y)
 	player.body:setLinearDamping(5)
 	player.shape = love.physics.newCircleShape(player.radius)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
-	player.fixture:setUserData(string.format("player%d",id))
+	player.fixture:setUserData("player")
 	-- so that the rope does not colllide with players
-	player.fixture:setCategory(id)
+	player.fixture:setCategory(id+1)  -- category 1 is for everyone
 	
 
 	print (string.format ("Created new player at %f,%f", x, y))

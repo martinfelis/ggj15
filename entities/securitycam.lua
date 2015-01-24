@@ -3,13 +3,13 @@ local function newSecurityCam (x, y)
 	local cam = {
 		x = x,
 		y = y,
-		alert1 = false,
-		alert2 = false,
+		alert = {},
+		onealert = false,
 		testingfor = 1,
 		radius = 170
 	}
 
-	function cam:update(world, player1, player2)
+	function cam:update(dt, players, world)
 
 		local function callback(fixture, x, y, xn, yn, fraction)
 			print("callback %s",fixture:getUserData())
@@ -19,46 +19,37 @@ local function newSecurityCam (x, y)
 				return -1
 			end
 
-			if (fixture:getUserData() == "player1") then
-				return -1
-			end
-			if (fixture:getUserData() == "player2") then
+			if (fixture:getUserData() == "player") then
 				return -1
 			end
 
 
 			-- we hit something bad
-			if (self.testingfor == 1) then
-				self.alert1 = false
-				return 0
-			end
-			if (self.testingfor == 2) then
-				self.alert2 = false
-				return 0
-			end
-
+			self.alert[self.testingfor] = false
 			return 0 -- immediately cancel the ray
 		end
 
-		-- cast rays
-		if ((player1.body:getX()-self.x)^2+(player1.body:getY()-self.y)^2 > (self.radius+player1.radius) * (self.radius+player1.radius)) then
-			self.alert1 = false
-		else
-			self.alert1 = true
-			self.testingfor = 1
-			world:rayCast(self.x, self.y, player1.body:getX(), player1.body:getY(), callback)
-		end
-
-		if ((player2.body:getX()-self.x)^2+(player2.body:getY()-self.y)^2 > (self.radius+player2.radius) * (self.radius+player2.radius)) then
-			self.alert2 = false
-		else
-			self.alert2 = true
-			self.testingfor = 2
-			world:rayCast(self.x, self.y, player2.body:getX(), player2.body:getY(), callback)
+		for k,player in pairs(players) do
+			-- cast rays
+			if ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 > (self.radius+player.radius) * (self.radius+player.radius)) then
+				self.alert[k] = false
+			else
+				self.alert[k] = true
+				self.testingfor = k
+				world:rayCast(self.x, self.y, player.body:getX(), player.body:getY(), callback)
+			end
 		end
 
 
-		if (self.alert1 or self.alert2) then
+		self.onealert = false
+		for k,a in pairs(self.alert) do
+			if (a) then
+				self.onealert = true
+				break
+			end
+		end
+
+		if (self.onealert) then
 			-- TODO lose game?
 		end
 
@@ -67,7 +58,7 @@ local function newSecurityCam (x, y)
 
 	function cam:draw()
 
-		if (self.alert1 or self.alert2) then
+		if (self.onealert) then
 			love.graphics.setColor(255,96,0,128)
 		else
 			love.graphics.setColor(255,255,0,128)
