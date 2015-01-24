@@ -21,7 +21,7 @@ function GameStateClass:new ()
   return setmetatable(newInstance, self)
 end
 
-function GameStateClass:loadLevel (filename) 
+function GameStateClass:loadLevel (filename)
 	love.physics.setMeter(64)
 	self.totalTime = 0
 
@@ -60,6 +60,7 @@ function GameStateClass:loadLevel (filename)
 		-- print ("adding wall", #w)
 		w.body = love.physics.newBody (self.world, 0, 0, "static")
 		if w.type == "polygon" then
+			print(w.id)
 			w.shape = love.physics.newPolygonShape (unpack(w.points))
 		elseif w.type == "circle" then
 			w.shape = love.physics.newCircleShape( w.x, w.y, w.r )
@@ -90,7 +91,7 @@ function GameStateClass:loadLevel (filename)
 end
 
 function GameStateClass:enter ()
-	self:loadLevel ("leveldefinitions/level.svg")
+	self:loadLevel ("level1.svg")
 end
 
 function GameStateClass:loadTestObjects()

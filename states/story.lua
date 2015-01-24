@@ -7,14 +7,14 @@ local IMAGE_DEFAULT_ZOOM_SPEED = 0.004
 
 local STORY_SCREEN_CONFIG = {
 	intro = {
-		filename = "images/story/moon.jpg",
+		filename = "images/story/infrontofprison.jpg",
 		imageobject = nil,
 		backgroundmusic = {filename = "audio/testbg.mp3"}, -- {filename, loop, volume}
 		foregroundmusic = nil,
-		text = "San Quentin State Prison, Saturday Night",
-		color = {230, 230, 230, 255},
+		text = "San Quentin State Prison, Saturday Night\n             7 weeks later",
+		color = {30, 30, 30, 255},
 		time = 10,
-		text_pos = {120, 550},
+		text_pos = {120, 510},
 		text_zoom = 1
 	}
 }
