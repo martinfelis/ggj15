@@ -1,4 +1,5 @@
 local PLAYER_MOVE_FORCE = 150*4
+local PLAYER_RADIUS = 20
 
 local PLAYER_CONFIG = {
 	{
@@ -9,7 +10,7 @@ local PLAYER_CONFIG = {
 			up = "up"
 		},
 		image = "images/player.png",
-		radius = 20,
+		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
@@ -21,7 +22,7 @@ local PLAYER_CONFIG = {
 			up = "w"
 		},
 		image = "images/player.png",
-		radius = 20,
+		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
@@ -33,7 +34,7 @@ local PLAYER_CONFIG = {
 			up = "i"
 		},
 		image = "images/player.png",
-		radius = 20,
+		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
@@ -45,7 +46,7 @@ local PLAYER_CONFIG = {
 			up = "i"
 		},
 		image = "images/player.png",
-		radius = 20,
+		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
@@ -57,7 +58,7 @@ local PLAYER_CONFIG = {
 			up = "i"
 		},
 		image = "images/player.png",
-		radius = 20,
+		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	}
@@ -113,9 +114,7 @@ local function newPlayer (world, id, x, y)
 		if (up==1 or down==1 or left == 1 or right == 1) then
 			vel:normalize_inplace()
 			vel = vel * PLAYER_MOVE_FORCE
-
 		end
-
 
 		self.body:setLinearVelocity(vel.x, vel.y)
 
@@ -140,7 +139,7 @@ local function newPlayer (world, id, x, y)
 --			print(string.format("angle %f (%f, %f)",self.angle,x,y))
 		end
 
-		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 1,1,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
+		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 2,2,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
 --		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
 	end
 
