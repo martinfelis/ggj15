@@ -22,6 +22,9 @@ function LevelOneClass:enter()
 	self.player:init()
 	self.player2:init()
 	self.chain:init()
+
+	local player_center = vector(self.player.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
+	self.camera = Camera (player_center.x, player_center.y)
 end
 
 function LevelOneClass:keypressed (key)
@@ -32,12 +35,19 @@ end
 
 
 function LevelOneClass:draw()
+	local player_center = vector(self.player.body:getPosition()) * 0.5 + vector (self.player2.body:getPosition()) * 0.5
+	self.camera:lookAt (player_center.x, player_center.y)
+	self.camera:attach()	
+
 	LevelBaseClass.draw(self)
 
 	self.player:draw()
 	self.player2:draw()
 	self.chain:draw()
 	-- debugWorldDraw(self.world, 0, 0, 800, 600)
+	debugWorldDraw(self.world, 0, 0, 800, 600)
+
+	self.camera:detach()	
 end
 function LevelOneClass:update(dt)
 	LevelBaseClass.update(self, dt)
