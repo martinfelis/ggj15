@@ -29,10 +29,12 @@ fonts = {}
 states = {}
 config = { sound = true }
 audio = AudioManager:new()
+sounds = { }
 
 -- game design parameters
 GVAR = {
-	spotlight_realize_time=1.5
+	spotlight_realize_time=1.5,
+	guard_realize_time=2,
 }
 
 io.stdout:setvbuf("no")
@@ -65,6 +67,10 @@ function love.load ()
 	}
 	love.graphics.setBackgroundColor(17,17,17)
 	love.graphics.setFont(fonts[12])
+
+	-- load sounds
+	sounds.punch = love.audio.newSource ("sounds/punch3.ogg", 'static')
+	sounds.whip= love.audio.newSource ("sounds/whip3.ogg", 'static')
 
 	-- create all states
 	states.menu = MenuStateClass:new()

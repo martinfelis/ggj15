@@ -395,7 +395,7 @@ function GameStateClass:update (dt)
 end
 
 function GameStateClass:keypressed (key)
-	print (key .. ' pressed')
+--	print (key .. ' pressed')
 end
 
 function GameStateClass:resize(x, y)
