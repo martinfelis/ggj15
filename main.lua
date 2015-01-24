@@ -10,6 +10,9 @@ local LevelOneClass = require("states.level1")
 local MenuClass = require("states.menu")
 local ExampleMenuClass = require("states.examplemenu")
 local Credits = require("states.credits")
+local Story = require("states.story")
+
+local AudioManager = require("audiomanager")
 
 vector = require("hump.vector")
 newPlayer = require ("entities.player")
@@ -18,6 +21,9 @@ newPlayer = require ("entities.player")
 fonts = {}
 states = {}
 config = { sound = true }
+audio = AudioManager:new()
+
+io.stdout:setvbuf("no")
 
 function love.load ()
 	love.window.setTitle("Prison Broke")
@@ -26,6 +32,10 @@ function love.load ()
 	fonts = {
 		[12] = love.graphics.newFont(12),
 		[20] = love.graphics.newFont(20),
+		tinet = love.graphics.newFont("fonts/tinet/TungusFont_Tinet.ttf", 30),
+		sugar = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 30),
+		sugarlarge = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 50),
+		sugarsmall = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 18),
 	}
 	love.graphics.setBackgroundColor(17,17,17)
 	love.graphics.setFont(fonts[12])
@@ -36,12 +46,15 @@ function love.load ()
 	states.levelbase = LevelBaseClass:new ()
 	states.levelone = LevelOneClass:new ()
 	states.credits = Credits:new ()
+	states.story = Story:new ()
 
 	-- start initial state
     Gamestate.registerEvents()
     Gamestate.push(states.levelone)
-    -- Gamestate.push(states.menu)
+    -- states.story:selectstories{"intro"}
+    -- Gamestate.push(states.story)
     -- Gamestate.push(states.credits)
+    -- Gamestate.push(states.menu)
 end
 
 function love.draw ()
