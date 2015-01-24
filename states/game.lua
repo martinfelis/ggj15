@@ -27,23 +27,51 @@ function GameStateClass:loadLevel (filename)
 
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
 
+	self.SVGdoors = loadShapes ( filename, "Doors")
+	self.SVGguards = loadShapes ( filename, "Guards")
+	self.SVGplayers = loadShapes (filename, "Players")
+	self.spotlightpaths = loadShapes (filename, "SpotlightPaths")
 	self.boxes = loadShapes (filename, "Boxes")
+	self.spotlights = loadShapes (filename, "Spotlights")
+
 	self.chains = {}
 	self.doors = {}
 	self.guards = {}
 	self.players = {}
 	self.securitycameras = {}
-	self.spotlightpaths = loadShapes (filename, "SpotlightPaths")
-	self.spotlights = loadShapes (filename, "Spotlights")
 	self.switches = {}
 	self.walls = loadShapes (filename, "Walls")
 
+	for _, player in pairs(self.SVGplayers.circles) do
+		table.insert(self.players, newPlayer (self.world, #self.players + 1,
+											  player.x, player.y))
+		if (#self.players ~= 1) then
+			table.insert(self.chains, newChain(self.world,
+												self.players[#self.players-1],
+												self.players[#self.players]))
+		end
+	end
+
+	-- DOORS
+	for _, svgdoor in pairs(self.SVGdoors.polygons) do
+		local door = newOpenDoor(self.world, svgdoor.x + 60, svgdoor.y + 60,
+								svgdoor.width, svgdoor.height, true)
+		table.insert(self.doors, door)
+	end
+
+	-- GUARDS
+	for _, svgguard in pairs(self.SVGguards.polygons) do
+		print(serialize(svgguard))
+		local guard = newGuard(self.world, svgguard.x, svgguard.y)
+		table.insert(self.guards, guard)
+	end
+
+
+	self.camera:zoom(0.2)
+
 	-- Players and chains
 	for i=1,NUM_PLAYERS,1 do
-		table.insert(self.players, newPlayer (self.world, i, 0,50*i))
-		if (i ~= 1) then
-			table.insert(self.objects, newChain(self.world, self.players[i-1], self.players[i]))
-		end
+
 	end
 
 	for k,player in pairs(self.players) do
@@ -53,14 +81,13 @@ function GameStateClass:loadLevel (filename)
 		chain:init()
 	end
 
-	self:loadTestObjects()
+	--self:loadTestObjects()
 
 	-- add walls to the world
 	for i,w in ipairs (self.walls.all) do
 		-- print ("adding wall", #w)
 		w.body = love.physics.newBody (self.world, 0, 0, "static")
 		if w.type == "polygon" then
-			print(w.id)
 			w.shape = love.physics.newPolygonShape (unpack(w.points))
 		elseif w.type == "circle" then
 			w.shape = love.physics.newCircleShape( w.x, w.y, w.r )
@@ -181,6 +208,7 @@ function GameStateClass:draw ()
 	draw_items (self.spotlights)
 	draw_items (self.guards)
 	draw_items (self.switches)
+	draw_items (self.chains)
 	draw_items (self.doors)
 	love.graphics.setColor (255, 255, 255, 255)
 
@@ -203,7 +231,9 @@ function GameStateClass:update (dt)
 
 	local function update_items (items, dt, arg1, arg2)
 		for i,v in ipairs (items) do
-			v:update (dt, arg1, arg2)
+			if v.update then
+				v:update (dt, arg1, arg2)
+			end
 		end
 	end
 

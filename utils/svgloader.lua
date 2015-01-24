@@ -56,7 +56,7 @@ local function loadShapes (filename, layername)
 			 return 0, { nums[1] + x, nums[2] + y,
 						 nums[1] + x+w, nums[2] + y,
 						 nums[1] + x+w, nums[2] + y+h,
-						 nums[1] + x, nums[2] + y+h }
+						 nums[1] + x, nums[2] + y+h }, nums[1], nums[2]
 		end
 
 		-- else MATRIX:
@@ -209,11 +209,11 @@ local function loadShapes (filename, layername)
 		circle.ry = node.xarg.ry
 
 
-		--[[if node.xarg.transform then
-			local angle, points
-			angle, points = parse_transform(node.xarg.transform, circle.rx, circle.ry, 1, 1)
-			circle.rx, circle.ry = points[1], points[2]
-		end]]--
+		if node.xarg.transform then
+			local angle, points, ty, tx
+			angle, points, tx, ty = parse_transform(node.xarg.transform, 0, 0, 1, 1)
+			circle.x, circle.y = circle.x + tx, circle.y + ty
+		end
 		circle.r = math.sqrt(node.xarg.rx * node.xarg.rx + node.xarg.ry * node.xarg.ry)
 
 

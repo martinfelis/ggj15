@@ -1,4 +1,4 @@
-local PLAYER_MOVE_FORCE = 150
+local PLAYER_MOVE_FORCE = 150*4
 
 local PLAYER_CONFIG = {
 	{
@@ -84,7 +84,7 @@ local function newPlayer (world, id, x, y)
 	player.fixture:setUserData("player")
 	-- so that the rope does not colllide with players
 	player.fixture:setCategory(id+1)  -- category 1 is for everyone
-	
+
 
 	print (string.format ("Created new player at %f,%f", x, y))
 
@@ -97,26 +97,26 @@ local function newPlayer (world, id, x, y)
 	function player:update (dt)
 		local velX, velY = self.body:getLinearVelocity()
 		local vel = vector(velX, velY)
-		
+
 		local right = love.keyboard.isDown(player.keys.right) and 1 or 0
 		local left = love.keyboard.isDown(player.keys.left) and 1 or 0
 		if (right==1 or left==1) then
 			vel.x = (right-left)*PLAYER_MOVE_FORCE
 		end
-		
+
 		local up = love.keyboard.isDown(player.keys.up) and 1 or 0
 		local down = love.keyboard.isDown(player.keys.down) and 1 or 0
 		if (up==1 or down==1) then
 			vel.y = (down-up)*PLAYER_MOVE_FORCE
 		end
-		
+
 		if (up==1 or down==1 or left == 1 or right == 1) then
 			vel:normalize_inplace()
 			vel = vel * PLAYER_MOVE_FORCE
 
 		end
 
-		
+
 		self.body:setLinearVelocity(vel.x, vel.y)
 
 		self.body:setAngle(math.atan2(vel.x, -vel.y))
@@ -124,7 +124,7 @@ local function newPlayer (world, id, x, y)
 --[[		if (love.keyboard.isDown("right")) then
 			self.body:setLinearVelocity(PLAYER_MOVE_FORCE, 0)
 		end
-		if (love.keyboard.isDown("up")) then 
+		if (love.keyboard.isDown("up")) then
 			self.body:setLinearVelocity(0, -PLAYER_MOVE_FORCE)
 		end
 		if (love.keyboard.isDown("down")) then
