@@ -172,14 +172,14 @@
      inkscape:label="Spotlights">
     <path
        sodipodi:type="arc"
-       style="fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:5.80000019000000044;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1.60000001999999997;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:5.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1.60000002;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="spotlight_path:spath1_speed:100"
        sodipodi:cx="0"
        sodipodi:cy="172.36218"
        sodipodi:rx="60"
        sodipodi:ry="60"
        d="m 60,172.36218 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
-       transform="translate(-62.857144,-94.285715)"
+       transform="matrix(0.33333333,0,0,0.33333333,-62.857144,20.622407)"
        inkscape:label="#path3836" />
   </g>
   <g

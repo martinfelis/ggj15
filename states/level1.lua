@@ -8,7 +8,7 @@ local newOpenDoor = require("entities.opendoor")
 local newSwitch = require("entities.switch")
 local debugWorldDraw = require("debugWorldDraw")
 
-NUM_PLAYERS = 1
+NUM_PLAYERS = 2
 
 local LevelOneClass = LevelBaseClass:new()
 
@@ -86,7 +86,7 @@ function LevelOneClass:draw()
 		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
 	end
 	self.camera:lookAt (player_center.x, player_center.y)
-	
+
 	LevelBaseClass.preDraw(self)
 	self.camera:attach()
 
