@@ -8,9 +8,13 @@ function pathfunctions.walk(path, time, speed)
 
 	local lastx, lasty = path[1], path[2]
 	local len = 0
+
+	-- EINMALIG: Gesamtpfaglänge berechnen
 	if not path.length then
-		table.insert(path, posx) -- close path
+		-- EINMALIG: Pfad schließen
+		table.insert(path, posx)
 		table.insert(path, posy)
+		-- Länge
 		for i = 3, #path, 2 do
 			local dx, dy = lastx - path[i], lasty - path[i+1]
 			len = len + math.sqrt(dx*dx + dy*dy)
@@ -20,12 +24,16 @@ function pathfunctions.walk(path, time, speed)
 		--print ("sf " ..path.length)
 	end
 
+	-- remaining = derzeitige position auf pfad vom aktuellen knoten (=pfadbeginn) aus
 	local remaining = (time * speed) % path.length
-	--print(remaining)
+
+
 	-- skipped segments
 	local running = true
 	local i = 3
 	lastx, lasty = path[1], path[2]
+	-- immer ein segment weiter und länge abziehen, bis das segment gefunden ist,
+	-- auf dem wir uns befinden
 	while running do
 
 		local dx, dy = lastx - path[i], lasty - path[i+1]

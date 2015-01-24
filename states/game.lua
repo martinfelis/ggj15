@@ -30,7 +30,8 @@ function GameStateClass:loadLevel (filename)
 	self.SVGdoors = loadShapes ( filename, "Doors")
 	self.SVGguards = loadShapes ( filename, "Guards")
 	self.SVGplayers = loadShapes (filename, "Players")
-	self.spotlightpaths = loadShapes (filename, "SpotlightPaths")
+	self.SVGpaths = loadShapes (filename, "Paths")
+	self.SVGswitches = loadShapes (filename, "Switches")
 	self.boxes = loadShapes (filename, "Boxes")
 	self.spotlights = loadShapes (filename, "Spotlights")
 
@@ -52,20 +53,48 @@ function GameStateClass:loadLevel (filename)
 		end
 	end
 
+
+	-- GUARDS -- guardid: guardX_path:gpathY_speed:200
+	for _, svgguard in pairs(self.SVGguards.circles) do
+		local guard = newGuard(svgguard.x, svgguard.y)
+		table.insert(self.guards, guard)
+
+		-- search path for guard
+		for i, svgpath in ipairs(self.SVGpaths.polygons) do
+			if svgpath.id == svgguard.config.path then
+				guard.pathpoints = svgpath.points
+				guard.speed = svgguard.config.speed or 200
+			end
+		end
+
+	end
+
+	-- SWITCHES
+	for _, svgswitch in pairs(self.SVGswitches.circles) do
+		print(serialize(svgswitch))
+		local switch = newSwitch(svgswitch.x, svgswitch.y)
+		switch.id = svgswitch.id
+		table.insert(self.switches, switch)
+	end
+
 	-- DOORS
 	for _, svgdoor in pairs(self.SVGdoors.polygons) do
 		local door = newOpenDoor(self.world, svgdoor.x + 60, svgdoor.y + 60,
 								svgdoor.width, svgdoor.height, true)
+		if svgdoor.config.openby then
+			for _, switch in pairs(self.switches) do
+				if switch.id == svgdoor.config.openby then
+					door:canBeOpenedBy (switch)
+				end
+			end
+		end
 		table.insert(self.doors, door)
 	end
 
-	-- GUARDS
-	for _, svgguard in pairs(self.SVGguards.polygons) do
-		print(serialize(svgguard))
-		local guard = newGuard(self.world, svgguard.x, svgguard.y)
-		table.insert(self.guards, guard)
-	end
 
+	-- associate spotlights with paths
+	for i, s in ipairs(self.spotlights.circles) do
+	end
 
 	self.camera:zoom(0.2)
 
@@ -106,14 +135,14 @@ function GameStateClass:loadLevel (filename)
 		b.body:setAngularDamping(150)
 	end
 	-- associate spotlights with paths
-	for i, s in ipairs(self.spotlights.circles) do
-		for i, sp in ipairs(self.spotlightpaths.polygons) do
-			-- print (sp.id)
-			if sp.id == s.config.path then
-				s.pathpoints = sp.points
-			end
-		end
-	end
+	--for i, s in ipairs(self.spotlights.circles) do
+	--	for i, sp in ipairs(self.spotlightpaths.polygons) do
+	--		-- print (sp.id)
+	--		if sp.id == s.config.path then
+	--			s.pathpoints = sp.points
+	--		end
+	--	end
+	--end
 	-- print (serialize(self.spotlights))
 end
 
@@ -229,17 +258,17 @@ function GameStateClass:update (dt)
 		c.x, c.y = pathfunctions.walk(c.pathpoints, self.totalTime, c.config.speed)
 	end
 
-	local function update_items (items, dt, arg1, arg2)
+	local function update_items (items, dt, arg1, arg2, arg3)
 		for i,v in ipairs (items) do
 			if v.update then
-				v:update (dt, arg1, arg2)
+				v:update (dt, arg1, arg2, arg3)
 			end
 		end
 	end
 
 	update_items (self.boxes, dt)
 	update_items (self.chains, dt)
-	update_items (self.guards, dt, self.players, self.world)
+	update_items (self.guards, dt, self.players, self.world, self.totalTime)
 	update_items (self.players, dt)
 	update_items (self.securitycameras, dt, self.players, self.world)
 	update_items (self.spotlights, dt, self.players)

@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748739"
-     inkscape:cx="977.30409"
-     inkscape:cy="-2064.0416"
+     inkscape:zoom="0.17500001"
+     inkscape:cx="391.28164"
+     inkscape:cy="-2373.5172"
      inkscape:document-units="px"
-     inkscape:current-layer="layer8"
+     inkscape:current-layer="layer2"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -115,7 +115,7 @@
        transform="translate(1180.0895,1239.9105)"
        sodipodi:type="arc"
        style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
-       id="Player2-6"
+       id="Guard1_path:pathg1"
        sodipodi:cx="-99.9105"
        sodipodi:cy="1320.0895"
        sodipodi:rx="40"
@@ -207,8 +207,8 @@
        id="rect4720-3"
        width="1119.9105"
        height="40.000137"
-       x="-160.00002"
-       y="2412.4517" />
+       x="-159.91051"
+       y="2412.3621" />
     <rect
        style="fill:#333333;fill-opacity:1;stroke:#333333;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect4814"
@@ -507,9 +507,10 @@
     <path
        style="fill:none;stroke:#ff0000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        d="m 1085.0895,2281.0895 0,-640 900,0 0,1280 -1280,0 0,-360 380,0"
-       id="path5496"
+       id="pathg1"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
+       sodipodi:nodetypes="ccccccc"
+       inkscape:label="#path5496" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -519,7 +520,7 @@
     <path
        sodipodi:type="arc"
        style="fill:#00ff00"
-       id="path3569"
+       id="sw1"
        sodipodi:cx="2140.0896"
        sodipodi:cy="3460.0896"
        sodipodi:rx="60"
@@ -527,7 +528,8 @@
        d="m 2200.0896,3460.0896 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
        inkscape:transform-center-x="39.9999"
        inkscape:transform-center-y="-139.99992"
-       transform="translate(-2300.0001,479.99992)" />
+       transform="translate(-260.0001,-920.00008)"
+       inkscape:label="#path3569" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -535,40 +537,41 @@
      inkscape:label="Doors"
      style="display:inline">
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.88928109px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect3515"
-       width="40.046135"
-       height="189.57834"
-       x="500.06644"
-       y="2550.0667" />
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="door1_openby:sw1"
+       width="40"
+       height="240"
+       x="500.08951"
+       y="2520.0896"
+       inkscape:label="#rect3515" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.92840213px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3517"
-       width="189.5119"
-       height="40.023811"
-       x="0.089500003"
-       y="3080.0776" />
+       width="220"
+       height="40"
+       x="-19.9105"
+       y="3080.0896" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.84120542px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3519"
-       width="40.158794"
-       height="169.15883"
-       x="500.01016"
-       y="3680.51" />
+       width="40"
+       height="240"
+       x="500.08951"
+       y="3640.0896" />
     <rect
        style="fill:#0000ff;display:inline"
        id="rect3528"
-       width="39.999901"
-       height="139.99992"
+       width="60"
+       height="200"
        x="2420.0896"
-       y="3635.0896" />
+       y="3600.0896" />
     <rect
        style="fill:#0000ff;display:inline"
        id="rect3526"
-       width="39.999821"
-       height="120.00008"
-       x="2420.0898"
-       y="3410.0896" />
+       width="60"
+       height="180"
+       x="2420.0896"
+       y="3380.0896" />
   </g>
   <g
      inkscape:groupmode="layer"

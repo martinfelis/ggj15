@@ -8,11 +8,17 @@ local function newGuard (x, y)
 		alerttime = 0,
 		testingfor = 1,
 		radius = 170,
-		angle = 1., 
+		angle = 1.,
 		fov = math.pi/2
 	}
 
-	function guard:update(dt, players, world)
+	function guard:update(dt, players, world, totalTime)
+
+		-- walk
+		if self.pathpoints then
+			self.x, self.y = pathfunctions.walk(self.pathpoints, totalTime, self.speed)
+		end
+
 		self.alert = false
 		self.alerttime = self.alerttime + dt
 		self.angle = self.angle + dt * 0.4
