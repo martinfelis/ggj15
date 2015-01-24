@@ -10,6 +10,10 @@ local function newGuard (x, y, world)
 		radius = 170,
 		angle = 1.,
 		wishAngle = 0,
+
+		alerted = false,
+		alertness = 0.,
+
 		detectortype = "guard",
 		player_alert_start= {},
 		fov = math.pi/2
@@ -26,6 +30,11 @@ local function newGuard (x, y, world)
 	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, 0,0,0,0, 20, false)
 
 	function guard:update(dt, players, world, totalTime)
+		if self.alerted then
+			self.alertness = math.min (1., self.alertness + dt * GVAR.alert_increase_rate)
+		else
+			self.alertness = math.max (0., self.alertness - dt * GVAR.alert_decrease_rate)
+		end
 
 		-- walk
 		if self.pathpoints then
@@ -120,28 +129,25 @@ local function newGuard (x, y, world)
 				self.player_alert_start[player] = nil
 			end
 		end
+
+		if next (self.player_alert_start) then
+			self.alerted = true
+		else
+			self.alerted = false
+		end
+
 	end
 
 	function guard:draw()
-
-		if (not self.alert) then
-			self.alerttime = 0
-		else
-			if (self.alerttime >= GVAR.guard_realize_time) then
-				-- TODO end game friendly
-				print("a guard caught you")
-				love.event.quit()
-			end
-		end
-
-		love.graphics.setColor(255,(GVAR.guard_realize_time-self.alerttime)*(255/GVAR.guard_realize_time),0,128)
+		love.graphics.setColor(255,(1. - self.alertness) * 255, 0, 128)
 																		   -- fix löves wrong angle drawing
 		love.graphics.arc("fill", self.x, self.y, self.radius, self.angle + self.fov*.5, self.angle - self.fov *.5)
 
---		local forward = vector (100., 0.)
---		forward:rotate_inplace(self.angle)
---		love.graphics.setColor (255, 0, 0, 255)
---		love.graphics.line (self.x, self.y, self.x + forward.x, self.y + forward.y)
+		if self.alerted then
+			love.graphics.setColor (255, 0, 0, 128)
+			love.graphics.setLineWidth (10.)
+			love.graphics.arc("line", self.x, self.y, self.radius + math.sin(love.timer.getTime() * 10) * 10, self.angle + self.fov*.5, self.angle - self.fov *.5)
+		end
 	end
 
 	return guard

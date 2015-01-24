@@ -33,8 +33,9 @@ sounds = { }
 
 -- game design parameters
 GVAR = {
-	spotlight_realize_time=1.5,
-	guard_realize_time=2,
+	alert_realize_time=2,
+	alert_increase_rate=0.5,
+	alert_decrease_rate=0.3,
 }
 
 io.stdout:setvbuf("no")

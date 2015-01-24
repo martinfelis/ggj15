@@ -4,15 +4,26 @@ local function newSecurityCam (x, y)
 	local cam = {
 		x = x,
 		y = y,
+
 		alert = {},
-		alerttime = 0,
-		onealert = false,
+
+		alerted = false,
+		alertness = 0.,
+			
 		testingfor = 1,
-		radius = 170
+		radius = 170,
+
+		player_alert_start= {},
+		detectortype = "securitycam",
 	}
 
 	function cam:update(dt, players, world)
-		self.alerttime = self.alerttime + dt
+		if self.alerted then
+			self.alertness = math.min (1., self.alertness + dt * GVAR.alert_increase_rate)
+		else
+			self.alertness = math.max (0., self.alertness - dt * GVAR.alert_decrease_rate)
+		end
+
 		local function callback(fixture, x, y, xn, yn, fraction)
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains
 				return -1
@@ -29,50 +40,44 @@ local function newSecurityCam (x, y)
 
 		for k,player in pairs(players) do
 			-- cast rays
-			if ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 > (self.radius+player.radius)^2) then
-				self.alert[k] = false
-			else
+			local visible = ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 < (self.radius+player.radius)^2) 
+
+			if visible then
 				self.alert[k] = true
 				self.testingfor = k
 				world:rayCast(self.x, self.y, player.body:getX(), player.body:getY(), callback)
+				visible = self.alert[k]
+			end
+
+			-- emit signals 
+			if visible and not self.player_alert_start[player] then
+				Signals.emit ('alert-start', self, player)
+				self.player_alert_start[player] = love.timer.getTime()
+			end
+
+			if not visible and self.player_alert_start[player] then
+				Signals.emit ('alert-stop', self, player)
+				self.player_alert_start[player] = nil
 			end
 		end
 
-
-		self.onealert = false
-		for k,a in pairs(self.alert) do
-			if (a) then
-				self.onealert = true
-				break
-			end
+		if next (self.player_alert_start) then
+			self.alerted = true
+		else
+			self.alerted = false
 		end
-
-		if (self.onealert) then
-			-- TODO lose game?
-		end
-
 	end
 
 	function cam:draw()
-
-		if (not self.onealert) then
-			self.alerttime = 0
-		else
-			if (self.alerttime >= SECURITYCAM_REALIZE_TIME) then
-				print("you were caught on tape by a security camera")
-				-- TODO end game friendly
-				love.event.quit()
-			end
-		end
-
-		love.graphics.setColor(255,(SECURITYCAM_REALIZE_TIME-self.alerttime)*(255/SECURITYCAM_REALIZE_TIME),0,128)
-		if (self.onealert) then
-			love.graphics.setColor(255,96,0,128)
-		else
-			love.graphics.setColor(255,255,0,128)
-		end
+		love.graphics.setColor(255,(1. - self.alertness) * 255, 0, 128)
 
 		love.graphics.circle("fill", self.x, self.y, self.radius)
+
+		if self.alerted then
+			love.graphics.setColor (255, 0, 0, 128)
+			love.graphics.setLineWidth (10.)
+			love.graphics.circle("line", self.x, self.y, self.radius + math.sin(love.timer.getTime() * 10) * 10)
+		end
 	end
 
 	return cam

@@ -6,11 +6,21 @@ local function newSpotlight (x, y)
 		alerttime = 0,
 		detectortype = "spotlight",
 		player_alert_start= {},
+
+		alerted = false,
+		alertness = 0.,
+
 		radius = 100
 	}
 
 	function spot:update(dt, players)
 		self.alerttime = self.alerttime + dt
+
+		if self.alerted then
+			self.alertness = math.min (1., self.alertness + dt * GVAR.alert_increase_rate)
+		else
+			self.alertness = math.max (0., self.alertness - dt * GVAR.alert_decrease_rate)
+		end
 
 		-- TODO MOVEMENT
 
@@ -33,15 +43,23 @@ local function newSpotlight (x, y)
 			end
 		end
 
-		if (not self.alert) then
-			self.alerttime = 0
+		if next (self.player_alert_start) then
+			self.alerted = true
+		else
+			self.alerted = false
 		end
 	end
 
 	function spot:draw()
-		love.graphics.setColor(255,(GVAR.spotlight_realize_time-self.alerttime)*(255/GVAR.spotlight_realize_time),0,128)
+		love.graphics.setColor(255,(1. - self.alertness) * 255, 0, 128)
 
 		love.graphics.circle("fill", self.x, self.y, self.radius)
+
+		if self.alerted then
+			love.graphics.setColor (255, 0, 0, 128)
+			love.graphics.setLineWidth (10.)
+			love.graphics.circle("line", self.x, self.y, self.radius + math.sin(love.timer.getTime() * 10) * 10)
+		end
 	end
 	return spot
 end
