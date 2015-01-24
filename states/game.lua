@@ -13,12 +13,27 @@ NUM_PLAYERS = 1
 
 function GameStateClass:new ()
   local newInstance = {}
-	newInstance.canvas = love.graphics.newCanvas()
-	newInstance.canvas:setFilter ("nearest", "nearest")
-	newInstance.camera = Camera (0,0)
-	newInstance.totalTime = 0
+
   self.__index = self
   return setmetatable(newInstance, self)
+end
+
+function GameStateClass:initTextures ()
+	self.canvas = love.graphics.newCanvas()
+	self.canvas:setFilter ("nearest", "nearest")
+
+	self.ground_texture= love.image.newImageData(40, 40)
+	self.ground_texture:mapPixel(function(x,y)
+		local l = love.math.noise (x,y) * 4 + 120
+		return l,l,l,l
+	end)
+	self.ground_texture = love.graphics.newImage(self.ground_texture)
+	self.ground_texture:setWrap ("repeat", "repeat")
+	self.ground_texture:setFilter("linear", "linear")
+	self.ground_texture:setFilter("nearest", "nearest")
+
+--	self.background_quad = love.graphics.newQuad (0, 0, love.window.getWidth(), love.graphics.getHeight(), love.window.getWidth(), love.graphics.getHeight())
+	self.background_quad = love.graphics.newQuad (0, 0, love.window.getWidth(), love.graphics.getHeight(), 400, 400)
 end
 
 function GameStateClass:loadLevel (filename)
@@ -66,8 +81,7 @@ function GameStateClass:loadLevel (filename)
 		table.insert(self.guards, guard)
 	end
 
-
-	self.camera:zoom(0.2)
+	self.camera:zoom(0.4)
 
 	-- Players and chains
 	for i=1,NUM_PLAYERS,1 do
@@ -118,11 +132,17 @@ function GameStateClass:loadLevel (filename)
 end
 
 function GameStateClass:enter ()
+	self.camera = Camera (0,0)
+
 	self:loadLevel ("level1.svg")
+	self:initTextures()
+--	self:loadLevel ("leveldefinitions/level.svg")
+
+	self.totalTime = 0
 end
 
 function GameStateClass:loadTestObjects()
-	table.insert(self.securitycameras, newSecurityCam(680, 420))
+--	table.insert(self.securitycameras, newSecurityCam(680, 420))
 	table.insert(self.spotlights, newSpotlight(400,420))
 	table.insert(self.guards, newGuard(200,200))
 
@@ -143,25 +163,12 @@ function GameStateClass:postDraw()
 
 	--
 	love.graphics.setShader (sketch_shader)
-	sketch_shader:send("noise_texture", noise_texture)
-	sketch_shader:send("noise_amp", 0.004)
-	sketch_shader:send("screen_center_x", self.camera.x / love.window.getWidth())
-	sketch_shader:send("screen_center_y", self.camera.y / love.window.getHeight())
-	love.graphics.draw (self.canvas, 0, 0, 0)
-
-	sketch_shader:send("noise_texture", noise_texture)
-	sketch_shader:send("noise_amp", 0.005)
-	love.graphics.draw (self.canvas, 0, 0, 0)
 
 	-- further draws with shifted noise
 	sketch_shader:send("noise_texture", noise_texture)
 	sketch_shader:send("noise_amp", 0.006)
-	sketch_shader:send("screen_center_x", 0.1 + (self.camera.x / love.window.getWidth()))
-	sketch_shader:send("screen_center_y", 0.13 + (self.camera.y / love.window.getHeight()))
-	love.graphics.draw (self.canvas, 0, 0, 0)
-
-	sketch_shader:send("noise_texture", noise_texture)
-	sketch_shader:send("noise_amp", 0.006)
+	sketch_shader:send("screen_center_x", 0.1 + (self.camera.scale * self.camera.x / love.window.getWidth()))
+	sketch_shader:send("screen_center_y", 0.13 + (self.camera.scale * self.camera.y / love.window.getHeight()))
 	love.graphics.draw (self.canvas, 0, 0, 0)
 
 	-- default drawing of the filtered canvas
@@ -170,14 +177,22 @@ function GameStateClass:postDraw()
 end
 
 function GameStateClass:draw ()
+
 	local player_center =  vector(0, 0)
 	for k,player in pairs(self.players) do
 		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
 	end
-	self.camera:lookAt (player_center.x, player_center.y)
 
 	self:preDraw()
+
+	self.camera:lookAt (player_center.x, player_center.y)
+
+	self.background_quad:setViewport (self.camera.scale * player_center.x, self.camera.scale * player_center.y, love.window.getWidth(), love.window.getHeight())
+	love.graphics.draw(self.ground_texture, self.background_quad, 0, 0)
+
 	self.camera:attach()
+
+	love.graphics.setLineWidth (4.)
 
 	for i,p in ipairs (self.walls.polygons) do
 		love.graphics.polygon ("line", unpack(p.points))
@@ -248,6 +263,12 @@ end
 
 function GameStateClass:keypressed (key)
 	print (key .. ' pressed')
+end
+
+function GameStateClass:resize(x, y)
+	self.camera = Camera (self.camera.x, self.camera.y)
+	self.canvas = love.graphics.newCanvas()
+	self.canvas:setFilter ("nearest", "nearest")
 end
 
 return GameStateClass
