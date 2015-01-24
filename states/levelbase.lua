@@ -23,17 +23,22 @@ function LevelBaseClass:enter ()
 	-- add boxes to the world
 	for i,b in ipairs (self.boxes) do
 		print ("adding box", #b)
-		local body = love.physics.newBody (self.world, 0, 0, "dynamic")
-		local shape = love.physics.newPolygonShape (unpack(b))
-		local fixture = love.physics.newFixture (body, shape)
-		body:setLinearDamping(20)
-		body:setAngularDamping(150)
+		b.body = love.physics.newBody (self.world, 0, 0, "dynamic")
+		b.shape = love.physics.newPolygonShape (unpack(b))
+		b.fixture = love.physics.newFixture (b.body, b.shape)
+		b.body:setLinearDamping(20)
+		b.body:setAngularDamping(150)
 	end
 end
 
 function LevelBaseClass:draw ()
 	for i,p in ipairs (self.walls) do
 		love.graphics.polygon ("fill", p)
+	end
+
+	for i,p in ipairs (self.boxes) do
+--		love.graphics.polygon ("fill", p)
+		love.graphics.polygon ("fill", p.body:getWorldPoints(p.shape:getPoints()))
 	end
 end
 

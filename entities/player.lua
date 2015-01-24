@@ -36,7 +36,8 @@ local function newPlayer (world, id, x, y)
 		keys = PLAYER_CONFIG[id].keys,
 		radius = PLAYER_CONFIG[id].radius,
 		center_x = PLAYER_CONFIG[id].center_x,
-		center_y = PLAYER_CONFIG[id].center_y
+		center_y = PLAYER_CONFIG[id].center_y,
+		angle = 0 -- needed so the player does not turn wildly at slow speed
 	}
 
 	-- physics
@@ -75,10 +76,12 @@ local function newPlayer (world, id, x, y)
 		if (up==1 or down==1 or left == 1 or right == 1) then
 			vel:normalize_inplace()
 			vel = vel * PLAYER_MOVE_FORCE
+
 		end
 
 		
 		self.body:setLinearVelocity(vel.x, vel.y)
+		
 		self.body:setAngle(math.atan2(vel.x, -vel.y))
 	--	self.body:setAngle()
 --[[		if (love.keyboard.isDown("right")) then
@@ -93,7 +96,14 @@ local function newPlayer (world, id, x, y)
 	end
 
 	function player:draw ()
-		love.graphics.draw(self.image, self.body:getX(), self.body:getY(), self.body:getAngle(), 1,1,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
+		local x,y = self.body:getLinearVelocity()
+
+		if (math.abs(x)+math.abs(y)>100) then
+			self.angle = math.atan2(x, -y)
+			print(string.format("angle %f (%f, %f)",self.angle,x,y))
+		end
+
+		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 1,1,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
 		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
 	end
 
