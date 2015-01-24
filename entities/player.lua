@@ -1,5 +1,5 @@
 local PLAYER_MOVE_FORCE = 150*4
-local PLAYER_RADIUS = 20
+local PLAYER_RADIUS = 40
 
 local PLAYER_CONFIG = {
 	{
@@ -83,6 +83,7 @@ local function newPlayer (world, id, x, y)
 	player.shape = love.physics.newCircleShape(player.radius)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	player.fixture:setUserData("player")
+	player.body:setMass (0.1)
 	-- so that the rope does not colllide with players
 	player.fixture:setCategory(id+1)  -- category 1 is for everyone
 

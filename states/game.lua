@@ -106,12 +106,10 @@ function GameStateClass:loadLevel (filename)
 		table.insert(self.doors, door)
 	end
 
-
 	-- associate spotlights with paths
 	for i, s in ipairs(self.spotlights.circles) do
 	end
-
-	self.camera:zoom(0.4)
+	self.camera:zoom(0.6)
 
 	-- Players and chains
 	for i=1,NUM_PLAYERS,1 do
@@ -125,7 +123,7 @@ function GameStateClass:loadLevel (filename)
 		chain:init()
 	end
 
-	--self:loadTestObjects()
+	self:loadTestObjects()
 
 	-- add walls to the world
 	for i,w in ipairs (self.walls.all) do
@@ -195,15 +193,33 @@ function GameStateClass:postDraw()
 	love.graphics.setShader (sketch_shader)
 
 	-- further draws with shifted noise
+	love.graphics.setCanvas (self.canvas)
 	sketch_shader:send("noise_texture", noise_texture)
-	sketch_shader:send("noise_amp", 0.006)
-	sketch_shader:send("screen_center_x", 0.1 + (self.camera.scale * self.camera.x / love.window.getWidth()))
-	sketch_shader:send("screen_center_y", 0.13 + (self.camera.scale * self.camera.y / love.window.getHeight()))
+	sketch_shader:send("noise_amp", 0.004)
+	sketch_shader:send("screen_center_x", (self.camera.scale * self.camera.x / love.window.getWidth()))
+	sketch_shader:send("screen_center_y", (self.camera.scale * self.camera.y / love.window.getHeight()))
+	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	sketch_shader:send("noise_amp", 0.002 )
+	sketch_shader:send("screen_center_x", 0.01 * self.camera.scale + (self.camera.scale * self.camera.x / love.window.getWidth()))
+	sketch_shader:send("screen_center_y", 0.03 * self.camera.scale + (self.camera.scale * self.camera.y / love.window.getHeight()))
 	love.graphics.draw (self.canvas, 0, 0, 0)
 
 	-- default drawing of the filtered canvas
 	love.graphics.setShader ()
+	love.graphics.setCanvas ()
 	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	self.camera:attach()
+	love.graphics.setColor (255, 255, 255 ,255)
+	for i,p in ipairs (self.walls.polygons) do
+		love.graphics.polygon ("line", unpack(p.points))
+	end
+	for i,p in ipairs (self.players) do
+		p:draw()
+	end
+
+	self.camera:detach()
 end
 
 function GameStateClass:draw ()
@@ -221,8 +237,6 @@ function GameStateClass:draw ()
 	love.graphics.draw(self.ground_texture, self.background_quad, 0, 0)
 
 	self.camera:attach()
-
-	love.graphics.setLineWidth (4.)
 
 	for i,p in ipairs (self.walls.polygons) do
 		love.graphics.polygon ("line", unpack(p.points))
