@@ -7,7 +7,8 @@ local function newChain (world, player1, player2)
 	local chain = {
 		player1 = player1,
 		player2 = player2,
-		parts = {}
+		parts = {},
+		image = love.graphics.newImage("images/chain.png")
 	}
 	
 	-- create chain parts
@@ -18,6 +19,7 @@ local function newChain (world, player1, player2)
 		part.shape = love.physics.newRectangleShape(CHAIN_PART_WIDTH, CHAIN_PART_HEIGHT)
 		part.fixture = love.physics.newFixture(part.body, part.shape)
 		part.body:setPosition(i*CHAIN_PART_WIDTH,0)
+		part.body:setLinearDamping(10)
 
 		-- chainparts should not collide with itself
 		part.fixture:setGroupIndex(-1)
@@ -32,9 +34,9 @@ local function newChain (world, player1, player2)
 	end
 	
 	-- first and last rope
-	love.physics.newRopeJoint(player1.body, chain.parts[1].body, 0,0, CHAIN_PART_WIDTH-CHAIN_PART_WIDTH/2, 0, SPACE_BETWEEN_PARTS +32, true)
+	love.physics.newRopeJoint(player1.body, chain.parts[1].body, 0,0, CHAIN_PART_WIDTH-CHAIN_PART_WIDTH/2, 0, player1.radius, true)
 	
-	love.physics.newRopeJoint(chain.parts[CHAIN_PART_COUNT].body, player2.body, CHAIN_PART_COUNT * CHAIN_PART_WIDTH +CHAIN_PART_WIDTH/2, 0,  0, 0, SPACE_BETWEEN_PARTS +32, true)
+	love.physics.newRopeJoint(chain.parts[CHAIN_PART_COUNT].body, player2.body, CHAIN_PART_COUNT * CHAIN_PART_WIDTH +CHAIN_PART_WIDTH/2, 0,  0, 0, player2.radius, true)
 	
 
 	-- changes the position of the chain to be linear between the players
@@ -47,6 +49,12 @@ local function newChain (world, player1, player2)
 			self.parts[i].body:setPosition(chainX, chainY)
 		end
 
+	end
+
+	function chain:draw()
+		for i = 1, CHAIN_PART_COUNT, 1 do
+			love.graphics.draw(self.image, self.parts[i].body:getX(), self.parts[i].body:getY(), self.parts[i].body:getAngle(), 1,1,self.image:getWidth() /2, self.image:getHeight()/2)
+		end
 	end
 	
 	return chain

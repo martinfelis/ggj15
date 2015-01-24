@@ -1,4 +1,3 @@
-local PLAYER_RADIUS = 32
 local PLAYER_MOVE_FORCE = 150
 
 local PLAYER_CONFIG = {
