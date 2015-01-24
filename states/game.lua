@@ -48,6 +48,7 @@ function GameStateClass:loadLevel (filename)
 	self.SVGpaths = loadShapes (filename, "Paths")
 	self.SVGswitches = loadShapes (filename, "Switches")
 	self.SVGtargets = loadShapes (filename, "Target")
+	self.SVGground = loadShapes (filename, "Ground")
 	self.boxes = loadShapes (filename, "Boxes")
 	self.spotlights = loadShapes (filename, "Spotlights")
 
@@ -59,7 +60,9 @@ function GameStateClass:loadLevel (filename)
 	self.switches = {}
 	self.target = {center_x = 0, center_y = 0, radius = 0}
 	self.walls = loadShapes (filename, "Walls")
+	self.grounds = {} -- list of {points={...}, color=...}
 
+	-- PLAYER and CHAINS
 	for _, player in pairs(self.SVGplayers.circles) do
 		table.insert(self.players, newPlayer (self.world, #self.players + 1,
 											  player.x, player.y))
@@ -70,6 +73,13 @@ function GameStateClass:loadLevel (filename)
 		end
 	end
 
+	-- init of PLAYER and CHAINS
+	for k,player in pairs(self.players) do
+		player:init()
+	end
+	for k,chain in pairs(self.chains) do
+		chain:init()
+	end
 
 	-- GUARDS -- guardid: guardX_path:gpathY_speed:200
 	for _, svgguard in pairs(self.SVGguards.circles) do
@@ -113,24 +123,23 @@ function GameStateClass:loadLevel (filename)
 		door:openIfNoSwitch()
 	end
 
+	-- TARGET
+	if self.SVGtargets.circles[1] then
+		local c = self.SVGtargets.circles[1]
+		self.target = {center_x = c.x, center_y = c.y, radius = c.r}
+	end
+
+	-- GROUND (colored)
+	self.grounds = self.SVGground.polygons
+
 	-- associate spotlights with paths
 	for i, s in ipairs(self.spotlights.circles) do
 	end
 
 	self.camera:zoom(0.6)
 
-	for k,player in pairs(self.players) do
-		player:init()
-	end
-	for k,chain in pairs(self.chains) do
-		chain:init()
-	end
 
-	-- TARGET
-	if self.SVGtargets.circles[1] then
-		local c = self.SVGtargets.circles[1]
-		self.target = {center_x = c.x, center_y = c.y, radius = c.r}
-	end
+
 
 	self:loadTestObjects()
 
@@ -195,6 +204,19 @@ function GameStateClass:preDraw()
 	self.canvas:clear()
 end
 
+function GameStateClass:drawGround()
+
+	local oldr, oldg, oldb, olda = love.graphics.getColor()
+	for _, ground in pairs(self.grounds) do
+		print(serialize(ground.config.hide))
+		if ground.config.hide == nil or ground.config.hide ~= "true" then
+			love.graphics.setColor(ground.color)
+			love.graphics.polygon("fill", unpack(ground.points))
+		end
+	end
+	love.graphics.setColor(oldr, oldg, oldb, olda)
+end
+
 function GameStateClass:postDraw()
 	love.graphics.setCanvas ()
 
@@ -246,6 +268,7 @@ function GameStateClass:draw ()
 	love.graphics.draw(self.ground_texture, self.background_quad, 0, 0)
 
 	self.camera:attach()
+	self:drawGround()
 
 	for i,p in ipairs (self.walls.polygons) do
 		love.graphics.polygon ("line", unpack(p.points))
@@ -288,6 +311,7 @@ function GameStateClass:draw ()
 
 	self:postDraw()
 end
+
 
 function GameStateClass:update (dt)
 	self.world:update(dt)
