@@ -7,10 +7,9 @@ matrix = require "utils.matrix"
 pathfunctions = require "utils.pathfunctions"
 
 -- require States
-local LevelBaseClass = require("states.levelbase")
-local LevelOneClass = require("states.level1")
-local MenuClass = require("states.menu")
-local ExampleMenuClass = require("states.examplemenu")
+local GameStateClass = require("states.game")
+local MenuStateClass = require("states.menu")
+local ExampleMenuStateClass = require("states.examplemenu")
 local Credits = require("states.credits")
 local Story = require("states.story")
 
@@ -58,16 +57,15 @@ function love.load ()
 	love.graphics.setFont(fonts[12])
 
 	-- create all states
-	states.menu = MenuClass:new()
-	states.examplemenu = ExampleMenuClass:new()
-	states.levelbase = LevelBaseClass:new ()
-	states.levelone = LevelOneClass:new ()
+	states.menu = MenuStateClass:new()
+	states.examplemenu = ExampleMenuStateClass:new()
+	states.game = GameStateClass:new ()
 	states.credits = Credits:new ()
 	states.story = Story:new ()
 
 	-- start initial state
     Gamestate.registerEvents()
-    Gamestate.push(states.levelone)
+    Gamestate.push(states.game)
     -- states.story:selectstories{"intro"}
     -- Gamestate.push(states.story)
     -- Gamestate.push(states.credits)

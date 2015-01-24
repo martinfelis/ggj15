@@ -1,7 +1,17 @@
-local LevelBaseClass = {}
+local GameStateClass = {}
 loadShapes = require ("utils.svgloader")
+local newPlayer = require ("entities.player")
+local newChain = require("entities.chain")
+local newSpotlight = require("entities.spotlight")
+local newGuard = require("entities.guard")
+local newOpenDoor = require("entities.opendoor")
+local newSwitch = require("entities.switch")
+local debugWorldDraw = require("debugWorldDraw")
+local newSecurityCam = require("entities.securitycam")
 
-function LevelBaseClass:new ()
+NUM_PLAYERS = 1
+
+function GameStateClass:new ()
   local newInstance = {}
 	newInstance.canvas = love.graphics.newCanvas()
 	newInstance.canvas:setFilter ("nearest", "nearest")
@@ -11,14 +21,39 @@ function LevelBaseClass:new ()
   return setmetatable(newInstance, self)
 end
 
-function LevelBaseClass:enter ()
+function GameStateClass:loadLevel (filename) 
 	love.physics.setMeter(64)
 	self.totalTime = 0
+
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
-	self.walls = loadShapes ("leveldefinitions/level.svg", "Walls")
-	self.boxes = loadShapes ("leveldefinitions/level.svg", "Boxes")
-	self.spotlights = loadShapes ("leveldefinitions/level.svg", "Spotlights")
-	self.spotlightpaths = loadShapes ("leveldefinitions/level.svg", "SpotlightPaths")
+
+	self.boxes = loadShapes (filename, "Boxes")
+	self.chains = {}
+	self.doors = {}
+	self.guards = {}
+	self.players = {}
+	self.securitycameras = {}
+	self.spotlightpaths = loadShapes (filename, "SpotlightPaths")
+	self.spotlights = loadShapes (filename, "Spotlights")
+	self.switches = {}
+	self.walls = loadShapes (filename, "Walls")
+
+	-- Players and chains
+	for i=1,NUM_PLAYERS,1 do
+		table.insert(self.players, newPlayer (self.world, i, 0,50*i))
+		if (i ~= 1) then
+			table.insert(self.objects, newChain(self.world, self.players[i-1], self.players[i]))
+		end
+	end
+
+	for k,player in pairs(self.players) do
+		player:init()
+	end
+	for k,chain in pairs(self.chains) do
+		chain:init()
+	end
+
+	self:loadTestObjects()
 
 	-- add walls to the world
 	for i,w in ipairs (self.walls.all) do
@@ -54,12 +89,28 @@ function LevelBaseClass:enter ()
 	-- print (serialize(self.spotlights))
 end
 
-function LevelBaseClass:preDraw()
+function GameStateClass:enter ()
+	self:loadLevel ("leveldefinitions/level.svg")
+end
+
+function GameStateClass:loadTestObjects()
+	table.insert(self.securitycameras, newSecurityCam(680, 420))
+	table.insert(self.spotlights, newSpotlight(400,420))
+	table.insert(self.guards, newGuard(200,200))
+
+	local switch = newSwitch(50, 50)
+	local door = newOpenDoor(self.world,70,39,80,20, false)
+	door.canBeOpenedBy (switch)
+	table.insert(self.switches, switch)
+	table.insert(self.doors, door)
+end
+
+function GameStateClass:preDraw()
 	love.graphics.setCanvas (self.canvas)
 	self.canvas:clear()
 end
 
-function LevelBaseClass:postDraw()
+function GameStateClass:postDraw()
 	love.graphics.setCanvas ()
 
 	--
@@ -90,7 +141,16 @@ function LevelBaseClass:postDraw()
 	love.graphics.draw (self.canvas, 0, 0, 0)
 end
 
-function LevelBaseClass:draw ()
+function GameStateClass:draw ()
+	local player_center =  vector(0, 0)
+	for k,player in pairs(self.players) do
+		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
+	end
+	self.camera:lookAt (player_center.x, player_center.y)
+
+	self:preDraw()
+	self.camera:attach()
+
 	for i,p in ipairs (self.walls.polygons) do
 		love.graphics.polygon ("line", unpack(p.points))
 	end
@@ -108,9 +168,29 @@ function LevelBaseClass:draw ()
 	end
 	love.graphics.setColor(oldr, oldg, oldb, olda)
 
+
+	local function draw_items (items)
+		for i,v in ipairs (items) do
+			v:draw()
+		end
+	end
+
+	draw_items (self.players)
+	draw_items (self.securitycameras)
+	draw_items (self.spotlights)
+	draw_items (self.guards)
+	love.graphics.setColor (255, 255, 255, 255)
+
+--	for k,object in pairs(self.objects) do
+--		object:draw()
+--	end
+
+	self.camera:detach()
+
+	self:postDraw()
 end
 
-function LevelBaseClass:update (dt)
+function GameStateClass:update (dt)
 	self.world:update(dt)
 	self.totalTime = self.totalTime + dt
 
@@ -118,10 +198,23 @@ function LevelBaseClass:update (dt)
 		c.x, c.y = pathfunctions.walk(c.pathpoints, self.totalTime, c.config.speed)
 	end
 
+	local function update_items (items, dt, arg1, arg2)
+		for i,v in ipairs (items) do
+			v:update (dt, arg1, arg2)
+		end
+	end
+
+	update_items (self.boxes, dt)
+	update_items (self.chains, dt)
+	update_items (self.guards, dt, self.players, self.world)
+	update_items (self.players, dt)
+	update_items (self.securitycameras, dt, self.players, self.world)
+	update_items (self.spotlights, dt, self.players)
+	update_items (self.switches, dt, self.players)
 end
 
-function LevelBaseClass:keypressed (key)
+function GameStateClass:keypressed (key)
 	print (key .. ' pressed')
 end
 
-return LevelBaseClass
+return GameStateClass

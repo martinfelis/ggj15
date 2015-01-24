@@ -20,7 +20,6 @@ local function newSecurityCam (x, y)
 				return -1
 			end
 
-
 			-- we hit something bad
 			self.alert[self.testingfor] = false
 			return 0 -- immediately cancel the ray
