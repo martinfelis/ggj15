@@ -34,6 +34,8 @@ function love.load ()
 		[20] = love.graphics.newFont(20),
 		tinet = love.graphics.newFont("fonts/tinet/TungusFont_Tinet.ttf", 30),
 		sugar = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 30),
+		sugarlarge = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 50),
+		sugarsmall = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 18),
 	}
 	love.graphics.setBackgroundColor(17,17,17)
 	love.graphics.setFont(fonts[12])
@@ -52,6 +54,7 @@ function love.load ()
     -- states.story:selectstories{"intro"}
     -- Gamestate.push(states.story)
     -- Gamestate.push(states.credits)
+    -- Gamestate.push(states.menu)
 end
 
 function love.draw ()

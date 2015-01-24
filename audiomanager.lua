@@ -33,17 +33,20 @@ end
 
 function AudioManager:configureCurrentMusic(musictoplay_astable)
 	self.current = musictoplay_astable
+	if not config.sound then
+		self.current = {}
+	end
 
 	-- stop all audio if its not playing now
 	for key, audio in pairs(self.audios) do
-		if musictoplay_astable[key] == nil and audio.source:isPlaying() then
+		if self.current[key] == nil and audio.source:isPlaying() then
 			audio.source:stop()
 			audio.source:rewind()
 		end
 	end
 
 	-- start audio if not started yet
-	for _, key in pairs(musictoplay_astable) do
+	for _, key in pairs(self.current) do
 		if not self.audios[key].source:isPlaying() then
 			self.audios[key].source:setVolume(self.audios[key].volume)
 			self.audios[key].source:setLooping(self.audios[key].loop)
