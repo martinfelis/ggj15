@@ -43,7 +43,7 @@ local function loadShapes (filename, layername)
 		if not (transformstring:sub(1, 10) == "translate("
 				or transformstring:sub(1, 7) == "matrix(") or transformstring:find(" ") then
 			print ("UNSUPPORTED TRANSFORMATION: " .. transformstring)
-			return 0, {x, y, x+w, y, x+w, y+h, x, y+h}
+			return 0, {x, y, x+w, y, x+w, y+h, x, y+h}, 0, 0
 		end
 
 		if transformstring:sub(1, 10) == "translate(" then
@@ -108,7 +108,7 @@ local function loadShapes (filename, layername)
 		--print(serialize(nums))
 		--print(serialize(resultingpointlist))
 		--print (angle)
-		return angle, resultingpointlist
+		return angle, resultingpointlist, 0, 0 -- die nuller sind die dx, dy bei transform() (nicht matrix())
 	end
 
 

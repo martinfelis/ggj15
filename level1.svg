@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.9798991"
-     inkscape:cx="485.29061"
-     inkscape:cy="-2101.2391"
+     inkscape:zoom="0.35000002"
+     inkscape:cx="2310.3739"
+     inkscape:cy="-3163.7086"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer11"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -576,6 +576,21 @@
        x="2420.0896"
        y="3390.0896"
        inkscape:label="#rect3526" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer11"
+     inkscape:label="Target">
+    <path
+       sodipodi:type="arc"
+       style="fill:#217844;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:6.50600004;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.30000019;stroke-opacity:1;stroke-dasharray:19.51800013, 19.51800013;stroke-dashoffset:0"
+       id="path3878"
+       sodipodi:cx="3540.0896"
+       sodipodi:cy="3320.0896"
+       sodipodi:rx="480"
+       sodipodi:ry="480"
+       d="m 4020.0896,3320.0896 a 480,480 0 1 1 -960,0 480,480 0 1 1 960,0 z"
+       transform="matrix(0.98653706,0,0,0.98653706,-195.59309,287.95109)" />
   </g>
   <g
      inkscape:groupmode="layer"

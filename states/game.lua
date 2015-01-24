@@ -47,6 +47,7 @@ function GameStateClass:loadLevel (filename)
 	self.SVGplayers = loadShapes (filename, "Players")
 	self.SVGpaths = loadShapes (filename, "Paths")
 	self.SVGswitches = loadShapes (filename, "Switches")
+	self.SVGtargets = loadShapes (filename, "Target")
 	self.boxes = loadShapes (filename, "Boxes")
 	self.spotlights = loadShapes (filename, "Spotlights")
 
@@ -56,6 +57,7 @@ function GameStateClass:loadLevel (filename)
 	self.players = {}
 	self.securitycameras = {}
 	self.switches = {}
+	self.target = {center_x = 0, center_y = 0, radius = 0}
 	self.walls = loadShapes (filename, "Walls")
 
 	for _, player in pairs(self.SVGplayers.circles) do
@@ -117,16 +119,17 @@ function GameStateClass:loadLevel (filename)
 
 	self.camera:zoom(0.6)
 
-	-- Players and chains
-	for i=1,NUM_PLAYERS,1 do
-
-	end
-
 	for k,player in pairs(self.players) do
 		player:init()
 	end
 	for k,chain in pairs(self.chains) do
 		chain:init()
+	end
+
+	-- TARGET
+	if self.SVGtargets.circles[1] then
+		local c = self.SVGtargets.circles[1]
+		self.target = {center_x = c.x, center_y = c.y, radius = c.r}
 	end
 
 	self:loadTestObjects()
@@ -309,6 +312,8 @@ function GameStateClass:update (dt)
 	update_items (self.securitycameras, dt, self.players, self.world)
 	update_items (self.spotlights, dt, self.players)
 	update_items (self.switches, dt, self.players)
+
+	self:checkWin()
 end
 
 function GameStateClass:keypressed (key)
@@ -319,6 +324,16 @@ function GameStateClass:resize(x, y)
 	self.camera = Camera (self.camera.x, self.camera.y)
 	self.canvas = love.graphics.newCanvas()
 	self.canvas:setFilter ("nearest", "nearest")
+end
+
+function GameStateClass:checkWin()
+	for _, player in pairs(self.players) do
+		local dx, dy = player.body:getX() - self.target.center_x, player.body:getY() - self.target.center_y
+		local distancetotarget = math.sqrt(dx*dx + dy*dy)
+		if distancetotarget < self.target.radius then
+			print ("WIN")
+		end
+	end
 end
 
 return GameStateClass
