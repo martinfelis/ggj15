@@ -86,14 +86,14 @@ function GameStateClass:loadLevel (filename)
 
 	-- SWITCHES
 	for _, svgswitch in pairs(self.SVGswitches.circles) do
-		print(serialize(svgswitch))
 		local switch = newSwitch(svgswitch.x, svgswitch.y)
 		switch.id = svgswitch.id
 		table.insert(self.switches, switch)
 	end
 
-	-- DOORS
+	-- DOORS: id: doorx_left:true
 	for _, svgdoor in pairs(self.SVGdoors.polygons) do
+		local rl = (svgdoor.config.left=="true") or false
 		local door = newOpenDoor(self.world, svgdoor.x + 60, svgdoor.y + 60,
 								svgdoor.width, svgdoor.height, true)
 		if svgdoor.config.openby then
@@ -106,12 +106,17 @@ function GameStateClass:loadLevel (filename)
 		table.insert(self.doors, door)
 	end
 
+	-- open all doors without switches
+	for _, door in pairs(self.doors) do
+		door:openIfNoSwitch()
+	end
+
 
 	-- associate spotlights with paths
 	for i, s in ipairs(self.spotlights.circles) do
 	end
 
-	self.camera:zoom(0.2)
+	self.camera:zoom(0.4)
 
 	-- Players and chains
 	for i=1,NUM_PLAYERS,1 do

@@ -184,6 +184,8 @@ local function loadShapes (filename, layername)
 
 	local function get_node_rect(node)
 		local rect = node.xarg -- has x, y, height, width
+		rect.x, rect.y = tonumber(rect.x), tonumber(rect.y)
+		rect.height, rect.width = tonumber(rect.height), tonumber(rect.width)
 		rect.colorhex, rect.color = get_color(parse_style(node.xarg.style))
 		rect.config = parse_id(node.xarg.id)
 		rect.angle = 0
@@ -280,6 +282,7 @@ local function loadShapes (filename, layername)
 				if v.label == "path" and v.xarg.type == "arc" then
 					 local circle = get_node_circle (v)
 					 circle.type = "circle"
+					 circle.id = v.xarg.id
 					 table.insert (shapes.circles, circle)
 					 table.insert (shapes.all, circle)
 				end

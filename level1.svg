@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.17500001"
-     inkscape:cx="391.28164"
-     inkscape:cy="-2373.5172"
+     inkscape:zoom="1.4000001"
+     inkscape:cx="132.84612"
+     inkscape:cy="-2477.2783"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
@@ -94,7 +94,7 @@
        sodipodi:ry="40"
        d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
        inkscape:label="#path5435"
-       transform="translate(1559.9105,1199.9105)" />
+       transform="translate(760.0895,1839.9105)" />
     <path
        sodipodi:type="arc"
        style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
@@ -104,7 +104,7 @@
        sodipodi:rx="40"
        sodipodi:ry="40"
        d="m 100.0895,1400.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
-       transform="translate(1439.9105,999.91054)" />
+       transform="translate(720.0895,1839.9105)" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -528,7 +528,7 @@
        d="m 2200.0896,3460.0896 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
        inkscape:transform-center-x="39.9999"
        inkscape:transform-center-y="-139.99992"
-       transform="translate(-260.0001,-920.00008)"
+       transform="translate(-1460.0001,-80.000083)"
        inkscape:label="#path3569" />
   </g>
   <g
@@ -545,33 +545,37 @@
        y="2520.0896"
        inkscape:label="#rect3515" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect3517"
-       width="220"
-       height="40"
-       x="-19.9105"
-       y="3080.0896" />
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.97619045px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="door2"
+       width="209.5238"
+       height="40.023811"
+       x="-19.922405"
+       y="3080.0776"
+       inkscape:label="#rect3517" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect3519"
-       width="40"
-       height="240"
-       x="500.08951"
-       y="3640.0896" />
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.91292036px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="door3"
+       width="40.087078"
+       height="199.58716"
+       x="500.54596"
+       y="3640.5459"
+       inkscape:label="#rect3519" />
     <rect
        style="fill:#0000ff;display:inline"
-       id="rect3528"
+       id="door5"
        width="60"
        height="200"
        x="2420.0896"
-       y="3600.0896" />
+       y="3600.0896"
+       inkscape:label="#rect3528" />
     <rect
        style="fill:#0000ff;display:inline"
-       id="rect3526"
+       id="door4"
        width="60"
        height="180"
        x="2420.0896"
-       y="3380.0896" />
+       y="3380.0896"
+       inkscape:label="#rect3526" />
   </g>
   <g
      inkscape:groupmode="layer"
