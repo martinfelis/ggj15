@@ -1,7 +1,8 @@
 
 local function newOpenDoor(world, x, y, width, height, left)
 	local door = {
-		left = left
+		left = left,
+		opener = {}
 	}
 
 	-- move center
@@ -27,6 +28,7 @@ local function newOpenDoor(world, x, y, width, height, left)
 		door.upJoint = love.physics.newRevoluteJoint(door.body, door.upHinge, x, up, false)
 		door.downJoint = love.physics.newRevoluteJoint(door.body, door.downHinge, x, down, false)
 	end
+
 	function door:draw()
 		love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 	end
@@ -43,11 +45,29 @@ local function newOpenDoor(world, x, y, width, height, left)
 				self.upJoint:destroy()
 			else
 				self.downJoint:destroy()
+				door.body:applyForce(100,0)
 			end
 		end
 	end
 
 	function door:canBeOpenedBy(switch)
+		print(switch)
+		table.insert(self.opener, switch)
+		switch:addObserver(self)
+	end
+
+	function door:notify(switch)
+		local opendoor = true
+		for k,v in pairs(self.opener) do
+			if (not v.on) then
+				opendoor = false
+				break
+			end
+		end
+		if (opendoor) then
+			self:open()
+		end
+
 	end
 
 	return door

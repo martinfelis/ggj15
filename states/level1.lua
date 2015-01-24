@@ -43,9 +43,9 @@ function LevelOneClass:enter()
 	table.insert(self.objects, newGuard(200,220))
 	local switch = newSwitch(50, 50)
 	table.insert(self.objects, switch)
-	local door = newOpenDoor(self.world,70,39,80,20, false)
+	local door = newOpenDoor(self.world,70,40,20,80, false)
 	table.insert(self.objects, door)
-	door.canBeOpenedBy(switch)
+	door:canBeOpenedBy(switch)
 
 	-- self.door:open()
 

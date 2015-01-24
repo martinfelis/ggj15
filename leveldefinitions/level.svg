@@ -28,7 +28,7 @@
      inkscape:cx="115.25159"
      inkscape:cy="738.93724"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1366"
      inkscape:window-height="702"
@@ -93,7 +93,7 @@
        sodipodi:nodetypes="ccccc" />
     <path
        style="fill:#999999;stroke:#999999;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 260,252.36218 -100,-85.00005 0,-20 100,0 z"
+       d="m 300,217.36223 -100,-85.00005 0,-20 100,0 z"
        id="path3866-8-0-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
@@ -126,22 +126,13 @@
        y="422.13837"
        inkscape:label="#rect3020"
        transform="matrix(0.86912819,0.49458688,-0.49458688,0.86912819,0,0)" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#000080;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:5.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1.60000002;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       id="path3790"
-       sodipodi:cx="-350"
-       sodipodi:cy="72.362183"
-       sodipodi:rx="50"
-       sodipodi:ry="60"
-       d="m -300,72.362183 a 50,60 0 1 1 -100,0 50,60 0 1 1 100,0 z" />
     <rect
        style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3512"
        width="120"
        height="120"
        x="80"
-       y="212.36218" />
+       y="232.36218" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -150,7 +141,7 @@
      style="display:inline">
     <path
        style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.89442718px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 67.52758,92.749641 120,32.362183 180.38744,84.834594 127.91502,145.22205 z"
+       d="M 47.52758,92.749641 100,32.362183 160.38744,84.834594 107.91502,145.22205 z"
        id="rect3199"
        inkscape:connector-curvature="0" />
   </g>
@@ -172,14 +163,14 @@
      inkscape:label="Spotlights">
     <path
        sodipodi:type="arc"
-       style="fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:5.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1.60000002;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:5.80000019000000044;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1.60000001999999997;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="spotlight_path:spath1_speed:100"
        sodipodi:cx="0"
        sodipodi:cy="172.36218"
        sodipodi:rx="60"
        sodipodi:ry="60"
        d="m 60,172.36218 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
-       transform="matrix(0.33333333,0,0,0.33333333,-62.857144,20.622407)"
+       transform="translate(-62.857144,-94.285715)"
        inkscape:label="#path3836" />
   </g>
   <g
