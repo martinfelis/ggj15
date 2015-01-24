@@ -15,17 +15,17 @@ local function newOpenDoor(world, x, y, width, height, left)
 	door.fixture = love.physics.newFixture(door.body, door.shape)
 
 	if (width > height) then -- breit
-		local jointy = y + height/2
-		local left = x
-		local right = x + width
+		local jointy = y -- + height/2
+		local left = x - width/2 + height/2 --x
+		local right = x + width/2 - height/2 --x + width
 		door.leftHinge = love.physics.newBody(world, left, jointy)
 		door.rightHinge = love.physics.newBody(world, right, jointy)
 		door.leftJoint = love.physics.newRevoluteJoint(door.body, door.leftHinge, left, jointy, false)
 		door.rightJoint = love.physics.newRevoluteJoint(door.body, door.rightHinge, right, jointy, false)
 	else -- hochkant
 		local jointx = x
-		local up = y - height/2
-		local down = y + height - height/2
+		local up = y - height/2 + width/2 --y - height/2
+		local down = y + height/2 - width/2 --y + height - height/2
 		door.upHinge = love.physics.newBody(world, jointx, up)
 		door.downHinge = love.physics.newBody(world, jointx, down)
 		door.upJoint = love.physics.newRevoluteJoint(door.body, door.upHinge, jointx, up, false)

@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4000001"
-     inkscape:cx="132.84612"
-     inkscape:cy="-2477.2783"
+     inkscape:zoom="1.9798991"
+     inkscape:cx="485.29061"
+     inkscape:cy="-2101.2391"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
@@ -528,7 +528,7 @@
        d="m 2200.0896,3460.0896 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
        inkscape:transform-center-x="39.9999"
        inkscape:transform-center-y="-139.99992"
-       transform="translate(-1460.0001,-80.000083)"
+       transform="translate(-1520.0001,-540.00008)"
        inkscape:label="#path3569" />
   </g>
   <g
@@ -537,44 +537,44 @@
      inkscape:label="Doors"
      style="display:inline">
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.9558717px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="door1_openby:sw1"
-       width="40"
-       height="240"
-       x="500.08951"
-       y="2520.0896"
+       width="40.044128"
+       height="219.04413"
+       x="499.56744"
+       y="2530.5674"
        inkscape:label="#rect3515" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.97619045px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.95176452px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="door2"
-       width="209.5238"
-       height="40.023811"
-       x="-19.922405"
-       y="3080.0776"
+       width="199.04823"
+       height="40.048237"
+       x="-9.434618"
+       y="3080.0654"
        inkscape:label="#rect3517" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.91292036px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.95694703px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="door3"
-       width="40.087078"
-       height="199.58716"
-       x="500.54596"
-       y="3640.5459"
+       width="40.043053"
+       height="219.54314"
+       x="500.56796"
+       y="3650.0679"
        inkscape:label="#rect3519" />
     <rect
        style="fill:#0000ff;display:inline"
        id="door5"
        width="60"
-       height="200"
+       height="159.99992"
        x="2420.0896"
-       y="3600.0896"
+       y="3620.0896"
        inkscape:label="#rect3528" />
     <rect
        style="fill:#0000ff;display:inline"
        id="door4"
        width="60"
-       height="180"
+       height="149.99992"
        x="2420.0896"
-       y="3380.0896"
+       y="3390.0896"
        inkscape:label="#rect3526" />
   </g>
   <g
