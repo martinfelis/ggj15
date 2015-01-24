@@ -207,8 +207,8 @@
        id="rect4720-3"
        width="1119.9105"
        height="40.000137"
-       x="-159.91051"
-       y="2412.3621" />
+       x="-160.00002"
+       y="2412.4517" />
     <rect
        style="fill:#333333;fill-opacity:1;stroke:#333333;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect4814"
@@ -535,40 +535,40 @@
      inkscape:label="Doors"
      style="display:inline">
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.88928109px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3515"
-       width="40"
-       height="240"
-       x="500.08951"
-       y="2520.0896" />
+       width="40.046135"
+       height="189.57834"
+       x="500.06644"
+       y="2550.0667" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.92840213px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3517"
-       width="220"
-       height="40"
-       x="-19.9105"
-       y="3080.0896" />
+       width="189.5119"
+       height="40.023811"
+       x="0.089500003"
+       y="3080.0776" />
     <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.84120542px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3519"
-       width="40"
-       height="240"
-       x="500.08951"
-       y="3640.0896" />
+       width="40.158794"
+       height="169.15883"
+       x="500.01016"
+       y="3680.51" />
     <rect
        style="fill:#0000ff;display:inline"
        id="rect3528"
-       width="60"
-       height="200"
+       width="39.999901"
+       height="139.99992"
        x="2420.0896"
-       y="3600.0896" />
+       y="3635.0896" />
     <rect
        style="fill:#0000ff;display:inline"
        id="rect3526"
-       width="60"
-       height="180"
-       x="2420.0896"
-       y="3380.0896" />
+       width="39.999821"
+       height="120.00008"
+       x="2420.0898"
+       y="3410.0896" />
   </g>
   <g
      inkscape:groupmode="layer"
