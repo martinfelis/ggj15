@@ -31,7 +31,7 @@ local function newSecurityCam (x, y)
 
 			if (fixture:getUserData() == "player1") then
 				-- the security cam can see the player
-				self.alert1 = true
+			--	self.alert1 = true
 				self.alert1X = x
 				self.alert1Y = y
 				self.alert1NX = xn
@@ -40,7 +40,7 @@ local function newSecurityCam (x, y)
 				--love.event.quit()
 			end
 			if (fixture:getUserData() == "player2") then
-				self.alert2 = true
+			--	self.alert2 = true
 				self.alert2X = x
 				self.alert2Y = y
 				self.alert2NX = xn
@@ -50,6 +50,9 @@ local function newSecurityCam (x, y)
 
 			self.nonAlert1X = x
 			self.nonAlert1Y = y
+
+			print(fraction)
+
 			-- we hit something bad
 			if (self.testingfor == 1) then
 				self.alert1 = false
