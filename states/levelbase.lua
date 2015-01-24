@@ -14,14 +14,17 @@ function LevelBaseClass:enter ()
 	self.boxes = loadShapes ("leveldefinitions/level.svg", "Boxes")
 
 	-- add walls to the world
-	for i,w in ipairs (self.walls.polygons) do
+	for i,w in ipairs (self.walls.all) do
 		-- print ("adding wall", #w)
 		w.body = love.physics.newBody (self.world, 0, 0, "static")
-		w.shape = love.physics.newPolygonShape (unpack(w))
-		w.fixture = love.physics.newFixture (w.body, w.shape)
-	end
-	for i,w in ipairs (self.walls.rects) do
-		print "RECT"
+		if w.type == "polygon" then
+			w.shape = love.physics.newPolygonShape (unpack(w.points))
+		elseif w.type == "circle" then
+			w.shape = love.physics.newCircleShape( w.x, w.y, w.r )
+		end
+		if w.shape then
+			w.fixture = love.physics.newFixture (w.body, w.shape)
+		end
 	end
 	-- add boxes to the world
 	for i,b in ipairs (self.boxes) do
@@ -36,9 +39,11 @@ end
 
 function LevelBaseClass:draw ()
 	for i,p in ipairs (self.walls.polygons) do
-		love.graphics.polygon ("fill", unpack(p))
+		love.graphics.polygon ("fill", unpack(p.points))
 	end
-
+	for i,c in ipairs (self.walls.circles) do
+		love.graphics.circle( "fill", c.x, c.y, c.r, 50 )
+	end
 	for i,p in ipairs (self.boxes) do
 --		love.graphics.polygon ("fill", p)
 		love.graphics.polygon ("fill", p.body:getWorldPoints(p.shape:getPoints()))
