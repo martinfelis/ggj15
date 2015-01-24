@@ -207,7 +207,6 @@ function GameStateClass:drawGround()
 
 	local oldr, oldg, oldb, olda = love.graphics.getColor()
 	for _, ground in pairs(self.grounds) do
-		print(serialize(ground.config.hide))
 		if ground.config.hide == nil or ground.config.hide ~= "true" then
 			love.graphics.setColor(ground.color)
 			love.graphics.polygon("fill", unpack(ground.points))
