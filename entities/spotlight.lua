@@ -4,7 +4,7 @@ local function newSpotlight (x, y)
 		y = y,
 		alert1 = false,
 		alert2 = false,
-		radius = 170
+		radius = 100
 	}
 
 	function spot:update(player1, player2)
