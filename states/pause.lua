@@ -39,7 +39,7 @@ function PauseState:update (dt)
 
 
 
-	if gui.Button ({text = "Give up!"}) then
+	if gui.Button ({text = "Retry!"}) then
 		prev_state.busted = true
 		Gamestate.pop()
 	end
