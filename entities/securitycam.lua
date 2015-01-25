@@ -64,10 +64,11 @@ local function newSecurityCam (x, y, radius)
 			if visible and not self.player_alert_start[player] then
 				Signals.emit ('alert-start', self, player)
 				self.player_alert_start[player] = love.timer.getTime()
-				self.beep_timer = Timer.addPeriodic (0.4, function ()
-					Sound.static.beep2:play()
-				end)
-
+				if not self.beep_timer then
+					self.beep_timer = Timer.addPeriodic (0.4, function ()
+						Sound.static.beep2:play()
+					end)
+				end
 			end
 
 			if not visible and self.player_alert_start[player] then
@@ -79,10 +80,11 @@ local function newSecurityCam (x, y, radius)
 		if next (self.player_alert_start) then
 			self.alerted = true
 		else
+			self.alerted = false
 			if self.beep_timer then
 				Timer.cancel (self.beep_timer)
+				self.beep_timer = nil
 			end
-			self.alerted = false
 		end
 	end
 
