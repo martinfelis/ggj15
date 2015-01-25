@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.125"
-     inkscape:cx="693.5536"
-     inkscape:cy="-1273.417"
+     inkscape:zoom="0.5"
+     inkscape:cx="1993.6961"
+     inkscape:cy="-1135.8373"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer2"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -376,27 +376,13 @@
        x="710.22357"
        y="1600.1339" />
     <rect
-       style="fill:#ffffff;fill-opacity:0.61458330999999999;stroke:#000000;stroke-width:0.17900000999999999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:0.64630225"
-       id="rect5384"
-       width="40"
-       height="120.00004"
-       x="1300.179"
-       y="1880" />
-    <rect
-       style="opacity:0.64630223;fill:#ffffff;fill-opacity:0.61458333;stroke:#000000;stroke-width:0.17909986;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:0.61458333;stroke:#000000;stroke-width:0.17899999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="myrect"
-       width="80.089363"
-       height="79.999985"
-       x="820.08948"
-       y="2380.0896"
+       width="80.000031"
+       height="80.000023"
+       x="1300.0895"
+       y="1720.0895"
        inkscape:label="#rect5386" />
-    <rect
-       style="fill:#ffffff;fill-opacity:0.61458330999999999;stroke:#000000;stroke-width:0.17900000999999999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:0.64630225"
-       id="rect5390"
-       width="40"
-       height="120"
-       x="1860.0895"
-       y="2640.0896" />
     <rect
        style="fill:#ffffff;fill-opacity:0.61458330999999999;stroke:#000000;stroke-width:0.21576159000000000;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline;opacity:0.64630225"
        id="rect5366"
@@ -488,6 +474,30 @@
        height="40.000015"
        x="980.08636"
        y="2799.9968" />
+    <rect
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:0.61458333;stroke:#000000;stroke-width:0.17909986;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="myrect-3"
+       width="80.089363"
+       height="79.999985"
+       x="1860.0895"
+       y="1720.0895"
+       inkscape:label="#rect5386" />
+    <rect
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:0.61458333;stroke:#000000;stroke-width:0.17899999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="myrect-0"
+       width="80.000031"
+       height="80.000023"
+       x="1300.0896"
+       y="2120.0896"
+       inkscape:label="#rect5386" />
+    <rect
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:0.61458333;stroke:#000000;stroke-width:0.17909986;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="myrect-3-8"
+       width="80.089363"
+       height="79.999985"
+       x="1860.0895"
+       y="2120.0896"
+       inkscape:label="#rect5386" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -544,6 +554,16 @@
        inkscape:transform-center-y="-139.99992"
        transform="translate(-360.0001,-400.00008)"
        inkscape:label="#path3569" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.64630223;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="not_open"
+       sodipodi:cx="2140.0896"
+       sodipodi:cy="320.08951"
+       sodipodi:rx="40"
+       sodipodi:ry="40"
+       d="m 2180.0896,320.08951 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
+       inkscape:label="#path11281" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -613,6 +633,14 @@
        height="137.9015"
        x="979.45618"
        y="1447.188" />
+    <rect
+       style="opacity:0.64630222999999998;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="asdf_openby:not_open"
+       width="40"
+       height="240"
+       x="2220.0896"
+       y="1300.0895"
+       inkscape:label="#rect11322" />
   </g>
   <g
      inkscape:groupmode="layer"
