@@ -49,7 +49,7 @@ function love.load ()
 	sketch_shader = love.graphics.newShader ("shader/sketch.fs")
 	noise_texture = love.image.newImageData(50, 50)
 	noise_texture:mapPixel(function(x,y)
-		local l = love.math.noise (x,y) * 255 
+		local l = love.math.noise (x,y) * 255
 		return l,l,l,l
 	end)
 	noise_texture = love.graphics.newImage(noise_texture)
@@ -86,7 +86,7 @@ function love.load ()
 
 	-- start initial state
     Gamestate.registerEvents()
---		Gamestate.push(states.menu)
+	--		Gamestate.push(states.menu)
     Gamestate.push(states.game)
     -- states.story:selectstories{"intro"}
     -- Gamestate.push(states.story)
