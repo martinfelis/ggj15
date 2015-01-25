@@ -28,7 +28,7 @@ local function newGuard (x, y, world)
 
 		detectortype = "guard",
 		player_alert_start= {},
-		view_fov = math.pi/2,
+		view_fov = math.pi * 0.3,
 		busted_fov = math.pi * 0.9
 	}
 	guard.guide = love.physics.newBody(world, x, y, "dynamic")
