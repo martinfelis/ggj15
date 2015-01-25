@@ -21,11 +21,11 @@ function newSwitch(x, y, radius)
 			end
 		end
 	end
-	function switch:draw() 
+	function switch:draw()
 		if (self.on) then
 			love.graphics.setColor(0, 255, 0, 255)
-		else 
-			love.graphics.setColor(64, 128, 64, 128)
+		else
+			love.graphics.setColor(255, 0, 0, 128)
 		end
 		love.graphics.circle("fill", self.x, self.y, self.radius)
 		love.graphics.setColor(255, 255, 255, 255)
