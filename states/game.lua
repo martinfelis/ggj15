@@ -469,9 +469,13 @@ function GameStateClass:keyreleased (key)
 		--Signals.emit ('win')
 		self.win = true
 		self:resume()
-
 	end
---	print (key .. ' pressed')
+	if key=="f11" then
+		--Signals.emit ('win')
+		self.busted = true
+		self:resume()
+	end
+	--	print (key .. ' pressed')
 end
 
 function GameStateClass:resize(x, y)

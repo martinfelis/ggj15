@@ -84,6 +84,9 @@ end
 
 function MenuClass:keypressed(key, code)
 	gui.keyboard.pressed(key)
+	if key=="f12" then
+		Gamestate.switch(states.game)
+	end
 end
 
 -- LÖVE 0.9
