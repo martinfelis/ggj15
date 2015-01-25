@@ -341,18 +341,12 @@ function GameStateClass:postDraw()
 	draw_items(self.walls)
 	draw_items(self.boxes)
 	draw_items(self.players)
-
-
-	for i,p in ipairs (self.players) do
-		p:draw()
-	end
+	draw_items(self.guards)
 
 	self.camera:detach()
 end
 
 function GameStateClass:draw ()
-
-
 	local player_center =  vector(0, 0)
 	for k,player in pairs(self.players) do
 		player_center = player_center + vector(player.body:getPosition()) * (1/table.getn(self.players))
@@ -363,23 +357,23 @@ function GameStateClass:draw ()
 	self.camera:lookAt (player_center.x, player_center.y)
 
 	self.background_quad:setViewport (self.camera.scale * player_center.x, self.camera.scale * player_center.y, love.window.getWidth(), love.window.getHeight())
+	love.graphics.setColor (20, 20, 120, 255)
 	love.graphics.draw(self.ground_texture, self.background_quad, 0, 0)
 
 	self.camera:attach()
 	self:drawGround()
 
+	love.graphics.setColor (100, 100, 255, 255)
 	draw_items (self.walls)
 	draw_items (self.players)
+	draw_items (self.boxes)
 	draw_items (self.securitycameras)
 	draw_items (self.spotlights)
 	draw_items (self.guards)
 	draw_items (self.switches)
 	draw_items (self.chains)
 	draw_items (self.doors)
-	draw_items (self.boxes)
 	love.graphics.setColor (255, 255, 255, 255)
-
-
 
 	self.camera:detach()
 
