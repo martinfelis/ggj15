@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.25"
-     inkscape:cx="-90.732642"
-     inkscape:cy="-3272.4143"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="1096.164"
+     inkscape:cy="-2103.2961"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer11"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -619,7 +619,7 @@
        sodipodi:rx="480"
        sodipodi:ry="480"
        d="m 4020.0896,3320.0896 a 480,480 0 1 1 -960,0 480,480 0 1 1 960,0 z"
-       transform="matrix(0.98653706,0,0,0.98653706,-195.59309,287.95109)" />
+       transform="matrix(0.98653706,0,0,0.98653706,-115.59309,287.95109)" />
   </g>
   <g
      inkscape:groupmode="layer"
