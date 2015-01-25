@@ -3,60 +3,30 @@ local PLAYER_RADIUS = 40
 
 local PLAYER_CONFIG = {
 	{
-		keys = {
-			right = "right",
-			left = "left",
-			down = "down",
-			up = "up"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "d",
-			left = "a",
-			down = "s",
-			up = "w"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "l",
-			left = "j",
-			down = "k",
-			up = "i"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "l",
-			left = "j",
-			down = "k",
-			up = "i"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "l",
-			left = "j",
-			down = "k",
-			up = "i"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
@@ -127,15 +97,15 @@ local function newPlayer (world, id, x, y)
 			self.stepping_timer = nil
 		end
 
-		local right = love.keyboard.isDown(player.keys.right) and 1 or 0
-		local left = love.keyboard.isDown(player.keys.left) and 1 or 0
-		if (right==1 or left==1) then
+		local right = input_mapper:query(player.id, "right")
+		local left = input_mapper:query(player.id, "left")
+		if (right~=0 or left~=0) then
 			vel.x = (right-left)*PLAYER_MOVE_FORCE
 		end
 
-		local up = love.keyboard.isDown(player.keys.up) and 1 or 0
-		local down = love.keyboard.isDown(player.keys.down) and 1 or 0
-		if (up==1 or down==1) then
+		local up = input_mapper:query(player.id, "up") 
+		local down = input_mapper:query(player.id, "down")
+		if (up~=0. or down~=0.) then
 			vel.y = (down-up)*PLAYER_MOVE_FORCE
 		end
 

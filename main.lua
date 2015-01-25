@@ -7,6 +7,7 @@ matrix = require "utils.matrix"
 Signals = require "hump.signal"
 Timer = require "hump.timer"
 pathfunctions = require "utils.pathfunctions"
+newInputMapper = require "InputMapper"
 
 -- require States
 local GameStateClass = require("states.game")
@@ -47,6 +48,7 @@ audio = AudioManager:new()
 sounds = { }
 levels = { "tutorial1.svg", "tutorial2.svg", "tutorial3.svg", "tutorial4.svg", "level1.svg", "level_out.svg"}
 step_sounds = {}
+input_mapper = {}
 
 -- game design parameters
 GVAR = {
@@ -62,6 +64,8 @@ io.stdout:setvbuf("no")
 
 function love.load ()
 	love.window.setTitle("Prison Broke")
+
+	input_mapper = newInputMapper()
 
 	-- setup of the sketching shader
 	sketch_shader = love.graphics.newShader ("shader/sketch.fs")
@@ -117,6 +121,7 @@ function love.load ()
 	-- Gamestate.push(states.menu)
 
 	Sound.stream.theme:play()	
+	Sound.stream.theme:setLooping (true)
 end
 
 function love.draw ()
