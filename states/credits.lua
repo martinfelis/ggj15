@@ -9,7 +9,7 @@ function Credits:new ()
 	local newInstance = {}
 
 	newInstance.credits = {
-		"Prison Break",
+		"Prison Broke",
 		"Global Game Jam 2015",
 		"",
 		"SimonPtr",
