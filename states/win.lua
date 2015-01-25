@@ -37,7 +37,7 @@ function WinState:update (dt)
 	gui.group.push({grow = "down", pos = {
 			love.graphics.getWidth() * 0.7,
 			love.graphics.getHeight() * 0.7} })
-	if gui.Button ({text = "Retry!"}) then
+	if gui.Button ({text = "Continue!"}) then
 		Gamestate.pop()
 	end
 	if gui.Button ({text = "Quit!"}) then
