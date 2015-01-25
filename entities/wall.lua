@@ -4,6 +4,7 @@ local function newPolygonWall (world, points, color)
 	wall.x = points[1]
 	wall.y = points[2]
 	wall.width, wall.height = pathfunctions.getDimensions(points)
+	wall.color = color
 
 
 	wall.points = pathfunctions.transform(points,
@@ -16,6 +17,7 @@ local function newPolygonWall (world, points, color)
 
 
 	function wall:draw()
+		love.graphics.setColor(wall.color)
 		love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
 		--love.graphics.setColor(200, 0, 0, 255)
 		--love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
