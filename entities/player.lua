@@ -3,60 +3,30 @@ local PLAYER_RADIUS = 40
 
 local PLAYER_CONFIG = {
 	{
-		keys = {
-			right = "right",
-			left = "left",
-			down = "down",
-			up = "up"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "d",
-			left = "a",
-			down = "s",
-			up = "w"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "l",
-			left = "j",
-			down = "k",
-			up = "i"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "l",
-			left = "j",
-			down = "k",
-			up = "i"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
 		center_y = -3
 	},
 	{
-		keys = {
-			right = "l",
-			left = "j",
-			down = "k",
-			up = "i"
-		},
 		image = "images/player.png",
 		radius = PLAYER_RADIUS,
 		center_x = 2,
@@ -77,7 +47,22 @@ local function newPlayer (world, id, x, y)
 		angle = 0, -- needed so the player does not turn wildly at slow speed
 		cycle_phase = 0.,
 		speed = 0.,
+		stepping_timer = nil,
 	}
+
+	Signals.register ('busted', function()
+		if player.stepping_timer then
+			Timer.cancel (player.stepping_timer)
+			player.stepping_timer = nil
+		end
+	end)
+
+	Signals.register ('win', function()
+		if player.stepping_timer ~= nil then
+			Timer.cancel (player.stepping_timer)
+			player.stepping_timer = nil
+		end
+	end)
 
 	-- physics
 	player.body = love.physics.newBody(world, 0, 0, "dynamic")
@@ -100,15 +85,27 @@ local function newPlayer (world, id, x, y)
 		local velX, velY = self.body:getLinearVelocity()
 		local vel = vector(velX, velY)
 
-		local right = love.keyboard.isDown(player.keys.right) and 1 or 0
-		local left = love.keyboard.isDown(player.keys.left) and 1 or 0
-		if (right==1 or left==1) then
+		if vel:len2() > 10 and not self.stepping_timer then
+			self.stepping_timer = Timer.addPeriodic (0.1, function ()
+				local index = math.floor ((love.math.random() * 4)) + 1
+				step_sounds[index]:play()
+			end)
+		end
+
+		if self.stepping_timer and vel:len() < 10 then
+			Timer.cancel (self.stepping_timer)
+			self.stepping_timer = nil
+		end
+
+		local right = input_mapper:query(player.id, "right")
+		local left = input_mapper:query(player.id, "left")
+		if (right~=0 or left~=0) then
 			vel.x = (right-left)*PLAYER_MOVE_FORCE
 		end
 
-		local up = love.keyboard.isDown(player.keys.up) and 1 or 0
-		local down = love.keyboard.isDown(player.keys.down) and 1 or 0
-		if (up==1 or down==1) then
+		local up = input_mapper:query(player.id, "up") 
+		local down = input_mapper:query(player.id, "down")
+		if (up~=0. or down~=0.) then
 			vel.y = (down-up)*PLAYER_MOVE_FORCE
 		end
 

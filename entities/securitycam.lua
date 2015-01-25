@@ -13,10 +13,20 @@ local function newSecurityCam (x, y, radius)
 		testingfor = 1,
 		radius = radius,
 		drawradius = 200,
+		beep_timer = nil,		
 
 		player_alert_start= {},
 		detectortype = "securitycam",
 	}
+
+	Signals.register ('win', function()
+		if cam.beep_timer ~= nil then
+			Timer.cancel (cam.beep_timer)
+			cam.beep_timer = nil
+		end
+	end)
+
+
 
 	function cam:update(dt, players, world)
 		if self.alerted then
@@ -54,6 +64,10 @@ local function newSecurityCam (x, y, radius)
 			if visible and not self.player_alert_start[player] then
 				Signals.emit ('alert-start', self, player)
 				self.player_alert_start[player] = love.timer.getTime()
+				self.beep_timer = Timer.addPeriodic (0.4, function ()
+					Sound.static.beep2:play()
+				end)
+
 			end
 
 			if not visible and self.player_alert_start[player] then
@@ -65,6 +79,9 @@ local function newSecurityCam (x, y, radius)
 		if next (self.player_alert_start) then
 			self.alerted = true
 		else
+			if self.beep_timer then
+				Timer.cancel (self.beep_timer)
+			end
 			self.alerted = false
 		end
 	end
