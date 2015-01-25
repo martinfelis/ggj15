@@ -28,20 +28,20 @@ function newInputMapper ()
 
 	mapping.joystick_defaults = {
 		right = {
-			{ axis = 1 },
+			{ axis = 1, scale = 1 },
 			{ hat = 1, char = "r" },
 		},
 		left = {
-			{ axis = 1 },
+			{ axis = 1, scale = -1},
 			{ hat = 1, char = "l" },
 		},
 		up = {
-			{ axis = 2 },
+			{ axis = 2 , scale = -1},
 			{ hat = 1, char = "u" },
 		},
 		down = {
-			{ axis = 2 },
-			{ hat = 1, char = "u" },
+			{ axis = 2, scale = 1},
+			{ hat = 1, char = "d" },
 		},
 	}
 
@@ -64,9 +64,35 @@ function newInputMapper ()
 				return love.keyboard.isDown (self.players[player_id][key]) and 1. or 0. 
 			end
 		elseif self.players[player_id].controller_type == "joystick" then
-		end
+--			print ("boo")
+			local config = self.players[player_id][key]
+			local joystick = self.players[player_id].joystick
 
-		return 0
+--			print (serialize(config))
+
+			if not config then
+				return 0
+			end
+
+			local value = 0
+			for i,binding in ipairs (config) do
+				if binding.axis then
+					local scale = binding.scale or 1
+					value = value + joystick:getAxis(binding.axis) * scale
+				end
+				if binding.hat then
+					local hat = joystick:getHat (binding.hat)
+					if string.find(hat, binding.char) then
+						value = value + 1
+					end
+				end
+			end
+
+			if math.abs(value) > 0.5 then
+				value = value * math.abs (1. / value)
+			end
+			return value
+		end
 	end
 
 	return mapping

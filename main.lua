@@ -129,6 +129,7 @@ end
 
 function love.update (dt)
 	Timer.update (dt)
+--	print(input_mapper:query (1, "right"))
 end
 
 function love.keypressed (key)
