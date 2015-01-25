@@ -34,8 +34,8 @@ function MenuClass:update (dt)
 			states.story:selectstories{"intro"}
    			Gamestate.switch(states.game)
 	    	Gamestate.push(states.story)
-	    	Timer.add(7, function()
-	    			if(Gamestate.prev() == states.story) then
+	    	Timer.add(5, function()
+	    			if(Gamestate.current() == states.story) then
 	    				Gamestate.pop()
 	    				audio:configureCurrentMusic{}
 	    			end

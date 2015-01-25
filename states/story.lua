@@ -9,7 +9,7 @@ local STORY_SCREEN_CONFIG = {
 	intro = {
 		filename = "images/story/infrontofprison.jpg",
 		imageobject = nil,
-		backgroundmusic = {filename = "audio/testbg.mp3"}, -- {filename, loop, volume}
+		backgroundmusic = nil, --{filename = "audio/testbg.mp3"}, -- {filename, loop, volume}
 		foregroundmusic = nil,
 		text = "San Quentin State Prison, Saturday Night\n",
 		color = {30, 30, 30, 255},
