@@ -28,13 +28,13 @@ function MenuClass:update (dt)
 			love.graphics.getWidth() * 0.7,
 			love.graphics.getHeight() * 0.7} })
 	if gui.Button ({text = "Play!"}) then
-		Gamestate.switch(states.levelone)
+		Gamestate.switch(states.game)
 	end
 	if gui.Button ({text = "Quit!"}) then
 		os.exit()
 	end
 	if gui.Button ({text = "Credits!"}) then
-		os.exit()
+		Gamestate.push(states.credits)
 	end
 
 	if gui.Checkbox{checked = config.sound, text = "Sound", size = {"tight"}} then

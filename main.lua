@@ -12,6 +12,7 @@ pathfunctions = require "utils.pathfunctions"
 local GameStateClass = require("states.game")
 local MenuStateClass = require("states.menu")
 local BustedState = require("states.busted")
+local WinState = require("states.win")
 local ExampleMenuStateClass = require("states.examplemenu")
 local Credits = require("states.credits")
 local Story = require("states.story")
@@ -30,6 +31,7 @@ states = {}
 config = { sound = true }
 audio = AudioManager:new()
 sounds = { }
+levels = { "level1.svg", "level2.svg" }
 
 -- game design parameters
 GVAR = {
@@ -80,9 +82,11 @@ function love.load ()
 	states.credits = Credits:new ()
 	states.story = Story:new ()
 	states.busted = BustedState:new ()
+	states.win = WinState:new()
 
 	-- start initial state
     Gamestate.registerEvents()
+--		Gamestate.push(states.menu)
     Gamestate.push(states.game)
     -- states.story:selectstories{"intro"}
     -- Gamestate.push(states.story)

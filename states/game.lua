@@ -36,6 +36,7 @@ function GameStateClass:initTextures ()
 end
 
 function GameStateClass:loadLevel (filename)
+	print ("Loading level", filename)
 	self.camera = Camera (0,0)
 
 	love.physics.setMeter(64)
@@ -46,7 +47,14 @@ function GameStateClass:loadLevel (filename)
 	self.alerts = {}
 	self.alertcount = 0
 	self.busted = false
+	self.win = false
 	self.currentlevel = filename
+	self.levelindex = 1
+	for i,v in ipairs (levels) do
+		if v == filename then
+			self.levelindex = i
+		end
+	end
 
 	self.SVGdoors = loadShapes ( filename, "Doors")
 	self.SVGguards = loadShapes ( filename, "Guards")
@@ -186,8 +194,6 @@ function GameStateClass:loadLevel (filename)
 		table.insert(self.spotlights, spotlight)
 	end
 
-	self.camera:zoom(0.6)
-
 	--	self:loadTestObjects()
 	self.camera:zoom(0.6)
 
@@ -214,10 +220,16 @@ function GameStateClass:loadLevel (filename)
 		print (string.format ("Player %s got busted by a %s (%s)", tostring(player), source.detectortype, tostring(source)))
 		self.busted = true
 		Timer.tween (1, self.camera, {x = source.x, y = source.y, scale = 1.})
+		Gamestate.push(states.busted)
 	end)
 
 	Signals.register ('busted-retry', function ()
 		print ("Retrying level " .. self.currentlevel)
+	end)
+
+	Signals.register ('win', function ()
+		Gamestate.push(states.win)
+		self.win = true
 	end)
 end
 
@@ -225,6 +237,14 @@ function GameStateClass:resume ()
 	if self.busted then
 		print ("Renturned from busted screen...")
 		self:loadLevel (self.currentlevel)
+	elseif self.win then
+		self.levelindex = self.levelindex + 1
+		print ("next level: ", self.levelindex)
+		if self.levelindex <= #levels then
+			self:loadLevel (levels[self.levelindex])
+		else
+			Gamestate.switch(states.credits)
+		end
 	end
 end
 
@@ -298,7 +318,7 @@ function GameStateClass:postDraw()
 	self.camera:attach()
 	love.graphics.setColor (255, 255, 255 ,255)
 
-	love.graphics.setLineWidth (5.)
+	love.graphics.setLineWidth (8.)
 	draw_items(self.walls)
 	draw_items(self.boxes)
 	draw_items(self.players)
@@ -361,7 +381,6 @@ function GameStateClass:checkAlerts ()
 		for source,spot_time in pairs(player) do
 			if love.timer.getTime() - spot_time > GVAR.alert_realize_time then
 				Signals.emit ('busted', source, player)
-				Gamestate.push(states.busted)
 			end
 		end
 	end
@@ -375,7 +394,7 @@ function GameStateClass:update (dt)
 	self.world:update(dt)
 	self.totalTime = self.totalTime + dt
 
-	if self.busted then
+	if self.busted or self.win then
 		return
 	end
 
@@ -416,7 +435,7 @@ function GameStateClass:checkWin()
 		local dx, dy = player.body:getX() - self.target.center_x, player.body:getY() - self.target.center_y
 		local distancetotarget = math.sqrt(dx*dx + dy*dy)
 		if distancetotarget < self.target.radius then
-			print ("WIN")
+			Signals.emit ('win')
 		end
 	end
 end
