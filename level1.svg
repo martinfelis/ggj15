@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1391.3085"
-     inkscape:cy="-845.48025"
+     inkscape:zoom="0.125"
+     inkscape:cx="693.5536"
+     inkscape:cy="-1273.417"
      inkscape:document-units="px"
      inkscape:current-layer="layer10"
      showgrid="true"
@@ -98,13 +98,14 @@
     <path
        sodipodi:type="arc"
        style="fill:#ff00ff;fill-opacity:0.96271189;fill-rule:nonzero;stroke:none;display:inline"
-       id="path3831-8"
+       id="seccam"
        sodipodi:cx="340.08951"
        sodipodi:cy="3960.0896"
        sodipodi:rx="160.00008"
        sodipodi:ry="160.00008"
        d="m 500.08958,3960.0896 a 160.00008,160.00008 0 1 1 -320.00015,0 160.00008,160.00008 0 1 1 320.00015,0 z"
-       transform="matrix(1.6249992,0,0,1.6249992,1407.4443,-4895.0529)" />
+       transform="matrix(1.6249992,0,0,1.6249992,1067.4443,-5175.0529)"
+       inkscape:label="#path3831-8" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -139,7 +140,7 @@
      inkscape:label="Guards"
      style="display:inline">
     <path
-       transform="translate(1840,2000)"
+       transform="translate(-720,1920)"
        sodipodi:type="arc"
        style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
        id="Guard1_path:pathg1"
@@ -512,7 +513,7 @@
      style="display:inline">
     <path
        style="fill:none;stroke:#ff0000;stroke-width:9.98044968;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="m 1293.5563,4690.0797 881.543,-5 0,1280 -1275.00002,0 0,-360 383.49612,-5 0,-40"
+       d="m -1741.4535,1805.0895 881.543,-5 0,1280 -1275,0 0,-360 383.4961,-5 0,-40"
        id="pathg1"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc"
@@ -639,7 +640,7 @@
        id="rect3524"
        width="200.00003"
        height="190.00005"
-       x="480.08951"
-       y="1460.0895" />
+       x="480.51367"
+       y="1419.6653" />
   </g>
 </svg>
