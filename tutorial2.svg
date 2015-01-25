@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.50000001"
-     inkscape:cx="2196.8645"
-     inkscape:cy="6214.3566"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="1811.6655"
+     inkscape:cy="5385.7921"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer6"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -245,9 +245,9 @@
        style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect12923-8"
        width="40"
-       height="839"
-       x="2580.0896"
-       y="-6139.4106" />
+       height="599.00018"
+       x="660.5896"
+       y="-6159.4106" />
     <rect
        style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect12923-8-2"
@@ -302,29 +302,43 @@
        id="rect13133"
        width="199.49994"
        height="199.50017"
-       x="1380.0895"
-       y="-4879.4106" />
+       x="1180.5896"
+       y="-4719.4106" />
     <rect
        style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect12923-8-2-0"
        width="40"
-       height="800.00012"
-       x="1899.5895"
-       y="-6139.9106" />
-    <rect
-       style="opacity:0.64630222999999998;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect14774"
-       width="220"
-       height="40"
-       x="2360.0896"
-       y="-5339.9106" />
+       height="819.99982"
+       x="-19.9105"
+       y="-6159.9102" />
     <rect
        style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect14780"
        width="720"
        height="40"
-       x="1900.0895"
-       y="-6179.9106" />
+       x="-19.4105"
+       y="-6199.9106" />
+    <rect
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect14784"
+       width="1919.5"
+       height="40"
+       x="700.08948"
+       y="-5599.9106" />
+    <rect
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect14786"
+       width="40"
+       height="259.49982"
+       x="2580.0896"
+       y="-5559.4102" />
+    <rect
+       style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect13133-3"
+       width="199.49994"
+       height="199.50017"
+       x="2180.0896"
+       y="-4679.9106" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -336,8 +350,8 @@
        id="rect14782"
        width="180"
        height="160"
-       x="2360.0896"
-       y="-6059.9106" />
+       x="440.58963"
+       y="-6079.9106" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -395,10 +409,10 @@
     <rect
        style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect14776"
-       width="200"
-       height="40"
-       x="2140.0896"
-       y="-5339.9106">
+       width="40.500099"
+       height="179.5"
+       x="659.58942"
+       y="-5539.9106">
       <desc
          id="desc14778">left:true</desc>
     </rect>
@@ -462,7 +476,7 @@
        sodipodi:ry="60"
        d="m -39.9105,-4719.9106 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
        inkscape:label="#path13091"
-       transform="translate(2120,-1279.9998)" />
+       transform="translate(200.50002,-1299.9994)" />
     <path
        sodipodi:type="arc"
        style="opacity:0.64630223;fill:#003bd9;fill-opacity:0.76862745;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
