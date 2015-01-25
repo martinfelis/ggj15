@@ -32,7 +32,7 @@ states = {}
 config = { sound = true }
 audio = AudioManager:new()
 sounds = { }
-levels = { "level1.svg", "level2.svg" }
+levels = { "level_out.svg", "level1.svg", "level2.svg" }
 
 -- game design parameters
 GVAR = {

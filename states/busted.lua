@@ -85,6 +85,14 @@ function BustedState:draw(dt)
 	gui.core.draw()
 end
 
+function BustedState:keypressed(key, code)
+	gui.keyboard.pressed(key)
+end
+
+-- LÖVE 0.9
+function BustedState:textinput(str)
+	gui.keyboard.textinput(str)
+end
 
 return BustedState
 
