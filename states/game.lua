@@ -160,8 +160,12 @@ function GameStateClass:loadLevel (filename)
 		svgbox.body = love.physics.newBody (self.world,0* svgbox.width/2,0* svgbox.height/2, "dynamic")
 		svgbox.shape = love.physics.newPolygonShape (unpack(svgbox.points))
 		svgbox.fixture = love.physics.newFixture (svgbox.body, svgbox.shape)
-		svgbox.body:setLinearDamping(10)
-		svgbox.body:setAngularDamping(150)
+		svgbox.body:setMass(0.5)
+		svgbox.body:setLinearDamping(100)
+		svgbox.body:setAngularDamping(55)
+		svgbox.draw = function(self)
+			love.graphics.polygon ("line", self.body:getWorldPoints(self.shape:getPoints()))
+		end
 		table.insert(self.boxes, svgbox)
 	end
 
@@ -260,6 +264,12 @@ function GameStateClass:drawGround()
 	love.graphics.setColor(oldr, oldg, oldb, olda)
 end
 
+local function draw_items (items)
+	for i,v in ipairs (items) do
+		v:draw()
+	end
+end
+
 function GameStateClass:postDraw()
 	love.graphics.setCanvas ()
 
@@ -288,9 +298,9 @@ function GameStateClass:postDraw()
 	love.graphics.setColor (255, 255, 255 ,255)
 
 	love.graphics.setLineWidth (5.)
-	for _,wall in ipairs (self.walls) do
-		wall:draw()
-	end
+	draw_items(self.walls)
+	draw_items(self.boxes)
+	draw_items(self.players)
 
 
 	for i,p in ipairs (self.players) do
@@ -301,11 +311,7 @@ function GameStateClass:postDraw()
 end
 
 function GameStateClass:draw ()
-	local function draw_items (items)
-		for i,v in ipairs (items) do
-			v:draw()
-		end
-	end
+
 
 	local player_center =  vector(0, 0)
 	for k,player in pairs(self.players) do
@@ -325,11 +331,7 @@ function GameStateClass:draw ()
 	-- WALLS
 	draw_items (self.walls)
 
-	-- BOXES
-	for i,p in ipairs (self.boxes) do
---		love.graphics.polygon ("fill", p)
-		love.graphics.polygon ("line", p.body:getWorldPoints(p.shape:getPoints()))
-	end
+
 	local oldr, oldg, oldb, olda = love.graphics.getColor()
 	love.graphics.setColor({210,200, 13, 180})
 	for i, c in ipairs (self.spotlights.circles) do
@@ -347,6 +349,7 @@ function GameStateClass:draw ()
 	draw_items (self.switches)
 	draw_items (self.chains)
 	draw_items (self.doors)
+	draw_items (self.boxes)
 	love.graphics.setColor (255, 255, 255, 255)
 
 --	for k,object in pairs(self.objects) do

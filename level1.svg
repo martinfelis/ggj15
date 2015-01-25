@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="665.40982"
-     inkscape:cy="-3151.5342"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="1592.7994"
+     inkscape:cy="-1934.1109"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer9"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -120,7 +120,7 @@
      inkscape:label="Guards"
      style="display:inline">
     <path
-       transform="translate(1279.9105,1319.9105)"
+       transform="translate(1359.9105,440.08954)"
        sodipodi:type="arc"
        style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
        id="Guard1_path:pathg1"
@@ -502,7 +502,7 @@
      style="display:inline">
     <path
        style="fill:none;stroke:#ff0000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="m 1205.0895,2355.0895 0,-640 900,0 0,1280 -1280,0 0,-360 380,0"
+       d="m 1220.0895,1720.0895 885,-5 0,1280 -1280,0 0,-360 385,-5 0,-40"
        id="pathg1"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc"
@@ -550,7 +550,7 @@
        inkscape:label="#rect3517" />
     <rect
        style="fill:#0000ff;fill-rule:evenodd;stroke:#000000;stroke-width:0.95694703px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="door3"
+       id="door3_left:true"
        width="40.043053"
        height="219.54314"
        x="579.56799"
