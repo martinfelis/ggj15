@@ -88,9 +88,12 @@ function newInputMapper ()
 				end
 			end
 
-			if math.abs(value) > 0.5 then
+			if math.abs(value) > 0.15 then
 				value = value * math.abs (1. / value)
+			else
+				value = 0.
 			end
+
 			return value
 		end
 	end
