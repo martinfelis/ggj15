@@ -13,7 +13,7 @@ function Credits:new ()
 		"Global Game Jam 2015",
 		"",
 		"SimonPtr",
-		"Phaiax2",
+		"Phaiax",
 		"fysx",
 		"bitowl"
 	}
