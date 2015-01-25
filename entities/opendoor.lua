@@ -1,12 +1,11 @@
 
-local function newOpenDoor(world, x, y, width, height, jointLeft, doorLeft)
-	print("CREATE DOOR " .. (jointLeft and 1 or 0) .. "" .. (doorLeft and 1 or 0))
+local function newOpenDoor(world, x, y, width, height, jointLeft, color)
 	local door = {
 		left = jointLeft,
-		doorLeft = doorLeft,
 		has_switch = false,
 		opener = {},
-		isopen = false
+		isopen = false,
+		color = color
 	}
 	local leftX = x
 	local upY = y
@@ -37,7 +36,7 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, doorLeft)
 		-- 	door.leftJoint:setLimits(0, math.pi/2)
 		-- 	door.rightJoint:setLimits(math.pi, 1.5*math.pi)
 		-- else
-		-- 	door.leftJoint:setLimits(1.5*math.pi, 2*math.pi)	
+		-- 	door.leftJoint:setLimits(1.5*math.pi, 2*math.pi)
 		-- 	door.rightJoint:setLimits(0, math.pi/2)
 		-- end
 
@@ -56,13 +55,14 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, doorLeft)
 		-- if (doorLeft) then
 		-- 	door.upJoint:setLimits(-math.pi/2, 0)
 		-- 	door.downJoint:setLimits(0, math.pi/2)
-		-- else			
+		-- else
 		-- 	door.upJoint:setLimits(0, math.pi/2)
 		-- 	door.downJoint:setLimits(-math.pi/2, 0)
 		-- end
 	end
 
 	function door:draw()
+		love.graphics.setColor(door.color)
 		love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 		if (self.isopen) then
 			love.graphics.setLineWidth(2)
@@ -72,7 +72,7 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, doorLeft)
 --						love.graphics.arc("line", leftX, upY+height, width > height and width or height, 1.5*math.pi, 2*math.pi)
 --						love.graphics.arc("line", leftX, upY, width > height and width or height, 0, math.pi/2)
 				else
-					love.graphics.arc("line", leftX + width, upY + height/2, width, math.pi/2, 1.5*math.pi)	
+					love.graphics.arc("line", leftX + width, upY + height/2, width, math.pi/2, 1.5*math.pi)
 						--love.graphics.arc("line", leftX+width, upY, width > height and width or height, math.pi, 1.5*math.pi)
 						--love.graphics.arc("line", leftX+width, upY, width > height and width or height, math.pi/2, math.pi)
 				end
@@ -94,7 +94,7 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, doorLeft)
 		self.isopen = true
 		if width > height then
 			if (self.left) then
-				door.rightJoint:destroy()				
+				door.rightJoint:destroy()
 			else
 				door.leftJoint:destroy()
 			end

@@ -117,7 +117,6 @@ local function loadShapes (filename, layername)
 		local color = styleargs.fill and styleargs.fill or "#000000"
 		--print(serialize(styleargs))
 		local r, g, b, a = 0, 0, 0, (tonumber(styleargs["fill-opacity"] or 1))*255
-		print(styleargs["fill-opacity"])
 		if #color >= 7 then
 			r = tonumber(color:sub(2, 3), 16)
 			g = tonumber(color:sub(4, 5), 16)
@@ -184,7 +183,6 @@ local function loadShapes (filename, layername)
 
 
 	local function get_node_rect(node)
-		print ("RECT" .. node.xarg.id .. " " .. node.xarg.style)
 		local rect = node.xarg -- has x, y, height, width
 		rect.x, rect.y = tonumber(rect.x), tonumber(rect.y)
 		rect.height, rect.width = tonumber(rect.height), tonumber(rect.width)
@@ -242,6 +240,11 @@ local function loadShapes (filename, layername)
 			if v.label and v.label == "g"
 				and v.xarg and type(v.xarg) == "table"
 				and v.xarg.label and v.xarg.label == layername then
+
+				if v.xarg.transform then
+					print ("UNSUPPORTED global TRANSFORM at Layer " .. layername)
+				end
+
 				return v
 			end
 		end

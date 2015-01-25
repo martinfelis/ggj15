@@ -125,7 +125,8 @@ function GameStateClass:loadLevel (filename)
 	for _, svgdoor in pairs(self.SVGdoors.polygons) do
 		local rl = (svgdoor.config.left=="true") or false
 		local door = newOpenDoor(self.world, svgdoor.x, svgdoor.y,
-								svgdoor.width, svgdoor.height, rl)
+								svgdoor.width, svgdoor.height, rl,
+								svgdoor.color)
 		if svgdoor.config.openby then
 			for _, switch in pairs(self.switches) do
 				if switch.id == svgdoor.config.openby then
@@ -174,7 +175,8 @@ function GameStateClass:loadLevel (filename)
 		svgbox.body:setLinearDamping(100)
 		svgbox.body:setAngularDamping(55)
 		svgbox.draw = function(self)
-			love.graphics.polygon ("line", self.body:getWorldPoints(self.shape:getPoints()))
+			love.graphics.setColor(self.color)
+			love.graphics.polygon ("fill", self.body:getWorldPoints(self.shape:getPoints()))
 		end
 		table.insert(self.boxes, svgbox)
 	end

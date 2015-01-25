@@ -74,7 +74,9 @@ local function newPlayer (world, id, x, y)
 		radius = PLAYER_CONFIG[id].radius,
 		center_x = PLAYER_CONFIG[id].center_x,
 		center_y = PLAYER_CONFIG[id].center_y,
-		angle = 0 -- needed so the player does not turn wildly at slow speed
+		angle = 0, -- needed so the player does not turn wildly at slow speed
+		cycle_phase = 0.,
+		speed = 0.,
 	}
 
 	-- physics
@@ -87,9 +89,7 @@ local function newPlayer (world, id, x, y)
 	-- so that the rope does not colllide with players
 	player.fixture:setCategory(id+1)  -- category 1 is for everyone
 
-
 	print (string.format ("Created new player at %f,%f", x, y))
-
 
 	-- changes the position of the player to the right
 	function player:init()
@@ -117,19 +117,28 @@ local function newPlayer (world, id, x, y)
 			vel = vel * PLAYER_MOVE_FORCE
 		end
 
+		self.speed = vel:len()
+
+		if self.cycle_phase > math.pi * 2 then
+			self.cycle_phase = self.cycle_phase - math.pi * 2
+		elseif self.cycle_phase < 0 then
+			self.cycle_phase = self.cycle_phase + math.pi * 2
+		end
+
+		if self.speed > 0.1 then
+			self.cycle_phase = self.cycle_phase + dt * self.speed / 30
+		else
+			self.speed = 0.
+			vel.x, vel.y = 0., 0.
+		end
+
+		if not up and not down and not left and not right then
+			self.cycle_phase = self.cycle_phase * self.speed
+		end
+
 		self.body:setLinearVelocity(vel.x, vel.y)
 
 		self.body:setAngle(math.atan2(vel.x, -vel.y))
-	--	self.body:setAngle()
---[[		if (love.keyboard.isDown("right")) then
-			self.body:setLinearVelocity(PLAYER_MOVE_FORCE, 0)
-		end
-		if (love.keyboard.isDown("up")) then
-			self.body:setLinearVelocity(0, -PLAYER_MOVE_FORCE)
-		end
-		if (love.keyboard.isDown("down")) then
-			self.body:setLinearVelocity(0, PLAYER_MOVE_FORCE)
-		end]]--
 	end
 
 	function player:draw ()
@@ -140,8 +149,48 @@ local function newPlayer (world, id, x, y)
 --			print(string.format("angle %f (%f, %f)",self.angle,x,y))
 		end
 
-		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 2,2,self.image:getWidth() /2 - player.center_x, self.image:getHeight()/2 -player.center_y)
+		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 2,2,self.image:getWidth() /2, self.image:getHeight()/2)
 --		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
+
+		local arm_width = 20
+		local shoulder_width = 38.
+		local phase_mod = math.sin (self.cycle_phase)
+		local arm_length = 20 + 30 * math.abs(phase_mod)
+		local arm_center = vector(arm_width * 0.5 + shoulder_width, phase_mod * 10)
+
+		local foot_width = 20
+		local hip_width = 10.
+		local phase_mod = math.sin (-self.cycle_phase)
+		local foot_length = 30 + 20 * math.abs(phase_mod)
+		local foot_center = vector(foot_width * 0.5 + hip_width, phase_mod * 10)
+
+		love.graphics.push()
+		love.graphics.translate (self.body:getX(), self.body:getY())
+		love.graphics.rotate (self.angle)
+		love.graphics.setLineWidth (4.)
+		
+		-- arms
+		love.graphics.rectangle ("line", 
+			arm_center.x - arm_width * 0.5, 
+			arm_center.y - arm_length * 0.5,
+			arm_width, arm_length)
+		love.graphics.rectangle ("line", 
+			- arm_center.x - arm_width * 0.5, 
+			-arm_center.y + arm_length * 0.5,
+			arm_width, -arm_length)
+
+			--[[
+		love.graphics.rectangle ("line", 
+			foot_center.x - foot_width * 0.5, 
+			foot_center.y - foot_length * 0.5,
+			foot_width, foot_length)
+		love.graphics.rectangle ("line", 
+			- foot_center.x - foot_width * 0.5, 
+			-foot_center.y + foot_length * 0.5,
+			foot_width, -foot_length)
+			--]]
+
+		love.graphics.pop()
 	end
 
 	return player
