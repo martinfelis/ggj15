@@ -12,6 +12,9 @@ function newSwitch(x, y, radius)
 		end
 		for k,player in pairs(players) do
 			if (self.x-player.body:getX())^2 + (self.y-player.body:getY())^2 < (self.radius+player.radius)^2 then
+				print ("switching!")
+				Signals.emit ('switch', self, player)
+
 				self.on = true
 
 				-- notify the doors
