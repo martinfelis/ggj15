@@ -13,6 +13,12 @@ local function newGuard (x, y, world)
 		angle = 1.,
 		wishAngle = 0,
 
+		hunt_duration = -1,
+		hunt_timeout = 0.,
+		last_seen_player_pos = vector (0,0), 
+		path_time = 0.,
+		target_player = nil,
+
 		alerted = false,
 		alertness = 0.,
 		image = "images/guard.png",
@@ -22,7 +28,7 @@ local function newGuard (x, y, world)
 
 		detectortype = "guard",
 		player_alert_start= {},
-		view_fov = math.pi/2,
+		view_fov = math.pi * 0.3,
 		busted_fov = math.pi * 0.9
 	}
 	guard.guide = love.physics.newBody(world, x, y, "dynamic")
@@ -36,23 +42,45 @@ local function newGuard (x, y, world)
 
 	guard.joint = love.physics.newRopeJoint(guard.guide, guard.body, 0,0,0,0, 20, false)
 
-	function guard:update(dt, players, world, totalTime)
+	function guard:update(dt, players, world)
 		if self.alerted then
 			self.alertness = math.min (1., self.alertness + dt * GVAR.alert_increase_rate)
 		else
 			self.alertness = math.max (0., self.alertness - dt * GVAR.alert_decrease_rate)
 		end
+	
+		-- steering
+		if self.hunt_duration < 0 then
+			self.path_time = self.path_time + dt
 
-		-- walk
-		if self.pathpoints then
-			--self.body:setPosition()
-			local aimx,aimy= pathfunctions.walk(self.pathpoints, totalTime, self.speed)
+			-- walk
+			if self.pathpoints then
+				--self.body:setPosition()
+				local aimx,aimy= pathfunctions.walk(self.pathpoints, self.path_time, self.speed)
 
-			self.body:setLinearVelocity(aimx-self.x,aimy-self.y)
-			-- self.body:setLinearVelocity(vel.x, vel.y)
-			local startX, startY = pathfunctions.walk(self.pathpoints, totalTime, self.speed)
-			local endX, endY = pathfunctions.walk(self.pathpoints, totalTime+dt, self.speed)
-			 -- self.angle = math.atan2(endY-startY, endX-startX)
+				self.body:setLinearVelocity(aimx-self.x,aimy-self.y)
+				-- self.body:setLinearVelocity(vel.x, vel.y)
+				local startX, startY = pathfunctions.walk(self.pathpoints, self.path_time, self.speed)
+				local endX, endY = pathfunctions.walk(self.pathpoints, self.path_time+dt, self.speed)
+				-- self.angle = math.atan2(endY-startY, endX-startX)
+			end
+		else
+--			print (string.format ("hunt duration %f timeout %f", self.hunt_duration, self.hunt_timeout))
+			self.hunt_duration = self.hunt_duration + dt
+			local pos = vector (self.x, self.y)
+			local target_rel = (self.last_seen_player_pos - pos):normalized() * GVAR.guard_hunt_speed
+			local cur_vel = vector(self.body:getLinearVelocity())
+--			print ("cur vel = ", cur_vel, " target vel = ", target_rel)
+			self.body:setLinearVelocity(target_rel.x, target_rel.y)
+
+			if not self.alert then
+				self.hunt_timeout = self.hunt_timeout - dt
+				if self.hunt_timeout < 0 then
+					print ("hunt stop")
+					Signals.emit ('guard-hunt-look', self, self.target_player)
+					self.hunt_duration = -1.
+				end
+			end
 		end
 
 		local vel = vector (self.body:getLinearVelocity())
@@ -76,7 +104,7 @@ local function newGuard (x, y, world)
 			if in_view_fov or in_busted_fov then
 				local distance = player_pos:dist (vector (self.x, self.y)) - player.radius
 
-				if distance < self.view_radius then
+				if in_view_fov and distance < self.view_radius then
 					alert = true
 				end
 
@@ -89,6 +117,10 @@ local function newGuard (x, y, world)
 			if alert and not self.player_alert_start[player] then
 				Signals.emit ('alert-start', self, player)
 				self.player_alert_start[player] = love.timer.getTime()
+
+				if self.hunt_duration < 0 then
+					self.hunt_duration = 0
+				end
 			end
 
 			if not alert and self.player_alert_start[player] then
@@ -114,6 +146,26 @@ local function newGuard (x, y, world)
 		else
 			self.speed = 0.
 			vel.x, vel.y = 0., 0.
+		end
+
+		-- search for the closest player
+--		self.last_seen_player_pos = vector (math.huge, math.huge)
+		local closest_dist2 = math.huge
+		local hunted_player = nil
+
+		if self.alerted then
+			self.hunt_timeout = GVAR.guard_hunt_timeout
+			local self_pos = vector (self.x, self.y)
+			for k,v in pairs (self.player_alert_start) do
+				local player_pos = vector (k.body:getX(), k.body:getY())
+				local dist2 = player_pos:dist2(self_pos)
+
+				if dist2 < closest_dist2 then
+					closest_dist2 = dist2
+					self.last_seen_player_pos = player_pos
+					self.target_player = k
+				end
+			end
 		end
 	end
 
@@ -204,6 +256,9 @@ local function newGuard (x, y, world)
 
 		love.graphics.pop()
 
+		if self.alerted then
+		love.graphics.line (self.x, self.y, self.last_seen_player_pos.x, self.last_seen_player_pos.y)
+	end
 
 	end
 
