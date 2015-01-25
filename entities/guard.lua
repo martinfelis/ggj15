@@ -7,7 +7,8 @@ local function newGuard (x, y, world)
 		alert = false,
 		alerttime = 0,
 		testingfor = 1,
-		radius = 170,
+		radius = 300,
+		guy_radius = 35,
 		angle = 1.,
 		wishAngle = 0,
 
@@ -16,14 +17,14 @@ local function newGuard (x, y, world)
 
 		detectortype = "guard",
 		player_alert_start= {},
-		fov = math.pi/2
+		fov = math.pi/1.6
 	}
 	guard.guide = love.physics.newBody(world, x, y, "dynamic")
 	guard.body = love.physics.newBody(world, x+20, y, "dynamic")
 	guard.shape = love.physics.newCircleShape(20)
 	guard.fixture = love.physics.newFixture(guard.body, guard.shape)
 	guard.body:setLinearDamping(5)
-	guard.shape2 = love.physics.newCircleShape(20)
+	guard.shape2 = love.physics.newCircleShape(guard.guy_radius)
 	guard.fixture2 = love.physics.newFixture(guard.guide, guard.shape2)
 
 
@@ -139,6 +140,9 @@ local function newGuard (x, y, world)
 	end
 
 	function guard:draw()
+		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.circle("line", self.x, self.y, self.guy_radius)
+
 		love.graphics.setColor(255,(1. - self.alertness) * 255, 0, 128)
 																		   -- fix löves wrong angle drawing
 		love.graphics.arc("fill", self.x, self.y, self.radius, self.angle + self.fov*.5, self.angle - self.fov *.5)
