@@ -43,7 +43,10 @@ Sound = {
 -- some global dicts
 fonts = {}
 states = {}
-config = { sound = true }
+config = { 
+	sound = true,
+	numplayer = 2
+}
 audio = AudioManager:new()
 sounds = { }
 levels = { "tutorial1.svg", "tutorial2.svg", "tutorial3.svg", "tutorial4.svg", "level1.svg", "level_out.svg"}
