@@ -39,17 +39,19 @@ function PauseState:update (dt)
 
 
 
+	if gui.Button ({text = "Resume"}) then
+		Gamestate.pop()
+	end
+
 	if gui.Button ({text = "Retry!"}) then
 		prev_state.busted = true
 		Gamestate.pop()
 	end
     gui.Label{text = "", size = {"tight"}}
 
-	if gui.Button ({text = "Resume!"}) then
-		Gamestate.pop()
-	end
-	if gui.Button ({text = "Quit!"}) then
-		os.exit()
+	if gui.Button ({text = "Menu"}) then
+		states.game.levelindex = 1
+		Gamestate.switch(states.menu)
 	end
 
 	if gui.Checkbox{checked = config.sound, text = "Sound", size = {"tight"}} then
@@ -60,6 +62,10 @@ function PauseState:update (dt)
 end
 
 function PauseState:draw(dt)
+	gui.group.default.size[1] = 150 
+	gui.group.default.size[2] = 50
+	gui.group.default.spacing = 20
+
 	local prev_state = Gamestate.prev()
 	if prev_state then
 		prev_state:draw()
@@ -86,8 +92,6 @@ end
 function PauseState:textinput(str)
 	gui.keyboard.textinput(str)
 end
-
-
 
 return PauseState
 

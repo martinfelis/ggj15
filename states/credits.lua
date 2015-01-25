@@ -10,11 +10,14 @@ function Credits:new ()
 
 	newInstance.credits = {
 		"Prison Broke",
-		"Global Game Jam 2015",
+		" - Global Game Jam 2015",
 		"",
 		"SimonPtr",
-		"Phaiax",
-		"fysx",
+		"",
+		"Phaiax (invisibletower.de)",
+		"",
+		"fysx (fysx.org)",
+		"",
 		"bitowl"
 	}
 
@@ -28,26 +31,29 @@ function Credits:enter()
 end
 
 function Credits:update (dt)
-	self.pos = self.pos - dt*CREDIT_SPEED
-end
-
-function Credits:draw(dt)
-	love.graphics.setFont(fonts[20])
-	for i = 1, #self.credits do
-
-
-		love.graphics.print(self.credits[i],
-						200,
-						self.pos + i * CREDIT_LINE_DISTANCE)
-	end
-end
-
-function Credits:keypressed(key)
-	if key=="escape" or key==" " then
+--	self.pos = self.pos - dt*CREDIT_SPEED
+	if gui.Button ({text = "Back", size={150, 50}, pos = {
+		love.graphics.getWidth() * 0.7,
+		love.graphics.getHeight() * 0.8}}) then
 		Gamestate.pop()
 	end
 end
 
+function Credits:draw(dt)
+	love.graphics.setFont(fonts.sugarlarge)
+	for i = 1, #self.credits do
+		love.graphics.print(self.credits[i],
+		love.window.getWidth() * 0.1,
+		self.pos + i * CREDIT_LINE_DISTANCE)
+	end
+	gui.core.draw()
+end
+
+function Credits:keypressed(key)
+	if key=="escape" or key==" " then
+		Gamestate.switch(states.menu)
+	end
+end
 
 return Credits
 

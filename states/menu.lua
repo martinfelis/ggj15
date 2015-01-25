@@ -44,7 +44,6 @@ function MenuClass:update (dt)
 			config.sound = not config.sound
 		end
 
-
 		gui.group.pop()
 	end
 
