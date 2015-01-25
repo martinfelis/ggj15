@@ -58,6 +58,7 @@ function GameStateClass:loadLevel (filename)
 	self.SVGwalls = loadShapes (filename, "Walls")
 	self.SVGboxes = loadShapes (filename, "Boxes")
 	self.SVGspotlights = loadShapes (filename, "Spotlights")
+	self.SVGsecuritycams = loadShapes (filename, "Securitycams")
 
 	self.chains = {}
 	self.doors = {}
@@ -172,6 +173,7 @@ function GameStateClass:loadLevel (filename)
 
 	-- SPOTLIGHTS
 	for _, svgspotlight in pairs(self.SVGspotlights.circles) do
+
 		local spotlight = newSpotlight(svgspotlight.x, svgspotlight.y, svgspotlight.r)
 		spotlight.svgspotlight = svgspotlight
 
@@ -184,6 +186,13 @@ function GameStateClass:loadLevel (filename)
 		end
 
 		table.insert(self.spotlights, spotlight)
+	end
+
+	-- SECURITY CAMS
+	for _, svgseccam in pairs(self.SVGsecuritycams.circles) do
+		local seccam = newSecurityCam(svgseccam.x, svgseccam.y, svgseccam.r)
+		seccam.svgseccam = svgseccam
+		table.insert(self.securitycameras, seccam)
 	end
 
 	self.camera:zoom(0.6)
@@ -329,14 +338,7 @@ function GameStateClass:draw ()
 	self.camera:attach()
 	self:drawGround()
 
-	-- WALLS
 	draw_items (self.walls)
-
-
-
-
-
-
 	draw_items (self.players)
 	draw_items (self.securitycameras)
 	draw_items (self.spotlights)
@@ -347,9 +349,7 @@ function GameStateClass:draw ()
 	draw_items (self.boxes)
 	love.graphics.setColor (255, 255, 255, 255)
 
---	for k,object in pairs(self.objects) do
---		object:draw()
---	end
+
 
 	self.camera:detach()
 

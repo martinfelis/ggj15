@@ -1,6 +1,6 @@
 local SECURITYCAM_REALIZE_TIME=4
 
-local function newSecurityCam (x, y)
+local function newSecurityCam (x, y, radius)
 	local cam = {
 		x = x,
 		y = y,
@@ -9,9 +9,10 @@ local function newSecurityCam (x, y)
 
 		alerted = false,
 		alertness = 0.,
-			
+
 		testingfor = 1,
-		radius = 170,
+		radius = radius,
+		drawradius = 200,
 
 		player_alert_start= {},
 		detectortype = "securitycam",
@@ -40,7 +41,7 @@ local function newSecurityCam (x, y)
 
 		for k,player in pairs(players) do
 			-- cast rays
-			local visible = ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 < (self.radius+player.radius)^2) 
+			local visible = ((player.body:getX()-self.x)^2+(player.body:getY()-self.y)^2 < (self.radius+player.radius)^2)
 
 			if visible then
 				self.alert[k] = true
@@ -49,7 +50,7 @@ local function newSecurityCam (x, y)
 				visible = self.alert[k]
 			end
 
-			-- emit signals 
+			-- emit signals
 			if visible and not self.player_alert_start[player] then
 				Signals.emit ('alert-start', self, player)
 				self.player_alert_start[player] = love.timer.getTime()
@@ -71,7 +72,7 @@ local function newSecurityCam (x, y)
 	function cam:draw()
 		love.graphics.setColor(255,(1. - self.alertness) * 255, 0, 128)
 
-		love.graphics.circle("fill", self.x, self.y, self.radius)
+		love.graphics.circle("fill", self.x, self.y, self.drawradius)
 
 		if self.alerted then
 			love.graphics.setColor (255, 0, 0, 128)

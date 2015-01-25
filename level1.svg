@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.125"
-     inkscape:cx="1389.5691"
-     inkscape:cy="-2663.4031"
+     inkscape:zoom="0.25"
+     inkscape:cx="-90.732642"
+     inkscape:cy="-3272.4143"
      inkscape:document-units="px"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer10"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -86,6 +86,21 @@
        height="560"
        x="283.52148"
        y="2790.9802" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer10"
+     inkscape:label="Securitycams">
+    <path
+       sodipodi:type="arc"
+       style="fill:#ff00ff;fill-opacity:0.96271189;fill-rule:nonzero;stroke:none"
+       id="path3831"
+       sodipodi:cx="340.08951"
+       sodipodi:cy="3960.0896"
+       sodipodi:rx="720"
+       sodipodi:ry="720"
+       d="m 1060.0895,3960.0896 a 720,720 0 1 1 -1439.99999,0 720,720 0 1 1 1439.99999,0 z"
+       transform="translate(-120.00001,-240.00008)" />
   </g>
   <g
      inkscape:groupmode="layer"
