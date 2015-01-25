@@ -42,6 +42,8 @@ function GameStateClass:loadLevel (filename)
 	love.physics.setMeter(64)
 	self.totalTime = 0
 
+	Signals.clear_pattern (".*")
+
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
 
 	self.alerts = {}
@@ -229,9 +231,6 @@ function GameStateClass:loadLevel (filename)
 
 	--	self:loadTestObjects()
 	self.camera:zoom(0.6)
-
-
-	Signals.clear_pattern (".*")
 
 	Signals.register ('switch', function (switch, player)
 		if switch.on == false then

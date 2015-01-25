@@ -46,6 +46,7 @@ config = { sound = true }
 audio = AudioManager:new()
 sounds = { }
 levels = { "tutorial1.svg", "tutorial2.svg", "tutorial3.svg", "tutorial4.svg", "level1.svg", "level2.svg" , "level_out.svg"}
+step_sounds = {}
 
 -- game design parameters
 GVAR = {
@@ -98,14 +99,21 @@ function love.load ()
 	states.win = WinState:new()
 	states.pause = PauseState:new()
 
+	step_sounds = {
+		Sound.static.footstep1,
+		Sound.static.footstep2,
+		Sound.static.footstep3,
+		Sound.static.footstep4
+	}
+
 	-- start initial state
 	Gamestate.registerEvents()
 	--		Gamestate.push(states.menu)
-	-- Gamestate.push(states.game)
+ 	Gamestate.push(states.game)
 	-- states.story:selectstories{"intro"}
 	-- Gamestate.push(states.story)
 	-- Gamestate.push(states.credits)
-	Gamestate.switch (states.menu)
+	--Gamestate.switch (states.menu)
 	-- Gamestate.push(states.menu)
 
 	Sound.stream.theme:play()	
