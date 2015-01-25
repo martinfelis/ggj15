@@ -8,12 +8,14 @@ Signals = require "hump.signal"
 Timer = require "hump.timer"
 pathfunctions = require "utils.pathfunctions"
 newInputMapper = require "InputMapper"
+gui = require "Quickie"
 
 -- require States
 local GameStateClass = require("states.game")
 local MenuStateClass = require("states.menu")
 local BustedState = require("states.busted")
 local WinState = require("states.win")
+local SelectNumPlayersState = require("states.select_num_players")
 local PauseState = require("states.pause")
 local ExampleMenuStateClass = require("states.examplemenu")
 local Credits = require("states.credits")
@@ -94,7 +96,7 @@ function love.load ()
 		sugarsmall = love.graphics.newFont("fonts/softsugarplain/Softplain.ttf", 18),
 	}
 	love.graphics.setBackgroundColor(17,17,17)
-	love.graphics.setFont(fonts[12])
+	love.graphics.setFont(fonts.sugarlarge)
 
 	-- create all states
 	states.menu = MenuStateClass:new()
@@ -105,6 +107,7 @@ function love.load ()
 	states.busted = BustedState:new ()
 	states.win = WinState:new()
 	states.pause = PauseState:new()
+	states.selectplayers = SelectNumPlayersState:new()
 
 	step_sounds = {
 		Sound.static.footstep1,
@@ -125,6 +128,10 @@ function love.load ()
 
 	Sound.stream.theme:play()	
 	Sound.stream.theme:setLooping (true)
+
+	gui.group.default.size[1] = 150
+	gui.group.default.size[2] = 10
+	gui.group.default.spacing = 5
 end
 
 function love.draw ()
