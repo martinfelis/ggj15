@@ -37,6 +37,47 @@ local function loadShapes (filename, layername)
 	end
 
 
+	local function split(str, delim)
+	   local res = { }
+	   local pattern = string.format("([^%s]+)%s()", delim, delim)
+	   local line, pos = "", 0
+	   while (true) do
+	      line, pos = str:match(pattern, pos)
+	      if line == nil then break end
+	      table.insert(res, line)
+	   end
+	   return res
+	end
+
+	local function search_and_parse_description(node, args)
+		for n, subnode in pairs(node) do
+			if tonumber(n) and subnode.label=="desc" then
+				if subnode[1] then
+					-- print ("Node" .. node.xarg.id .. " has desc conf")
+					local desc = subnode[1] .. "\n"
+					if desc:find("_") then
+						print("NO _ in description config in svg")
+						assert(false)
+					end
+
+					local lines = split(desc, "\n")
+					-- print(serialize(lines))
+					for _, line in pairs(lines) do
+						for key, value in string.gmatch(line, "([%w]+)[:]([%w%d]+)") do
+							args[key] = tonumber(value) or value
+						end
+					end
+
+
+				end
+			end
+		end
+
+
+		return args
+	end
+
+
 	local function parse_transform(transformstring, x, y, w, h)
 		-- transform = "matrix(0.86912819,0.49458688,-0.49458688,0.86912819,0,0)"
 		-- returns the angle
@@ -177,6 +218,7 @@ local function loadShapes (filename, layername)
 		local polygon = {points = points}
 		polygon.colorhex, polygon.color = get_color(parse_style(node.xarg.style))
 		polygon.config = parse_id(node.xarg.id)
+		polygon.config = search_and_parse_description(node, polygon.config)
 		-- print (serialize(polygon))
 		return polygon
 	end
@@ -188,6 +230,7 @@ local function loadShapes (filename, layername)
 		rect.height, rect.width = tonumber(rect.height), tonumber(rect.width)
 		rect.colorhex, rect.color = get_color(parse_style(node.xarg.style))
 		rect.config = parse_id(node.xarg.id)
+		rect.config = search_and_parse_description(node, rect.config)
 		rect.angle = 0
 		rect.points = {rect.x, rect.y,
 					   rect.x+rect.width, rect.y,
@@ -205,6 +248,7 @@ local function loadShapes (filename, layername)
 		local circle = {}
 		circle.colorhex, circle.color = get_color(parse_style(node.xarg.style))
 		circle.config = parse_id(node.xarg.id)
+		circle.config = search_and_parse_description(node, circle.config)
 		circle.x = node.xarg.cx
 		circle.y = node.xarg.cy
 		circle.rx = node.xarg.rx
