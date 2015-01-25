@@ -43,6 +43,7 @@ function GameStateClass:loadLevel (filename)
 	self.totalTime = 0
 
 	Signals.clear_pattern (".*")
+	Timer.clear()
 
 	self.world = love.physics.newWorld(0, 0, true) -- no gravity
 
