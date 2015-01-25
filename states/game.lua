@@ -282,7 +282,8 @@ function GameStateClass:resume ()
 		else
 			Gamestate.switch(states.credits)
 		end
-	elseif self.pause then
+	end
+	if self.pause then
 		print ("RESUME")
 		self.pause = false
 	end

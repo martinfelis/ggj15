@@ -13,7 +13,7 @@
    height="620.17902"
    id="svg4578"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="level1.svg"
    enable-background="new">
   <defs
@@ -40,10 +40,10 @@
      inkscape:guide-bbox="true"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
-     inkscape:window-width="1366"
-     inkscape:window-height="702"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-width="1391"
+     inkscape:window-height="876"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
      inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
@@ -94,7 +94,7 @@
        sodipodi:rx="160.00008"
        sodipodi:ry="160.00008"
        d="m 500.08958,3960.0896 a 160.00008,160.00008 0 1 1 -320.00015,0 160.00008,160.00008 0 1 1 320.00015,0 z"
-       transform="translate(-80.000084,-160.00001)" />
+       transform="translate(-80.000084,-400.00016)" />
     <path
        sodipodi:type="arc"
        style="fill:#ff00ff;fill-opacity:0.96271189;fill-rule:nonzero;stroke:none;display:inline"
@@ -104,7 +104,7 @@
        sodipodi:rx="160.00008"
        sodipodi:ry="160.00008"
        d="m 500.08958,3960.0896 a 160.00008,160.00008 0 1 1 -320.00015,0 160.00008,160.00008 0 1 1 320.00015,0 z"
-       transform="matrix(1.6249992,0,0,1.6249992,1067.4443,-5175.0529)"
+       transform="matrix(1.6249992,0,0,1.6249992,1047.4443,-5455.0529)"
        inkscape:label="#path3831-8" />
   </g>
   <g

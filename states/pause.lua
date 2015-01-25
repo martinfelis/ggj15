@@ -37,6 +37,15 @@ function PauseState:update (dt)
 	gui.group.push({grow = "down", pos = {
 			love.graphics.getWidth() * 0.4,
 			love.graphics.getHeight() * 0.4} })
+
+
+
+	if gui.Button ({text = "Give up!"}) then
+		prev_state.busted = true
+		Gamestate.pop()
+	end
+    gui.Label{text = "", size = {"tight"}}
+
 	if gui.Button ({text = "Resume!"}) then
 		Gamestate.pop()
 	end
@@ -66,10 +75,20 @@ end
 
 function PauseState:keyreleased(key)
 	if key=="escape" and not self.pause then
-
 		Gamestate.pop()
 	end
 end
+
+function PauseState:keypressed(key, code)
+	gui.keyboard.pressed(key)
+end
+
+-- LÖVE 0.9
+function PauseState:textinput(str)
+	gui.keyboard.textinput(str)
+end
+
+
 
 return PauseState
 
