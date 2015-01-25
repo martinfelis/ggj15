@@ -28,7 +28,7 @@
      inkscape:cx="273.11136"
      inkscape:cy="-3398.1693"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer11"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -622,7 +622,7 @@
        sodipodi:rx="480"
        sodipodi:ry="480"
        d="m 4020.0896,3320.0896 a 480,480 0 1 1 -960,0 480,480 0 1 1 960,0 z"
-       transform="matrix(0.98653706,0,0,0.98653706,-195.59309,287.95109)" />
+       transform="matrix(0.98653706,0,0,0.98653706,-115.59309,287.95109)" />
   </g>
   <g
      inkscape:groupmode="layer"

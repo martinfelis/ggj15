@@ -261,6 +261,9 @@ function GameStateClass:resume ()
 		else
 			Gamestate.switch(states.credits)
 		end
+	elseif self.pause then
+		print ("RESUME")
+		self.pause = false
 	end
 end
 
@@ -421,7 +424,11 @@ function GameStateClass:update (dt)
 	self:checkAlerts()
 end
 
-function GameStateClass:keypressed (key)
+function GameStateClass:keyreleased (key)
+	if key=="escape" and not self.pause then
+		self.pause = true
+		Gamestate.push(states.pause)
+	end
 --	print (key .. ' pressed')
 end
 
