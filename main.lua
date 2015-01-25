@@ -108,8 +108,8 @@ function love.load ()
 
 	-- start initial state
 	Gamestate.registerEvents()
-	--		Gamestate.push(states.menu)
- 	Gamestate.push(states.game)
+			Gamestate.push(states.menu)
+ 	--Gamestate.push(states.game)
 	-- states.story:selectstories{"intro"}
 	-- Gamestate.push(states.story)
 	-- Gamestate.push(states.credits)
