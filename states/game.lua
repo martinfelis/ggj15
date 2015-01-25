@@ -121,7 +121,7 @@ function GameStateClass:loadLevel (filename)
 		table.insert(self.switches, switch)
 	end
 
-	-- DOORS: id: doorX_left:true
+	-- DOORS: id: doorX_left:true_openby:sw1_openby2:sw2_openby3:sw4
 	for _, svgdoor in pairs(self.SVGdoors.polygons) do
 		local rl = (svgdoor.config.left=="true") or false
 		local door = newOpenDoor(self.world, svgdoor.x, svgdoor.y,
@@ -134,6 +134,27 @@ function GameStateClass:loadLevel (filename)
 				end
 			end
 		end
+		if svgdoor.config.openby1 then
+			for _, switch in pairs(self.switches) do
+				if switch.id == svgdoor.config.openby1 then
+					door:canBeOpenedBy (switch)
+				end
+			end
+		end		if svgdoor.config.openby2 then
+			for _, switch in pairs(self.switches) do
+				if switch.id == svgdoor.config.openby2 then
+					door:canBeOpenedBy (switch)
+				end
+			end
+		end
+		if svgdoor.config.openby3 then
+			for _, switch in pairs(self.switches) do
+				if switch.id == svgdoor.config.openby3 then
+					door:canBeOpenedBy (switch)
+				end
+			end
+		end
+
 		table.insert(self.doors, door)
 	end
 
