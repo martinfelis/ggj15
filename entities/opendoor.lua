@@ -1,11 +1,11 @@
-
 local function newOpenDoor(world, x, y, width, height, jointLeft, color)
 	local door = {
 		left = jointLeft,
 		has_switch = false,
 		opener = {},
 		isopen = false,
-		color = color
+		color = color,
+		opened = false,
 	}
 	local leftX = x
 	local upY = y
@@ -61,6 +61,16 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, color)
 		-- end
 	end
 
+	function door:update(dt)
+		if not self.opened then
+			local angle_velocity = self.body:getAngularVelocity()
+			if math.abs(angle_velocity) > 0.1 then
+				self.opened = true
+				Signals.emit ('door-open', self)
+			end
+		end
+	end
+
 	function door:draw()
 		love.graphics.setColor(door.color)
 		love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
@@ -92,6 +102,8 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, color)
 	end
 
 	function door:open()
+		Signals.emit ('door-open', self)
+		print ("opening door")
 		self.isopen = true
 		if width > height then
 			if (self.left) then

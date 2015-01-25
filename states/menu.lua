@@ -4,7 +4,8 @@ local MenuClass = {}
 
 function MenuClass:new ()
 	local newInstance = {
-		imageobject = love.graphics.newImage("images/story/moon.jpg")
+		imageobject = love.graphics.newImage("images/story/moon.jpg"),
+		first = true
 	}
 
 	-- group defaults
@@ -17,6 +18,7 @@ function MenuClass:new ()
 end
 
 function MenuClass:enter()
+
 	self.zoombase = math.max(
 		love.graphics.getWidth() / self.imageobject:getWidth(),
 		love.graphics.getHeight() / self.imageobject:getHeight()
@@ -28,7 +30,17 @@ function MenuClass:update (dt)
 			love.graphics.getWidth() * 0.7,
 			love.graphics.getHeight() * 0.7} })
 	if gui.Button ({text = "Play!"}) then
-		Gamestate.switch(states.game)
+		if self.first then
+			states.story:selectstories{"intro"}
+   			Gamestate.switch(states.game)
+	    	Gamestate.push(states.story)
+	    	Timer.add(7, function()
+	    			Gamestate.pop()
+	    			audio:configureCurrentMusic{}
+	    		end)
+	    	self.first = false
+		end
+
 	end
 	if gui.Button ({text = "Quit!"}) then
 		os.exit()
@@ -68,6 +80,14 @@ function MenuClass:draw(dt)
 
 end
 
+function MenuClass:keypressed(key, code)
+	gui.keyboard.pressed(key)
+end
+
+-- LÖVE 0.9
+function MenuClass:textinput(str)
+	gui.keyboard.textinput(str)
+end
 
 return MenuClass
 

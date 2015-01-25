@@ -84,5 +84,15 @@ function WinState:draw(dt)
 	gui.core.draw()
 end
 
+function WinState:keypressed(key, code)
+	gui.keyboard.pressed(key)
+end
+
+-- LÖVE 0.9
+function WinState:textinput(str)
+	gui.keyboard.textinput(str)
+end
+
+
 return WinState
 

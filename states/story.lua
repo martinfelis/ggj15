@@ -86,6 +86,22 @@ function Story:draw(dt)
 	love.graphics.setColor({255, 255, 255, 255})
 end
 
+function Story:keypressed(key, code)
+
+	if key == "return" or key == " " then
+		if #self.stories > 0 then
+			self:nextstoryscreen()
+		else
+			Gamestate.pop()
+   			audio:configureCurrentMusic{}
+		end
+	end
+end
+
+-- LÖVE 0.9
+function Story:textinput(str)
+	gui.keyboard.textinput(str)
+end
 
 return Story
 

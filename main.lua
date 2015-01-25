@@ -26,6 +26,19 @@ newPlayer = require ("entities.player")
 sketch_shader = {}
 noise_texture = {}
 
+local function Proxy(f)
+	return setmetatable({}, {__index = function(t,k)
+		local v = f(k)
+		t[k] = v
+		return v
+	end})
+end
+
+Sound = {
+	static = Proxy(function(path) return love.audio.newSource('sounds/'..path..'.mp3', 'static') end),
+	stream = Proxy(function(path) return love.audio.newSource('music/'..path..'.mp3', 'stream') end)
+}
+
 -- some global dicts
 fonts = {}
 states = {}
@@ -75,10 +88,6 @@ function love.load ()
 	love.graphics.setBackgroundColor(17,17,17)
 	love.graphics.setFont(fonts[12])
 
-	-- load sounds
-	sounds.punch = love.audio.newSource ("sounds/punch3.ogg", 'static')
-	sounds.whip= love.audio.newSource ("sounds/whip3.ogg", 'static')
-
 	-- create all states
 	states.menu = MenuStateClass:new()
 	states.examplemenu = ExampleMenuStateClass:new()
@@ -90,13 +99,16 @@ function love.load ()
 	states.pause = PauseState:new()
 
 	-- start initial state
-    Gamestate.registerEvents()
+	Gamestate.registerEvents()
 	--		Gamestate.push(states.menu)
-    Gamestate.push(states.game)
-    -- states.story:selectstories{"intro"}
-    -- Gamestate.push(states.story)
-    -- Gamestate.push(states.credits)
-    -- Gamestate.push(states.menu)
+	-- Gamestate.push(states.game)
+	-- states.story:selectstories{"intro"}
+	-- Gamestate.push(states.story)
+	-- Gamestate.push(states.credits)
+	Gamestate.switch (states.menu)
+	-- Gamestate.push(states.menu)
+
+	Sound.stream.theme:play()	
 end
 
 function love.draw ()

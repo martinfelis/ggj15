@@ -233,6 +233,19 @@ function GameStateClass:loadLevel (filename)
 
 	Signals.clear_pattern (".*")
 
+	Signals.register ('switch', function (switch, player) 
+		if switch.on == false then
+			Sound.static.switch:play()
+		end
+	end)
+
+	Signals.register ('door-open', function (door) 
+--		if door.isopen == false then
+			Sound.static.door_open:play()
+			print ("opening door")
+--		end
+	end)
+
 	Signals.register ('alert-start', function (source, player)
 		print (string.format ("A %s (%s) spotted player %s", source.detectortype, tostring(source), tostring (player)))
 		if not self.alerts[player] then
@@ -436,6 +449,7 @@ function GameStateClass:update (dt)
 
 	update_items (self.boxes, dt)
 	update_items (self.chains, dt)
+	update_items (self.doors, dt)
 	update_items (self.guards, dt, self.players, self.world)
 	update_items (self.players, dt)
 	update_items (self.securitycameras, dt, self.players, self.world)
