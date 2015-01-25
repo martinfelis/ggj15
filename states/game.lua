@@ -242,8 +242,10 @@ function GameStateClass:loadLevel (filename)
 	end)
 
 	Signals.register ('win', function ()
-		Gamestate.push(states.win)
-		self.win = true
+		if not self.win then
+			Gamestate.push(states.win)
+			self.win = true
+		end
 	end)
 end
 
@@ -439,6 +441,7 @@ function GameStateClass:checkWin()
 	for _, player in pairs(self.players) do
 		local dx, dy = player.body:getX() - self.target.center_x, player.body:getY() - self.target.center_y
 		local distancetotarget = math.sqrt(dx*dx + dy*dy)
+		print(distancetotarget)
 		if distancetotarget < self.target.radius then
 			Signals.emit ('win')
 		end
