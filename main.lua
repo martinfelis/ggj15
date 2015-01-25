@@ -99,14 +99,14 @@ function love.load ()
 	states.pause = PauseState:new()
 
 	-- start initial state
-    Gamestate.registerEvents()
+	Gamestate.registerEvents()
 	--		Gamestate.push(states.menu)
-    -- Gamestate.push(states.game)
-    -- states.story:selectstories{"intro"}
-    -- Gamestate.push(states.story)
-    -- Gamestate.push(states.credits)
-    Gamestate.push(states.menu)
-    -- Gamestate.push(states.menu)
+	-- Gamestate.push(states.game)
+	-- states.story:selectstories{"intro"}
+	-- Gamestate.push(states.story)
+	-- Gamestate.push(states.credits)
+	Gamestate.switch (states.menu)
+	-- Gamestate.push(states.menu)
 
 	Sound.stream.theme:play()	
 end
