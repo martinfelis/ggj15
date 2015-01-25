@@ -48,23 +48,6 @@ local function newGuard (x, y, world)
 			 -- self.angle = math.atan2(endY-startY, endX-startX)
 		end
 
-
-		--[[if self.wishAngle > 2*math.pi then
-			self.wishAngle = self.wishAngle - 2*math.pi
-		elseif self.angle < 0 then
-			self.wishAngle= self.wishAngle + 2*math.pi
-		end
-
-		print(string.format("%f <> %f", self.wishAngle, self.angle))
-
-		if (self.wishAngle > self.angle) then
-			print("greater")
-			self.angle = self.angle + dt * GUARD_ROTATION_SPEED
-		end
-		if (self.wishAngle < self.angle) then
-			print("smaller")
-			self.angle = self.angle - dt * GUARD_ROTATION_SPEED
-		end ]]--
 		local vel= {}
 		vel.x, vel.y = self.body:getLinearVelocity()
 		self.angle = math.atan2(vel.y, vel.x)
@@ -75,16 +58,7 @@ local function newGuard (x, y, world)
 
 		self.alert = false
 		self.alerttime = self.alerttime + dt
-		-- self.angle = self.angle + dt * 0.4
-	
 
-		-- TODO NEEDED?
-
---		if self.angle > 2*math.pi then
---			self.angle = self.angle - 2*math.pi
---		elseif self.angle < 0 then
---			self.angle= self.angle + 2*math.pi
---		end
 		local function callback(fixture, x, y, xn, yn, fraction)
 
 			if (fixture:getUserData() == "chain") then -- you can't hide behind your chains

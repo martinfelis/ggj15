@@ -139,16 +139,6 @@ local function newPlayer (world, id, x, y)
 		self.body:setLinearVelocity(vel.x, vel.y)
 
 		self.body:setAngle(math.atan2(vel.x, -vel.y))
-	--	self.body:setAngle()
---[[		if (love.keyboard.isDown("right")) then
-			self.body:setLinearVelocity(PLAYER_MOVE_FORCE, 0)
-		end
-		if (love.keyboard.isDown("up")) then
-			self.body:setLinearVelocity(0, -PLAYER_MOVE_FORCE)
-		end
-		if (love.keyboard.isDown("down")) then
-			self.body:setLinearVelocity(0, PLAYER_MOVE_FORCE)
-		end]]--
 	end
 
 	function player:draw ()
