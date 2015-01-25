@@ -240,6 +240,11 @@ local function loadShapes (filename, layername)
 			if v.label and v.label == "g"
 				and v.xarg and type(v.xarg) == "table"
 				and v.xarg.label and v.xarg.label == layername then
+
+				if v.xarg.transform then
+					print ("UNSUPPORTED global TRANSFORM at Layer " .. layername)
+				end
+
 				return v
 			end
 		end
