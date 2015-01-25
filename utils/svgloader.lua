@@ -92,7 +92,7 @@ local function loadShapes (filename, layername)
 		local resultingpointlist = {}
 
 		local untransformedpoints = {
-			{{x, y, 0}}, {{x+w, y, 0}}, {{x+w, y+h, 0}}, {{x, y+h, 0}}
+			{{x, y, 1}}, {{x+w, y, 1}}, {{x+w, y+h, 1}}, {{x, y+h, 1}}
 		}
 
 		for _, untransformedvertex in pairs(untransformedpoints) do
@@ -108,7 +108,7 @@ local function loadShapes (filename, layername)
 		--print(serialize(nums))
 		--print(serialize(resultingpointlist))
 		--print (angle)
-		return angle, resultingpointlist, 0, 0 -- die nuller sind die dx, dy bei transform() (nicht matrix())
+		return angle, resultingpointlist, nums[5], nums[6] -- die nuller sind die dx, dy bei transform() (nicht matrix())
 	end
 
 
