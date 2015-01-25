@@ -23,7 +23,7 @@ function WinState:enter()
 		)
 
 	self.bustedlabel = {x = love.window.getWidth(), y = 0, scale = 20}
-	Timer.tween (0.5, self.bustedlabel, {x = love.window.getWidth() / 5., y = love.window.getHeight() / 2.5, scale = 1})
+	Timer.tween (0.5, self.bustedlabel, {x = love.window.getWidth() / 7., y = love.window.getHeight() / 2.5, scale = 1})
 	Timer.add (0.5, function() Sound.static.punch:play() end)
 	Sound.static.whip:play()
 end
@@ -44,7 +44,7 @@ function WinState:update (dt)
 		os.exit()
 	end
 	if gui.Button ({text = "Credits!"}) then
-		os.exit()
+		Gamestate.push(states.credits)
 	end
 
 	if gui.Checkbox{checked = config.sound, text = "Sound", size = {"tight"}} then
