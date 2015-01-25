@@ -150,7 +150,6 @@ local function newPlayer (world, id, x, y)
 		end
 
 		love.graphics.draw(self.image, self.body:getX(), self.body:getY(),self.angle, 2,2,self.image:getWidth() /2, self.image:getHeight()/2)
---		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
 
 		local arm_width = 20
 		local shoulder_width = 38.
