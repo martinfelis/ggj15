@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1592.7994"
-     inkscape:cy="-1934.1109"
+     inkscape:zoom="0.125"
+     inkscape:cx="1389.5691"
+     inkscape:cy="-2663.4031"
      inkscape:document-units="px"
-     inkscape:current-layer="layer9"
+     inkscape:current-layer="layer5"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -494,7 +494,18 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Spotlights"
-     style="display:inline" />
+     style="display:inline">
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffff00;fill-opacity:0.96271189000000001;fill-rule:nonzero;stroke:#000080;stroke-width:6.50600003999999998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.30000019000000044;stroke-opacity:1;stroke-dasharray:19.51800013000000078, 19.51800013000000078;stroke-dashoffset:0"
+       id="spot1_path:pathspot1"
+       sodipodi:cx="820.08948"
+       sodipodi:cy="1720.0895"
+       sodipodi:rx="250.48923"
+       sodipodi:ry="250.48923"
+       d="m 1070.5787,1720.0895 a 250.48923,250.48923 0 1 1 -500.97845,0 250.48923,250.48923 0 1 1 500.97845,0 z"
+       inkscape:label="#path3824" />
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer7"
@@ -507,6 +518,12 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc"
        inkscape:label="#path5496" />
+    <path
+       style="fill:none;stroke:#ffef00;stroke-width:11;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:11, 11;stroke-dashoffset:0"
+       d="m 820.0895,1800.0895 -1280,640 4160,640 -4160,720 3840,-1920"
+       id="pathspot1"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path3826" />
   </g>
   <g
      inkscape:groupmode="layer"

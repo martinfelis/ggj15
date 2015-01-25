@@ -1,4 +1,4 @@
-local function newSpotlight (x, y)
+local function newSpotlight (x, y, r)
 	local spot = {
 		x = x,
 		y = y,
@@ -10,10 +10,15 @@ local function newSpotlight (x, y)
 		alerted = false,
 		alertness = 0.,
 
-		radius = 100
+		radius = r
 	}
 
-	function spot:update(dt, players)
+	function spot:update(dt, players, totalTime)
+
+		if self.pathpoints then
+			self.x, self.y = pathfunctions.walk(self.pathpoints, totalTime, self.speed)
+		end
+
 		self.alerttime = self.alerttime + dt
 
 		if self.alerted then
@@ -35,7 +40,7 @@ local function newSpotlight (x, y)
 
 			if not alert and self.player_alert_start[player] ~= nil then
 				Signals.emit ('alert-stop', self, player)
-				self.player_alert_start[player] = nil 
+				self.player_alert_start[player] = nil
 			end
 
 			if alert then
@@ -60,6 +65,7 @@ local function newSpotlight (x, y)
 			love.graphics.setLineWidth (10.)
 			love.graphics.circle("line", self.x, self.y, self.radius + math.sin(love.timer.getTime() * 10) * 10)
 		end
+
 	end
 	return spot
 end

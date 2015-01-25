@@ -57,7 +57,7 @@ function GameStateClass:loadLevel (filename)
 	self.SVGground = loadShapes (filename, "Ground")
 	self.SVGwalls = loadShapes (filename, "Walls")
 	self.SVGboxes = loadShapes (filename, "Boxes")
-	self.spotlights = loadShapes (filename, "Spotlights")
+	self.SVGspotlights = loadShapes (filename, "Spotlights")
 
 	self.chains = {}
 	self.doors = {}
@@ -69,6 +69,7 @@ function GameStateClass:loadLevel (filename)
 	self.grounds = {} -- list of {points={...}, color=...}
 	self.walls = {}
 	self.boxes = {} -- gets svg table
+	self.spotlights = {}
 
 	-- PLAYER and CHAINS
 	for _, player in pairs(self.SVGplayers.circles) do
@@ -170,9 +171,19 @@ function GameStateClass:loadLevel (filename)
 	end
 
 	-- SPOTLIGHTS
+	for _, svgspotlight in pairs(self.SVGspotlights.circles) do
+		local spotlight = newSpotlight(svgspotlight.x, svgspotlight.y, svgspotlight.r)
+		spotlight.svgspotlight = svgspotlight
 
-	-- associate spotlights with paths
-	for i, s in ipairs(self.spotlights.circles) do
+		-- search path for spotlight
+		for i, svgpath in ipairs(self.SVGpaths.polygons) do
+			if svgpath.id == svgspotlight.config.path then
+				spotlight.pathpoints = svgpath.points
+				spotlight.speed = svgspotlight.config.speed or 200
+			end
+		end
+
+		table.insert(self.spotlights, spotlight)
 	end
 
 	self.camera:zoom(0.6)
@@ -180,16 +191,6 @@ function GameStateClass:loadLevel (filename)
 	--	self:loadTestObjects()
 	self.camera:zoom(0.6)
 
-	-- associate spotlights with paths
-	--for i, s in ipairs(self.spotlights.circles) do
-	--	for i, sp in ipairs(self.spotlightpaths.polygons) do
-	--		-- print (sp.id)
-	--		if sp.id == s.config.path then
-	--			s.pathpoints = sp.points
-	--		end
-	--	end
-	--end
-	-- print (serialize(self.spotlights))
 
 	Signals.clear_pattern (".*")
 
@@ -332,12 +333,6 @@ function GameStateClass:draw ()
 	draw_items (self.walls)
 
 
-	local oldr, oldg, oldb, olda = love.graphics.getColor()
-	love.graphics.setColor({210,200, 13, 180})
-	for i, c in ipairs (self.spotlights.circles) do
-		love.graphics.circle( "fill", c.x, c.y, c.r, 50 )
-	end
-	love.graphics.setColor(oldr, oldg, oldb, olda)
 
 
 
@@ -384,9 +379,7 @@ function GameStateClass:update (dt)
 		return
 	end
 
-	for i, c in ipairs (self.spotlights.circles) do
-		c.x, c.y = pathfunctions.walk(c.pathpoints, self.totalTime, c.config.speed)
-	end
+
 
 	local function update_items (items, dt, arg1, arg2, arg3)
 		for i,v in ipairs (items) do
@@ -401,7 +394,7 @@ function GameStateClass:update (dt)
 	update_items (self.guards, dt, self.players, self.world, self.totalTime)
 	update_items (self.players, dt)
 	update_items (self.securitycameras, dt, self.players, self.world)
-	update_items (self.spotlights, dt, self.players)
+	update_items (self.spotlights, dt, self.players, self.totalTime)
 	update_items (self.switches, dt, self.players)
 
 	self:checkWin()
