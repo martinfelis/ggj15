@@ -466,7 +466,10 @@ function GameStateClass:keyreleased (key)
 		Gamestate.push(states.pause)
 	end
 	if key=="f12" then
-		Signals.emit ('win')
+		--Signals.emit ('win')
+		self.win = true
+		self:resume()
+
 	end
 --	print (key .. ' pressed')
 end
