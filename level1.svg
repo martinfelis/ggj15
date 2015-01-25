@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.1767767"
-     inkscape:cx="2100.1882"
-     inkscape:cy="-2149.2687"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="727.72915"
+     inkscape:cy="-488.12295"
      inkscape:document-units="px"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="layer8"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -172,7 +172,7 @@
        sodipodi:ry="40"
        d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
        inkscape:label="#path5435"
-       transform="translate(140,2560)" />
+       transform="translate(380,-239.99996)" />
     <path
        sodipodi:type="arc"
        style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
@@ -182,7 +182,29 @@
        sodipodi:rx="40"
        sodipodi:ry="40"
        d="m 100.0895,1400.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
-       transform="translate(180,2480)" />
+       transform="translate(420,-319.99996)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="Player2-0"
+       sodipodi:cx="-99.9105"
+       sodipodi:cy="1320.0895"
+       sodipodi:rx="40"
+       sodipodi:ry="40"
+       d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
+       inkscape:label="#path5435"
+       transform="translate(440,-359.99996)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="Player2-3"
+       sodipodi:cx="-99.9105"
+       sodipodi:cy="1320.0895"
+       sodipodi:rx="40"
+       sodipodi:ry="40"
+       d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
+       inkscape:label="#path5435"
+       transform="translate(700,-179.99996)" />
   </g>
   <g
      inkscape:groupmode="layer"

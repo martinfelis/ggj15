@@ -13,7 +13,7 @@
    height="620.17902"
    id="svg4578"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="tutorial3.svg"
    enable-background="new">
   <defs
@@ -26,10 +26,10 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.25"
-     inkscape:cx="5644.4178"
-     inkscape:cy="3467.1901"
+     inkscape:cx="6306.4396"
+     inkscape:cy="1934.9265"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer8"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -40,10 +40,10 @@
      inkscape:guide-bbox="true"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
-     inkscape:window-width="1366"
-     inkscape:window-height="702"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-width="1391"
+     inkscape:window-height="876"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      showborder="false"
      inkscape:showpageshadow="false">
@@ -65,7 +65,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -320,6 +320,28 @@
        d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
        inkscape:label="#path5435"
        transform="translate(6400,-2600)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="Player2-0-6"
+       sodipodi:cx="-99.9105"
+       sodipodi:cy="1320.0895"
+       sodipodi:rx="40"
+       sodipodi:ry="40"
+       d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
+       inkscape:label="#path5435"
+       transform="translate(6240,-2600)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="Player2-0-5"
+       sodipodi:cx="-99.9105"
+       sodipodi:cy="1320.0895"
+       sodipodi:rx="40"
+       sodipodi:ry="40"
+       d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
+       inkscape:label="#path5435"
+       transform="translate(6280,-2480)" />
   </g>
   <g
      inkscape:groupmode="layer"

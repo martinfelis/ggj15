@@ -85,12 +85,14 @@ function GameStateClass:loadLevel (filename)
 
 	-- PLAYER and CHAINS
 	for _, player in pairs(self.SVGplayers.circles) do
-		table.insert(self.players, newPlayer (self.world, #self.players + 1,
-											  player.x, player.y))
-		if (#self.players ~= 1) then
-			table.insert(self.chains, newChain(self.world,
-												self.players[#self.players-1],
-												self.players[#self.players]))
+		if #self.players < config.numplayer then
+			table.insert(self.players, newPlayer (self.world, #self.players + 1,
+												  player.x, player.y))
+			if (#self.players ~= 1) then
+				table.insert(self.chains, newChain(self.world,
+													self.players[#self.players-1],
+													self.players[#self.players]))
+			end
 		end
 	end
 
