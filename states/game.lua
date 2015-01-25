@@ -233,13 +233,13 @@ function GameStateClass:loadLevel (filename)
 
 	Signals.clear_pattern (".*")
 
-	Signals.register ('switch', function (switch, player) 
+	Signals.register ('switch', function (switch, player)
 		if switch.on == false then
 			Sound.static.switch:play()
 		end
 	end)
 
-	Signals.register ('door-open', function (door) 
+	Signals.register ('door-open', function (door)
 --		if door.isopen == false then
 			Sound.static.door_open:play()
 			print ("opening door")
@@ -464,6 +464,9 @@ function GameStateClass:keyreleased (key)
 	if key=="escape" and not self.pause then
 		self.pause = true
 		Gamestate.push(states.pause)
+	end
+	if key=="f12" then
+		Signals.emit ('win')
 	end
 --	print (key .. ' pressed')
 end
