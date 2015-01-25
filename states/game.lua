@@ -116,7 +116,7 @@ function GameStateClass:loadLevel (filename)
 
 	-- SWITCHES
 	for _, svgswitch in pairs(self.SVGswitches.circles) do
-		local switch = newSwitch(svgswitch.x, svgswitch.y)
+		local switch = newSwitch(svgswitch.x, svgswitch.y, svgswitch.r)
 		switch.id = svgswitch.id
 		table.insert(self.switches, switch)
 	end
