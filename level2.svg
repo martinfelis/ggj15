@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1658.7883"
-     inkscape:cy="441.80023"
+     inkscape:zoom="11.313708"
+     inkscape:cx="795.11573"
+     inkscape:cy="78.411208"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer2"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -130,7 +130,7 @@
        style="fill:#676568;fill-opacity:0.79166667"
        id="rect5167"
        width="40"
-       height="319.99997"
+       height="285"
        x="780.08948"
        y="120.08952" />
     <rect
@@ -535,12 +535,12 @@
        x="-98.893051"
        y="680.08954" />
     <rect
-       style="fill:none;stroke:#000000;stroke-width:1.25063491;stroke-opacity:1;display:inline"
+       style="fill:none;stroke:#000000;stroke-width:0.93350333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect5191"
        width="40.624741"
-       height="280"
-       x="780.71484"
-       y="160.71483" />
+       height="243.99998"
+       x="779.46472"
+       y="161.08952" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:1.69327605;stroke-opacity:1;display:inline"
        id="rect5191-8"
@@ -756,10 +756,18 @@
     <rect
        style="fill:#0000ff;fill-opacity:1;stroke:none;display:inline"
        id="door1_openby:switch1_left:true"
-       width="40"
-       height="209.99997"
-       x="780.08948"
-       y="460.08951"
+       width="29.999977"
+       height="122"
+       x="785.08954"
+       y="548.08954"
+       inkscape:label="#rect6995" />
+    <rect
+       style="fill:#0000ff;fill-opacity:1;stroke:none;display:inline"
+       id="door1_openby:switch1_left:true-9"
+       width="29.999977"
+       height="119.99998"
+       x="785.08954"
+       y="417.08954"
        inkscape:label="#rect6995" />
   </g>
   <g
@@ -795,7 +803,7 @@
        id="rect7079"
        width="200.00002"
        height="200"
-       x="1970.0895"
+       x="1980.0895"
        y="-319.91049"
        inkscape:transform-center-x="59.999893"
        inkscape:transform-center-y="20.000007" />
