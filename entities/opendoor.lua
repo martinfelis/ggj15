@@ -66,6 +66,7 @@ local function newOpenDoor(world, x, y, width, height, jointLeft, color)
 		love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 		if (self.isopen) then
 			love.graphics.setLineWidth(2)
+			love.graphics.setColor (255, 255, 255, 128)
 			if (width > height) then
 				if (self.left) then
 					love.graphics.arc("line", leftX, upY + height/2, width, -math.pi/2, math.pi/2)
