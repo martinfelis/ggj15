@@ -35,8 +35,10 @@ function MenuClass:update (dt)
    			Gamestate.switch(states.game)
 	    	Gamestate.push(states.story)
 	    	Timer.add(7, function()
-	    			Gamestate.pop()
-	    			audio:configureCurrentMusic{}
+	    			if(Gamestate.prev() == states.story) then
+	    				Gamestate.pop()
+	    				audio:configureCurrentMusic{}
+	    			end
 	    		end)
 	    	self.first = false
 		end
