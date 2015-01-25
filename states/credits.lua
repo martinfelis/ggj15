@@ -39,6 +39,12 @@ function Credits:draw(dt)
 	end
 end
 
+function Credits:keypressed(key)
+	if key=="escape" then
+		Gamestate.pop()
+	end
+end
+
 
 return Credits
 
