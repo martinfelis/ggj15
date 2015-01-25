@@ -13,7 +13,7 @@
    height="620.17902"
    id="svg4578"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="level1.svg"
    enable-background="new">
   <defs
@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.50000001"
-     inkscape:cx="1675.8311"
-     inkscape:cy="-433.48755"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="1482.3436"
+     inkscape:cy="-1895.191"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer7"
      showgrid="true"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -40,10 +40,10 @@
      inkscape:guide-bbox="true"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
-     inkscape:window-width="1366"
-     inkscape:window-height="702"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-width="1391"
+     inkscape:window-height="876"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
      inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
@@ -200,6 +200,20 @@
        sodipodi:ry="40"
        d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
        inkscape:label="#path5435" />
+    <path
+       transform="translate(2159.9105,1239.9105)"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.17900001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="Guard1"
+       sodipodi:cx="-99.9105"
+       sodipodi:cy="1320.0895"
+       sodipodi:rx="40"
+       sodipodi:ry="40"
+       d="m -59.9105,1320.0895 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
+       inkscape:label="#path5435">
+      <desc
+         id="desc3877">path:gp2</desc>
+    </path>
   </g>
   <g
      inkscape:label="Walls"
@@ -542,6 +556,12 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccc"
        inkscape:label="#path5496" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 2100.0895,2440.0895 0,-960 -880,0 0,1120 400,0 0,-640 240,640"
+       id="gp2"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path3107" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -571,6 +591,19 @@
        sodipodi:ry="40"
        d="m 2180.0896,320.08951 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
        inkscape:label="#path11281" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ffff;fill-opacity:1;display:inline"
+       id="sw2"
+       sodipodi:cx="2140.0896"
+       sodipodi:cy="3460.0896"
+       sodipodi:rx="60"
+       sodipodi:ry="60"
+       d="m 2200.0896,3460.0896 a 60,60 0 1 1 -120,0 60,60 0 1 1 120,0 z"
+       inkscape:transform-center-x="39.9999"
+       inkscape:transform-center-y="-139.99992"
+       transform="translate(-2180.0001,-920.00008)"
+       inkscape:label="#path3569" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -658,12 +691,16 @@
        inkscape:label="#rect11322" />
     <rect
        style="opacity:0.64630223;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.20138741;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       id="wachraum_left:true-5"
+       id="wachraum"
        width="238.70134"
        height="40.603935"
        x="720.28748"
        y="3640.2876"
-       inkscape:label="#rect11203" />
+       inkscape:label="#rect11203">
+      <desc
+         id="desc3087">openby:sw2
+left:true</desc>
+    </rect>
   </g>
   <g
      inkscape:groupmode="layer"
