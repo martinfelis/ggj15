@@ -45,7 +45,7 @@ states = {}
 config = { sound = true }
 audio = AudioManager:new()
 sounds = { }
-levels = { "tutorial1.svg", "tutorial2.svg", "tutorial3.svg", "tutorial4.svg", "level1.svg", "level2.svg" , "level_out.svg"}
+levels = { "tutorial1.svg", "tutorial2.svg", "tutorial3.svg", "tutorial4.svg", "level1.svg", "level_out.svg"}
 step_sounds = {}
 
 -- game design parameters
