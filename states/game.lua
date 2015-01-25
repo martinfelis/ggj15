@@ -292,7 +292,7 @@ end
 function GameStateClass:enter ()
 	self.camera = Camera (0,0)
 
-	self:loadLevel ("level_out.svg")
+	self:loadLevel ("tutorial1.svg")
 	self:initTextures()
 
 	self.totalTime = 0
