@@ -117,6 +117,7 @@ local function newGuard (x, y, world)
 			if alert and not self.player_alert_start[player] then
 				Signals.emit ('alert-start', self, player)
 				self.player_alert_start[player] = love.timer.getTime()
+				Sound.static.surprised_guard:play()
 
 				if self.hunt_duration < 0 then
 					self.hunt_duration = 0
