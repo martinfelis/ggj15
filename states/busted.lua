@@ -44,9 +44,6 @@ function BustedState:update (dt)
 	if gui.Button ({text = "Quit!"}) then
 		os.exit()
 	end
-	if gui.Button ({text = "Credits!"}) then
-		os.exit()
-	end
 
 	if gui.Checkbox{checked = config.sound, text = "Sound", size = {"tight"}} then
 		config.sound = not config.sound

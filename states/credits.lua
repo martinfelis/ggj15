@@ -40,7 +40,7 @@ function Credits:draw(dt)
 end
 
 function Credits:keypressed(key)
-	if key=="escape" then
+	if key=="escape" or key=="space" then
 		Gamestate.pop()
 	end
 end
