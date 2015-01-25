@@ -77,7 +77,22 @@ local function newPlayer (world, id, x, y)
 		angle = 0, -- needed so the player does not turn wildly at slow speed
 		cycle_phase = 0.,
 		speed = 0.,
+		stepping_timer = nil,
 	}
+
+	Signals.register ('busted', function()
+		if player.stepping_timer then
+			Timer.cancel (player.stepping_timer)
+			player.stepping_timer = nil
+		end
+	end)
+
+	Signals.register ('win', function()
+		if player.stepping_timer ~= nil then
+			Timer.cancel (player.stepping_timer)
+			player.stepping_timer = nil
+		end
+	end)
 
 	-- physics
 	player.body = love.physics.newBody(world, 0, 0, "dynamic")
@@ -99,6 +114,18 @@ local function newPlayer (world, id, x, y)
 	function player:update (dt)
 		local velX, velY = self.body:getLinearVelocity()
 		local vel = vector(velX, velY)
+
+		if vel:len2() > 10 and not self.stepping_timer then
+			self.stepping_timer = Timer.addPeriodic (0.1, function ()
+				local index = math.floor ((love.math.random() * 4)) + 1
+				step_sounds[index]:play()
+			end)
+		end
+
+		if self.stepping_timer and vel:len() < 10 then
+			Timer.cancel (self.stepping_timer)
+			self.stepping_timer = nil
+		end
 
 		local right = love.keyboard.isDown(player.keys.right) and 1 or 0
 		local left = love.keyboard.isDown(player.keys.left) and 1 or 0
