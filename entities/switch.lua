@@ -1,8 +1,8 @@
-function newSwitch(x, y)
+function newSwitch(x, y, radius)
 	local switch = {
 		x = x,
 		y = y,
-		radius = 10,
+		radius = radius,
 		on = false,
 		observers = {}
 	}
