@@ -307,8 +307,7 @@ local function loadShapes (filename, layername)
 			all = {}
 		}
 
-		local level_file = io.open (filename)
-		local level_xml_string = level_file:read("*a")
+		local level_xml_string = love.filesystem.read(filename)
 		local svg_data = parseXml (level_xml_string)
 		-- print (serialize (svg_data))
 		assert (#svg_data == 2)
@@ -340,7 +339,6 @@ local function loadShapes (filename, layername)
 				end
 			end
 		end --if
-		level_file:close()
 
 		return shapes
 	end
