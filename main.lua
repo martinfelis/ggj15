@@ -39,6 +39,9 @@ GVAR = {
 	alert_realize_time=2,
 	alert_increase_rate=0.5,
 	alert_decrease_rate=0.3,
+	guard_hunt_speed=200,
+	guard_hunt_timeout=2.,
+	guard_hunt_look_timeout = 5.,
 }
 
 io.stdout:setvbuf("no")
