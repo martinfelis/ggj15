@@ -213,8 +213,11 @@ local function loadShapes (filename, layername)
 
 		if node.xarg.transform then
 			local angle, points, ty, tx
-			angle, points, tx, ty = parse_transform(node.xarg.transform, 0, 0, 1, 1)
-			circle.x, circle.y = circle.x + tx, circle.y + ty
+
+			angle, points, tx, ty = parse_transform(node.xarg.transform, circle.x, circle.y, circle.rx, circle.ry)
+
+			circle.rx, circle.ry = pathfunctions.getDimensions(points) --
+			circle.x, circle.y = points[1], points[2]-- circle.x + tx, circle.y + ty
 		end
 		circle.r = math.sqrt(node.xarg.rx * node.xarg.rx + node.xarg.ry * node.xarg.ry)
 
