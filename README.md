@@ -1,6 +1,6 @@
 # Prison Broke
 
-A little game made during the Global Game Jam 2015 (wohooo!)
+A fun coop-stealth game made during Global Game Jam 2015 by  SimonPtr, Phaiax (http://invisibletower.de), bitowl, and fysx (http://fysx.org).
 
 http://globalgamejam.org/2015/games/prison-broke
 
@@ -10,26 +10,16 @@ It's dark and a little bit scary outside of your prison cell, but you escaped wi
 - Player 2: W A S D 
 - Player 3: I J K L 
 - Your goal: escape
-- First blue levels are tutorials
+- Note: the first few levels are only tutorials
 
-In der Dunkelheit hast du dich mit deinem Zellengenossen aus dem Fenster abgeseilt. Doch was nun? Es fehlen noch einige Schritte in die Freiheit. Blöderweise seid ihr jedoch aneinander gekettet. 
+# Downloads
 
-- Player1: Pfeiltasten 
-- Player2: W A S D 
-- Ziel: Entkommen 
-- Die ersten Level sind zum Kennenlernen
+- Windows http://www.fysx.org/files/2015/01/Prisonbroke-GGJ-edition-win32.zip
+- MacOS/X http://www.fysx.org/files/2015/01/Prisonbroke-GGJ-edition-macosx-x64.zip
+- Ubuntu/Debian http://fysx.org/~martin/shared/prisonbroke-ggj-edition-1.0.0_all.deb
+- LOVE http://fysx.org/~martin/shared/Prisonbroke%20GGJ%20edition.love
 
-
-
-# HOWTO play on Windows (64 Bit)
-
-Download our game zip from http://www.invisibletower.de/Prisonbroke_Win64.zip
-
-(if you need a 32 bit version, please request it by creating a new issue)
-
-Open or extract it. Start Prisonbroke.exe
-
-# HOWTO play on linux (Ubuntu 14.04):
+# Alternate Method Ubuntu (play from source):
 
 Install love 0.9.1: https://love2d.org/
 
