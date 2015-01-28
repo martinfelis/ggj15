@@ -1,8 +1,8 @@
-# Prison Broke
+# Prisonbroke
 
 A fun coop-stealth game made during Global Game Jam 2015 by  SimonPtr, Phaiax (http://invisibletower.de), bitowl, and fysx (http://fysx.org).
 
-http://globalgamejam.org/2015/games/prison-broke
+Jam site: http://globalgamejam.org/2015/games/prison-broke
 
 It's dark and a little bit scary outside of your prison cell, but you escaped with the help of your inmate and a file you found in a cake. What do you do now? There are still more steps to do to become free. Supidly you are still chained together. And the file is left in your cell. 
 
