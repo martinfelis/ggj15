@@ -33,7 +33,7 @@ function SelectNumPlayersClass:update (dt)
 		if gui.Button ({text = "2"}) then
 			config.numplayer = 2
 		elseif gui.Button ({text = "3"}) then
-			config.numplayer = 3 
+			config.numplayer = 3
 		elseif gui.Button ({text = "4"}) then
 			config.numplayer = 4
 		end
@@ -59,7 +59,7 @@ function SelectNumPlayersClass:update (dt)
 end
 
 function SelectNumPlayersClass:draw(dt)
-	gui.group.default.size[1] = 150 
+	gui.group.default.size[1] = 150
 	gui.group.default.size[2] = 180
 	gui.group.default.spacing = 50
 
@@ -83,7 +83,7 @@ function SelectNumPlayersClass:draw(dt)
 	local str = "Select Number of Prisoners"
 	local width = font:getWidth (str)
 	local height = font:getHeight (str)
-	love.graphics.print ("Select Number of Prisoners", love.window.getWidth() * 0.5 - width * 0.5, love.window.getHeight() * 0.3)
+	love.graphics.print ("Select Number of Prisoners", love.graphics.getWidth() * 0.5 - width * 0.5, love.graphics.getHeight() * 0.3)
 	gui.core.draw()
 end
 

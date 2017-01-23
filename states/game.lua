@@ -20,6 +20,8 @@ end
 function GameStateClass:initTextures ()
 	self.canvas = love.graphics.newCanvas()
 	self.canvas:setFilter ("nearest", "nearest")
+	self.canvas2 = love.graphics.newCanvas()
+	self.canvas2:setFilter ("nearest", "nearest")
 
 	self.ground_texture= love.image.newImageData(40, 40)
 	self.ground_texture:mapPixel(function(x,y)
@@ -31,8 +33,8 @@ function GameStateClass:initTextures ()
 	self.ground_texture:setFilter("linear", "linear")
 	self.ground_texture:setFilter("nearest", "nearest")
 
---	self.background_quad = love.graphics.newQuad (0, 0, love.window.getWidth(), love.graphics.getHeight(), love.window.getWidth(), love.graphics.getHeight())
-	self.background_quad = love.graphics.newQuad (0, 0, love.window.getWidth(), love.graphics.getHeight(), 400, 400)
+--	self.background_quad = love.graphics.newQuad (0, 0, love.graphics.getWidth(), love.graphics.getHeight(), love.graphics.getWidth(), love.graphics.getHeight())
+	self.background_quad = love.graphics.newQuad (0, 0, love.graphics.getWidth(), love.graphics.getHeight(), 400, 400)
 end
 
 function GameStateClass:loadLevel (filename)
@@ -327,7 +329,8 @@ end
 
 function GameStateClass:preDraw()
 	love.graphics.setCanvas (self.canvas)
-	self.canvas:clear()
+	love.graphics.clear()
+	--self.canvas:clear()
 end
 
 function GameStateClass:drawGround()
@@ -354,17 +357,21 @@ function GameStateClass:postDraw()
 	love.graphics.setShader (sketch_shader)
 
 	-- further draws with shifted noise
-	love.graphics.setCanvas (self.canvas)
+	love.graphics.setCanvas (self.canvas2)
 	sketch_shader:send("noise_texture", noise_texture)
 	sketch_shader:send("noise_amp", 0.002)
-	sketch_shader:send("screen_center_x", (self.camera.scale * self.camera.x / love.window.getWidth()))
-	sketch_shader:send("screen_center_y", (self.camera.scale * self.camera.y / love.window.getHeight()))
+	sketch_shader:send("screen_center_x", (self.camera.scale * self.camera.x / love.graphics.getWidth()))
+	sketch_shader:send("screen_center_y", (self.camera.scale * self.camera.y / love.graphics.getHeight()))
 	love.graphics.draw (self.canvas, 0, 0, 0)
 
 	sketch_shader:send("noise_amp", 0.003 )
-	sketch_shader:send("screen_center_x", 0.01 * self.camera.scale + (self.camera.scale * self.camera.x / love.window.getWidth()))
-	sketch_shader:send("screen_center_y", 0.03 * self.camera.scale + (self.camera.scale * self.camera.y / love.window.getHeight()))
+	sketch_shader:send("screen_center_x", 0.01 * self.camera.scale + (self.camera.scale * self.camera.x / love.graphics.getWidth()))
+	sketch_shader:send("screen_center_y", 0.03 * self.camera.scale + (self.camera.scale * self.camera.y / love.graphics.getHeight()))
 	love.graphics.draw (self.canvas, 0, 0, 0)
+
+	-- cant draw to itself anymore, so use canvas2 as immediate
+	love.graphics.setCanvas (self.canvas)
+	love.graphics.draw (self.canvas2, 0, 0, 0)
 
 	-- default drawing of the filtered canvas
 	love.graphics.setShader ()
@@ -393,7 +400,7 @@ function GameStateClass:draw ()
 
 	self.camera:lookAt (player_center.x, player_center.y)
 
-	self.background_quad:setViewport (self.camera.scale * player_center.x, self.camera.scale * player_center.y, love.window.getWidth(), love.window.getHeight())
+	self.background_quad:setViewport (self.camera.scale * player_center.x, self.camera.scale * player_center.y, love.graphics.getWidth(), love.graphics.getHeight())
 	love.graphics.setColor (20, 20, 120, 255)
 	love.graphics.draw(self.ground_texture, self.background_quad, 0, 0)
 
@@ -483,7 +490,9 @@ end
 function GameStateClass:resize(x, y)
 	self.camera = Camera (self.camera.x, self.camera.y)
 	self.canvas = love.graphics.newCanvas()
+	self.canvas2 = love.graphics.newCanvas()
 	self.canvas:setFilter ("nearest", "nearest")
+	self.canvas2:setFilter ("nearest", "nearest")
 end
 
 function GameStateClass:checkWin()

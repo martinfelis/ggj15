@@ -22,8 +22,8 @@ function PauseState:enter()
 		love.graphics.getHeight() / self.imageobject:getHeight()
 		)
 
-	self.bustedlabel = {x = love.window.getWidth(), y = 0, scale = 20}
-	Timer.tween (0.5, self.bustedlabel, {x = love.window.getWidth() / 5., y = love.window.getHeight() / 2.5, scale = 1})
+	self.bustedlabel = {x = love.graphics.getWidth(), y = 0, scale = 20}
+	Timer.tween (0.5, self.bustedlabel, {x = love.graphics.getWidth() / 5., y = love.graphics.getHeight() / 2.5, scale = 1})
 	Sound.static.whip:play()
 end
 
@@ -62,7 +62,7 @@ function PauseState:update (dt)
 end
 
 function PauseState:draw(dt)
-	gui.group.default.size[1] = 150 
+	gui.group.default.size[1] = 150
 	gui.group.default.size[2] = 50
 	gui.group.default.spacing = 20
 
@@ -72,7 +72,7 @@ function PauseState:draw(dt)
 	end
 
 	love.graphics.setColor (0, 0, 0, 178)
-	love.graphics.rectangle ('fill', 0, 0, love.window.getWidth(), love.window.getHeight())
+	love.graphics.rectangle ('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
 	love.graphics.setFont(fonts.sugarsmall)
 	gui.core.draw()

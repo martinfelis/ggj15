@@ -43,7 +43,7 @@ function Credits:draw(dt)
 	love.graphics.setFont(fonts.sugarlarge)
 	for i = 1, #self.credits do
 		love.graphics.print(self.credits[i],
-		love.window.getWidth() * 0.1,
+		love.graphics.getWidth() * 0.1,
 		self.pos + i * CREDIT_LINE_DISTANCE)
 	end
 	gui.core.draw()

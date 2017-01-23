@@ -38,14 +38,14 @@ local function Proxy(f)
 end
 
 Sound = {
-	static = Proxy(function(path) return love.audio.newSource('sounds/'..path..'.mp3', 'static') end),
-	stream = Proxy(function(path) return love.audio.newSource('music/'..path..'.mp3', 'stream') end)
+	static = Proxy(function(path) return love.audio.newSource('sounds/'..path..'.ogg', 'static') end),
+	stream = Proxy(function(path) return love.audio.newSource('music/'..path..'.ogg', 'stream') end)
 }
 
 -- some global dicts
 fonts = {}
 states = {}
-config = { 
+config = {
 	sound = true,
 	numplayer = 2
 }
@@ -126,7 +126,7 @@ function love.load ()
 	--Gamestate.switch (states.menu)
 	-- Gamestate.push(states.menu)
 
-	Sound.stream.theme:play()	
+	Sound.stream.theme:play()
 	Sound.stream.theme:setLooping (true)
 
 	gui.group.default.size[1] = 150

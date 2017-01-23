@@ -22,8 +22,8 @@ function BustedState:enter()
 		love.graphics.getHeight() / self.imageobject:getHeight()
 		)
 
-	self.bustedlabel = {x = love.window.getWidth(), y = 0, scale = 20}
-	Timer.tween (0.5, self.bustedlabel, {x = love.window.getWidth() / 5., y = love.window.getHeight() / 2.5, scale = 1})
+	self.bustedlabel = {x = love.graphics.getWidth(), y = 0, scale = 20}
+	Timer.tween (0.5, self.bustedlabel, {x = love.graphics.getWidth() / 5., y = love.graphics.getHeight() / 2.5, scale = 1})
 	Timer.add (0.5, function() Sound.static.punch:play() end)
 	Sound.static.whip:play()
 end
@@ -59,7 +59,7 @@ function BustedState:draw(dt)
 	end
 
 	love.graphics.setColor (255, 0, 0, 128)
-	love.graphics.rectangle ('fill', 0, 0, love.window.getWidth(), love.window.getHeight())
+	love.graphics.rectangle ('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
 --	love.graphics.draw(self.imageobject,
 --		love.graphics.getWidth()/2, love.graphics.getHeight()/2, 0,
@@ -72,7 +72,7 @@ function BustedState:draw(dt)
 	love.graphics.setFont(fonts.megalarge)
 	love.graphics.print("BUSTED!!",
 			self.bustedlabel.x, self.bustedlabel.y,
---			love.window.getWidth() / 2., love.window.getHeight() / 2.,
+--			love.graphics.getWidth() / 2., love.graphics.getHeight() / 2.,
 			-0.2,
 			self.bustedlabel.scale, self.bustedlabel.scale
 			)
